@@ -8,8 +8,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useWines, Wine } from '../hooks/useWines';
 
-export default function WineTable() {
-    const { wineList, columns } = useWines();
+export default async function WineTable() {
+    const { wineList, columns } = await useWines();
     const columnHeadings = Object.values(columns).filter(h => ![ 'ID', 'Category' ].includes(h));
 
     return (
@@ -21,7 +21,7 @@ export default function WineTable() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {wineList.map((row) => (
+              {wineList.map((row: Wine) => (
                 <TableRow
                   key={`${row.ID}-${row.Producer}`}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

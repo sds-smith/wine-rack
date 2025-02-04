@@ -1,5 +1,5 @@
 
-import XLSX from 'xlsx';
+// import XLSX from 'xlsx';
 
 export type Wine = {
     ID: Number;
@@ -57,12 +57,12 @@ export const columns = {
     O: "Comments",
 }
 
-const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTIEicrz8-4AV2o7dq4N77K5CDugM_5EQNLZu3kUg_AuYi4cFXQ3OKfdai3dQx6qg/pubhtml';
-const file = await (await fetch(url)).arrayBuffer();
-const workbook = XLSX.read(file);
+export async function useWines() {
+    const data = await fetch('http://localhost:3000/api')
+    const wineList = await data.json()
 
-export function useWines() {
-    const wineList: Wine[] = [];
+    // const wineList: Wine[] = [];
+    // const promiseArray: any[] = [];
 
     const columns = {
         A: 'ID',
@@ -82,25 +82,37 @@ export function useWines() {
         O: "Comments",
     }
 
-    const { Sheet1 } = workbook.Sheets;
-    const rows: Rows = Object.entries(Sheet1).reduce((acc, [cell, data]) => {
-        const cellCol = cell.slice(0, 1);
-        const cellRow = cell.slice(1);
-        if (cellRow === '2') return acc;
-        return {
-            ...acc,
-           [cellRow] : {
-                ...acc[cellRow],
-                [columns[cellCol as keyof Columns]]: data.v
-            } 
-        }
-    }, {} as Rows)
-    console.log({rows})
-    Object.values(rows).forEach((row) => {
-        if (row.Country) wineList.push(row)
-        return
-    })
-console.log({wineList})
+    // const { Sheet1 } = workbook.Sheets;
+    // const rows: Rows = Object.entries(Sheet1).reduce((acc, [cell, data]) => {
+    //     const cellCol = cell.slice(0, 1);
+    //     const cellRow = cell.slice(1);
+    //     if (cellRow === '2') return acc;
+    //     return {
+    //         ...acc,
+    //        [cellRow] : {
+    //             ...acc[cellRow],
+    //             [columns[cellCol as keyof Columns]]: data.v
+    //         } 
+    //     }
+    // }, {} as Rows)
+
+    // const postWine = (wine: Wine) => {
+    //     console.log({wine})
+    //     fetch("http://localhost:3000/api", {
+    //         method: "POST",
+    //         body: JSON.stringify(wine),
+    //     })
+    //     .then(res => res.json().then(wine => console.log('[mongo]',{wine})))
+    // }
+    // Object.values(rows).forEach((row) => {
+    //     if (row.Country) {
+    //         wineList.push(row)
+    //         promiseArray.push(postWine(row))
+    //     }
+    //     return
+    // })
+
+    // Promise.allSettled(promiseArray).then(()=>console.log('YO FAM'))
 
     return { wineList, columns };
 };
