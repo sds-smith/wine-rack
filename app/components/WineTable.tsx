@@ -26,7 +26,7 @@ export default function WineTable() {
                   key={`${row.ID}-${row.Producer}`}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                    { columnHeadings.map(h => <TableCell align="right">{row[h as keyof Wine]?.toString()}</TableCell>)}
+                    { columnHeadings.map(h => <TableCell key={h} align="center">{row[h as keyof Wine]?.toString()}</TableCell>)}
                 </TableRow>
               ))}
             </TableBody>
