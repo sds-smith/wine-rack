@@ -1,6 +1,6 @@
 
 export type Wine = {
-    ID: Number;
+    ID: number;
     Category: string;
     Varietal: string;
     Country: string;
@@ -13,7 +13,7 @@ export type Wine = {
     Price: string;
     Acquired: Date;
     Notes: string;
-    Quantity: Number;
+    Quantity: number;
     Comments: string;
 };
 
@@ -37,7 +37,13 @@ export type Columns = {
 
 export async function useWines() {
     const data = await fetch('http://localhost:3000/api');
-    const wineList = await data.json();
+    const wineData = await data.json();
+    const wineList = wineData.sort((a: Wine, b: Wine) => parseInt(a.Category) - parseInt(b.Category))
+
+    const categories = [...new Set(wineList.map(({Category}: Wine) => Category))]
+    const ids = wineList.map(({ID}: Wine) => ID).sort((a: number, b: number) => a-b)
+    const nextId = wineList.reduce((acc: number, curr: Wine) => Math.max(acc, curr.ID), 0) + 1
+    console.log({nextId})
 
     const columns = {
         A: 'ID',
@@ -57,5 +63,5 @@ export async function useWines() {
         O: "Comments",
     }
 
-    return { wineList, columns };
+    return { wineList, columns, nextId, categories };
 };
