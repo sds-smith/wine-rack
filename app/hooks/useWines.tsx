@@ -40,7 +40,7 @@ export async function useWines() {
     const wineData = await data.json();
     const wineList = wineData.sort((a: Wine, b: Wine) => parseInt(a.Category) - parseInt(b.Category))
 
-    const categories = [...new Set(wineList.map(({Category}: Wine) => Category))]
+    const categories = [...new Set(wineList.map(({Category}: Wine) => Category))] as string[]
     const nextId = wineList.reduce((acc: number, curr: Wine) => Math.max(acc, curr.ID), 0) + 1
 
     const columns = {

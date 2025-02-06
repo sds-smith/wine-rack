@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -14,8 +14,12 @@ import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 
+type AlertDialogProps = {
+  ID: number,
+  categories: string[]
+} 
 
-export default function AlertDialog({ ID, categories}) {
+export default function AlertDialog({ ID, categories}: AlertDialogProps) {
     const newWineInitialState = {
         ID,
         Category: '',
@@ -47,13 +51,13 @@ export default function AlertDialog({ ID, categories}) {
     const handleClickOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const handleChange = (e) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setNewWine((newWine) => ({
             ...newWine,
             [name]: value
         }))
-        if (value.length && submitError[name]) {
+        if (value.length && submitError[name as keyof typeof submitError]) {
             setSubmitError(se => ({
                 ...se,
                 [name]: false
@@ -64,7 +68,7 @@ export default function AlertDialog({ ID, categories}) {
     const handleSubmit = async () => {
         let error = false;
         Object.keys(submitError).forEach(key => {
-            if (!newWine[key]) {
+            if (!newWine[key as keyof typeof newWine]) {
                 setSubmitError(se => ({
                     ...se,
                     [key]: true
@@ -85,7 +89,7 @@ export default function AlertDialog({ ID, categories}) {
 
     return (
       <>
-        <Button variant="outlined" color='black' onClick={handleClickOpen} sx={{margin: '10px'}}>
+        <Button variant="outlined" onClick={handleClickOpen} sx={{margin: '10px', color: 'black'}}>
           ADD NEW WINE
         </Button>
         <Dialog
@@ -140,11 +144,14 @@ export default function AlertDialog({ ID, categories}) {
             <TextField fullWidth name='Appellation' id="Appellation" label="Appellation" variant="standard" value={newWine.Appellation} onChange={handleChange} />
             <TextField fullWidth name='Ready' id="Ready" label="Ready" variant="standard" value={newWine.Ready} onChange={handleChange} />
             <TextField fullWidth name='Source' id="Source" label="Source" variant="standard" value={newWine.Source} onChange={handleChange} />
-            <FormControl fullWidth name='Price' id="Price" variant="standard" value={newWine.Price} onChange={handleChange}>
-              <InputLabel htmlFor="standard-adornment-amount">Price</InputLabel>
+            <FormControl >
+              <InputLabel htmlFor="Price">Price</InputLabel>
               <Input
-                id="standard-adornment-amount"
-                label='Price'
+                fullWidth 
+                name='Price' 
+                id="Price" 
+                value={newWine.Price} 
+                onChange={handleChange}
                 type='text'
                 startAdornment={<InputAdornment position="start">$</InputAdornment>}
               />
