@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -16,8 +16,7 @@ import FormControl from '@mui/material/FormControl';
 
 
 export default function AlertDialog({ ID, categories}) {
-    const [open, setOpen] = useState(false);
-    const [ newWine, setNewWine ] = useState({
+    const newWineInitialState = {
         ID,
         Category: '',
         Varietal: '',
@@ -33,21 +32,57 @@ export default function AlertDialog({ ID, categories}) {
         Notes: '',
         Quantity: '',
         Comments: '',
+    }
+
+    const [open, setOpen] = useState(false);
+    const [ newWine, setNewWine ] = useState(newWineInitialState)
+    const [ submitError, setSubmitError ] = useState({
+        Category: false,
+        Producer: false,
+        Label: false,
+        Quantity: false,
+        Notes: false
     })
 
     const handleClickOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     const handleChange = (e) => {
-        console.log({target: e.target})
         const { name, value } = e.target;
-        console.log({name, value})
         setNewWine((newWine) => ({
             ...newWine,
             [name]: value
         }))
+        if (value.length && submitError[name]) {
+            setSubmitError(se => ({
+                ...se,
+                [name]: false
+            }))
+        }
     }
-useEffect(()=>console.log({newWine}),[newWine])
+
+    const handleSubmit = async () => {
+        let error = false;
+        Object.keys(submitError).forEach(key => {
+            if (!newWine[key]) {
+                setSubmitError(se => ({
+                    ...se,
+                    [key]: true
+                }))
+                error = true;
+            }
+        })
+        if (error) return;
+        const resp = await fetch('http://localhost:3000/api', {
+            method: 'POST',
+            body: JSON.stringify(newWine)
+        });
+        const responsey = await resp.json();
+        console.log({responsey})
+        setNewWine(newWineInitialState);
+        handleClose();
+    }
+
     return (
       <>
         <Button variant="outlined" color='black' onClick={handleClickOpen} sx={{margin: '10px'}}>
@@ -76,6 +111,8 @@ useEffect(()=>console.log({newWine}),[newWine])
                 value={newWine.Category} 
                 onChange={handleChange}
                 required
+                error={submitError.Category}
+                helperText={submitError.Category ? 'Please select a Category' : ''}
             >
               {categories?.map((option) => (
                 <MenuItem key={option} value={option}>
@@ -86,8 +123,20 @@ useEffect(()=>console.log({newWine}),[newWine])
             <TextField fullWidth name='Varietal' id="Varietal" label="Varietal" variant="standard" value={newWine.Varietal} onChange={handleChange} />
             <TextField fullWidth name='Country' id="Country" label="Country" variant="standard" value={newWine.Country} onChange={handleChange} />
             <TextField fullWidth name='Vintage' id="Vintage" label="Vintage" variant="standard" value={newWine.Vintage} onChange={handleChange} />
-            <TextField fullWidth name='Producer' id="Producer" label="Producer" variant="standard" value={newWine.Producer} onChange={handleChange} required />
-            <TextField fullWidth name='Label' id="Label" label="Label" variant="standard" value={newWine.Label} onChange={handleChange} required />
+            <TextField 
+                fullWidth 
+                name='Producer' id="Producer" label="Producer" variant="standard" 
+                value={newWine.Producer} 
+                onChange={handleChange} 
+                required error={submitError.Producer} helperText={submitError.Producer ? 'Producer cannot be empty' : ''}
+            />
+            <TextField 
+                fullWidth 
+                name='Label' id="Label" label="Label" variant="standard" 
+                value={newWine.Label} 
+                onChange={handleChange} 
+                required error={submitError.Label} helperText={submitError.Label ? 'Label cannot be empty' : ''}
+            />
             <TextField fullWidth name='Appellation' id="Appellation" label="Appellation" variant="standard" value={newWine.Appellation} onChange={handleChange} />
             <TextField fullWidth name='Ready' id="Ready" label="Ready" variant="standard" value={newWine.Ready} onChange={handleChange} />
             <TextField fullWidth name='Source' id="Source" label="Source" variant="standard" value={newWine.Source} onChange={handleChange} />
@@ -101,15 +150,28 @@ useEffect(()=>console.log({newWine}),[newWine])
               />
             </FormControl>
             <TextField fullWidth name='Acquired' id="Acquired" label="Acquired" variant="standard" value={newWine.Acquired} onChange={handleChange} />
-            <TextField fullWidth select name='Notes' id="Notes" label="Notes" variant="standard" value={newWine.Notes} onChange={handleChange} required >
+            <TextField 
+                fullWidth 
+                select 
+                name='Notes' id="Notes" label="Notes" variant="standard" 
+                value={newWine.Notes} 
+                onChange={handleChange} 
+                required error={submitError.Notes} helperText={submitError.Notes ? 'Please indicate whether notes exist for this wine' : ''}
+            >
                 <MenuItem value='Yes' >Yes</MenuItem>
                 <MenuItem value='No' >No</MenuItem>
             </TextField>
-            <TextField fullWidth name='Quantity' id="Quantity" label="Quantity" variant="standard" value={newWine.Quantity} onChange={handleChange} required />
+            <TextField 
+                fullWidth 
+                name='Quantity' id="Quantity" label="Quantity" variant="standard" 
+                value={newWine.Quantity} 
+                onChange={handleChange} 
+                required error={submitError.Quantity} helperText={submitError.Quantity ? 'Please enter a Quantity' : ''}
+            />
             <TextField fullWidth name='Comments' id="Comments" label="Comments" variant="standard" value={newWine.Comments} onChange={handleChange} multiline rows={4} />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Submit</Button>
+            <Button onClick={handleSubmit}>Submit</Button>
             <Button onClick={handleClose} autoFocus>
               Cancel
             </Button>
