@@ -13,9 +13,11 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+import WineInputButton from './WineInputButton';
 import { Wine } from '../hooks/useWines';
 
 type WineInputDialogProps = {
+  mode: string,
   categories: string[],
   defaultWineState: Wine,
   onSubmit: (wineState: Wine) => Promise<void>
@@ -29,7 +31,12 @@ const defaultErrorState = {
   Notes: false
 }
 
-export default function WineInputDialog({ defaultWineState, categories, onSubmit }: WineInputDialogProps) {
+const dialogTitle = {
+  ADD: 'Add Wine to Inventory',
+  EDIT: 'Edit Wine Inventory Entry'
+}
+
+export default function WineInputDialog({ mode, defaultWineState, categories, onSubmit }: WineInputDialogProps) {
     const [open, setOpen] = useState(false);
     const [ wineState, setWineState ] = useState(defaultWineState)
     const [ submitError, setSubmitError ] = useState(defaultErrorState)
@@ -73,9 +80,10 @@ export default function WineInputDialog({ defaultWineState, categories, onSubmit
 
     return (
       <>
-        <Button variant="outlined" onClick={handleClickOpen} sx={{margin: '10px', borderColor: 'black', color: 'black'}}>
-          {`${'add'} new wine`}
-        </Button>
+        <WineInputButton
+          mode={mode}
+          onClick={handleClickOpen}
+        />
         <Dialog
           open={open}
           onClose={handleClose}
@@ -83,7 +91,7 @@ export default function WineInputDialog({ defaultWineState, categories, onSubmit
           aria-describedby="add-wine-dialog-description"
         >
           <DialogTitle id="add-wine-dialog-title">
-            Add Wine to Inventory
+            {dialogTitle[mode as keyof typeof dialogTitle]}
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="add-wine-dialog-description">
@@ -162,6 +170,7 @@ export default function WineInputDialog({ defaultWineState, categories, onSubmit
             <TextField fullWidth name='Comments' id="Comments" label="Comments" variant="standard" value={wineState.Comments} onChange={handleChange} multiline rows={4} />
           </DialogContent>
           <DialogActions>
+            { mode === 'EDIT' && <Button onClick={()=>console.log("delete")}>Delete</Button> }
             <Button onClick={handleSubmit}>Submit</Button>
             <Button onClick={handleClose} autoFocus>
               Cancel

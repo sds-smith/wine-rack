@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import AddWineDialog from './AddWineDialog';
-import EditWineButton from './EditWineButton';
+import EditWineDialog from './EditWineDialog';
 import { useWines, Wine } from '../hooks/useWines';
 
 export default async function WineTable() {
@@ -36,7 +36,10 @@ export default async function WineTable() {
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell align="center" size='small' sx={{width: '10px'}}>
-                  <EditWineButton />
+                  <EditWineDialog
+                    wine={row}
+                    categories={categories}
+                  />
                 </TableCell>
                 { columnHeadings.map(h => <TableCell key={h} align="center">{row[h as keyof Wine]?.toString()}</TableCell>)}
               </TableRow>

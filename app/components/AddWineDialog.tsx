@@ -39,9 +39,10 @@ export default function AddWineDialog({ID, categories}: AddWineDialogProps) {
 
     return (
       <WineInputDialog
-          defaultWineState={defaultWineState}
-          categories={categories}
-          onSubmit={handleSubmit}
+        mode='ADD'
+        defaultWineState={defaultWineState}
+        categories={categories}
+        onSubmit={handleSubmit}
       />
     )
 }
