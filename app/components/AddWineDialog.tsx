@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react';
-import WineInputDialog from './WineInputDialog';
+import WineDialogBase from './WineDialogBase';
 import { Wine } from '../hooks/useWines';
 
 type AddWineDialogProps = {
@@ -38,7 +38,7 @@ export default function AddWineDialog({ID, categories}: AddWineDialogProps) {
     }
 
     return (
-      <WineInputDialog
+      <WineDialogBase
         mode='ADD'
         defaultWineState={defaultWineState}
         categories={categories}
