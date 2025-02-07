@@ -78,6 +78,16 @@ export default function WineInputDialog({ mode, defaultWineState, categories, on
         handleClose();
     }
 
+    const handleDelete = async () => {
+      const resp = await fetch('http://localhost:3000/api', {
+          method: 'DELETE',
+          body: JSON.stringify(wineState)
+      });
+      const responsey = await resp.json();
+      console.log({responsey})
+      handleClose();
+    }
+
     return (
       <>
         <WineInputButton
@@ -170,7 +180,7 @@ export default function WineInputDialog({ mode, defaultWineState, categories, on
             <TextField fullWidth name='Comments' id="Comments" label="Comments" variant="standard" value={wineState.Comments} onChange={handleChange} multiline rows={4} />
           </DialogContent>
           <DialogActions>
-            { mode === 'EDIT' && <Button onClick={()=>console.log("delete")}>Delete</Button> }
+            { mode === 'EDIT' && <Button onClick={handleDelete}>Delete</Button> }
             <Button onClick={handleSubmit}>Submit</Button>
             <Button onClick={handleClose} autoFocus>
               Cancel
