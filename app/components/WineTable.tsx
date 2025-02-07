@@ -7,16 +7,17 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
-import AddWineModal from './AddWineModal';
+import AddWineDialog from './AddWineDialog';
+import EditWineButton from './EditWineButton';
 import { useWines, Wine } from '../hooks/useWines';
 
 export default async function WineTable() {
   const { wineList, columns, nextId, categories } = await useWines();
-  const columnHeadings = Object.values(columns).filter(h => ![ 'ID', 'Category' ].includes(h));
+  const columnHeadings = columns.filter(h => ![ 'ID', 'Category' ].includes(h));
 
   return (
     <Box >
-      <AddWineModal
+      <AddWineDialog
         ID={nextId}
         categories={categories}
       />
@@ -24,6 +25,7 @@ export default async function WineTable() {
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead sx={{position: 'sticky', top: 0}}>
             <TableRow sx={{background: 'black'}}>
+              <TableCell size='small' sx={{width: '10px'}}></TableCell>
               { columnHeadings.map(h => <TableCell key={h} align="center" sx={{color: 'white'}}>{h}</TableCell>)}
             </TableRow>
           </TableHead>
@@ -33,6 +35,9 @@ export default async function WineTable() {
                 key={`${row.ID}-${row.Producer}`}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
+                <TableCell align="center" size='small' sx={{width: '10px'}}>
+                  <EditWineButton />
+                </TableCell>
                 { columnHeadings.map(h => <TableCell key={h} align="center">{row[h as keyof Wine]?.toString()}</TableCell>)}
               </TableRow>
             ))}

@@ -11,9 +11,9 @@ export type Wine = {
     Ready: string;
     Source: string;
     Price: string;
-    Acquired: Date;
+    Acquired: Date | string;
     Notes: string;
-    Quantity: number;
+    Quantity: number | string;
     Comments: string;
 };
 
@@ -43,23 +43,23 @@ export async function useWines() {
     const categories = [...new Set(wineList.map(({Category}: Wine) => Category))] as string[]
     const nextId = wineList.reduce((acc: number, curr: Wine) => Math.max(acc, curr.ID), 0) + 1
 
-    const columns = {
-        A: 'ID',
-        B: "Category",
-        C: "Varietal",
-        D: "Country",
-        E: "Vintage",
-        F: "Producer",
-        G: "Label",
-        H: "Appellation",
-        I: "Ready",
-        J: "Source",
-        K: "Price",
-        L: "Acquired",
-        M: "Notes",
-        N: "Quantity",
-        O: "Comments",
-    }
+    const columns = [
+        'ID',
+        "Category",
+        "Varietal",
+        "Country",
+        "Vintage",
+        "Producer",
+        "Label",
+        "Appellation",
+        "Ready",
+        "Source",
+        "Price",
+        "Acquired",
+        "Notes",
+        "Quantity",
+        "Comments",
+    ]
 
     return { wineList, columns, nextId, categories };
 };

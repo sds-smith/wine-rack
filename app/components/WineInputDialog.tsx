@@ -13,48 +13,37 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+import { Wine } from '../hooks/useWines';
 
-type AlertDialogProps = {
-  ID: number,
-  categories: string[]
+type WineInputDialogProps = {
+  categories: string[],
+  defaultWineState: Wine,
+  onSubmit: (wineState: Wine) => Promise<void>
 } 
 
-export default function AlertDialog({ ID, categories}: AlertDialogProps) {
-    const newWineInitialState = {
-        ID,
-        Category: '',
-        Varietal: '',
-        Country: '',
-        Vintage: '',
-        Producer: '',
-        Label: '',
-        Appellation: '',
-        Ready: '',
-        Source: '',
-        Price: '',
-        Acquired: '',
-        Notes: '',
-        Quantity: '',
-        Comments: '',
-    }
+const defaultErrorState = {
+  Category: false,
+  Producer: false,
+  Label: false,
+  Quantity: false,
+  Notes: false
+}
 
+export default function WineInputDialog({ defaultWineState, categories, onSubmit }: WineInputDialogProps) {
     const [open, setOpen] = useState(false);
-    const [ newWine, setNewWine ] = useState(newWineInitialState)
-    const [ submitError, setSubmitError ] = useState({
-        Category: false,
-        Producer: false,
-        Label: false,
-        Quantity: false,
-        Notes: false
-    })
+    const [ wineState, setWineState ] = useState(defaultWineState)
+    const [ submitError, setSubmitError ] = useState(defaultErrorState)
 
     const handleClickOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleClose = () => {
+      setSubmitError(defaultErrorState);
+      setOpen(false);
+    };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        setNewWine((newWine) => ({
-            ...newWine,
+        setWineState((ws) => ({
+            ...ws,
             [name]: value
         }))
         if (value.length && submitError[name as keyof typeof submitError]) {
@@ -68,7 +57,7 @@ export default function AlertDialog({ ID, categories}: AlertDialogProps) {
     const handleSubmit = async () => {
         let error = false;
         Object.keys(submitError).forEach(key => {
-            if (!newWine[key as keyof typeof newWine]) {
+            if (!wineState![key as keyof typeof wineState]) {
                 setSubmitError(se => ({
                     ...se,
                     [key]: true
@@ -77,20 +66,15 @@ export default function AlertDialog({ ID, categories}: AlertDialogProps) {
             }
         })
         if (error) return;
-        const resp = await fetch('http://localhost:3000/api', {
-            method: 'POST',
-            body: JSON.stringify(newWine)
-        });
-        const responsey = await resp.json();
-        console.log({responsey})
-        setNewWine(newWineInitialState);
+        onSubmit(wineState);
+        setWineState(defaultWineState);
         handleClose();
     }
 
     return (
       <>
-        <Button variant="outlined" onClick={handleClickOpen} sx={{margin: '10px', color: 'black'}}>
-          ADD NEW WINE
+        <Button variant="outlined" onClick={handleClickOpen} sx={{margin: '10px', borderColor: 'black', color: 'black'}}>
+          {`${'add'} new wine`}
         </Button>
         <Dialog
           open={open}
@@ -112,7 +96,7 @@ export default function AlertDialog({ ID, categories}: AlertDialogProps) {
                 name="Category" 
                 label="Category" 
                 variant="standard" 
-                value={newWine.Category} 
+                value={wineState.Category} 
                 onChange={handleChange}
                 required
                 error={submitError.Category}
@@ -124,44 +108,44 @@ export default function AlertDialog({ ID, categories}: AlertDialogProps) {
                 </MenuItem>
               ))}
             </TextField>
-            <TextField fullWidth name='Varietal' id="Varietal" label="Varietal" variant="standard" value={newWine.Varietal} onChange={handleChange} />
-            <TextField fullWidth name='Country' id="Country" label="Country" variant="standard" value={newWine.Country} onChange={handleChange} />
-            <TextField fullWidth name='Vintage' id="Vintage" label="Vintage" variant="standard" value={newWine.Vintage} onChange={handleChange} />
+            <TextField fullWidth name='Varietal' id="Varietal" label="Varietal" variant="standard" value={wineState.Varietal} onChange={handleChange} />
+            <TextField fullWidth name='Country' id="Country" label="Country" variant="standard" value={wineState.Country} onChange={handleChange} />
+            <TextField fullWidth name='Vintage' id="Vintage" label="Vintage" variant="standard" value={wineState.Vintage} onChange={handleChange} />
             <TextField 
                 fullWidth 
                 name='Producer' id="Producer" label="Producer" variant="standard" 
-                value={newWine.Producer} 
+                value={wineState.Producer} 
                 onChange={handleChange} 
                 required error={submitError.Producer} helperText={submitError.Producer ? 'Producer cannot be empty' : ''}
             />
             <TextField 
                 fullWidth 
                 name='Label' id="Label" label="Label" variant="standard" 
-                value={newWine.Label} 
+                value={wineState.Label} 
                 onChange={handleChange} 
                 required error={submitError.Label} helperText={submitError.Label ? 'Label cannot be empty' : ''}
             />
-            <TextField fullWidth name='Appellation' id="Appellation" label="Appellation" variant="standard" value={newWine.Appellation} onChange={handleChange} />
-            <TextField fullWidth name='Ready' id="Ready" label="Ready" variant="standard" value={newWine.Ready} onChange={handleChange} />
-            <TextField fullWidth name='Source' id="Source" label="Source" variant="standard" value={newWine.Source} onChange={handleChange} />
-            <FormControl >
+            <TextField fullWidth name='Appellation' id="Appellation" label="Appellation" variant="standard" value={wineState.Appellation} onChange={handleChange} />
+            <TextField fullWidth name='Ready' id="Ready" label="Ready" variant="standard" value={wineState.Ready} onChange={handleChange} />
+            <TextField fullWidth name='Source' id="Source" label="Source" variant="standard" value={wineState.Source} onChange={handleChange} />
+            <FormControl sx={{width: '100%', marginTop: '15px'}}>
               <InputLabel htmlFor="Price">Price</InputLabel>
               <Input
                 fullWidth 
                 name='Price' 
                 id="Price" 
-                value={newWine.Price} 
+                value={wineState.Price} 
                 onChange={handleChange}
                 type='text'
                 startAdornment={<InputAdornment position="start">$</InputAdornment>}
               />
             </FormControl>
-            <TextField fullWidth name='Acquired' id="Acquired" label="Acquired" variant="standard" value={newWine.Acquired} onChange={handleChange} />
+            <TextField fullWidth name='Acquired' id="Acquired" label="Acquired" variant="standard" value={wineState.Acquired} onChange={handleChange} />
             <TextField 
                 fullWidth 
                 select 
                 name='Notes' id="Notes" label="Notes" variant="standard" 
-                value={newWine.Notes} 
+                value={wineState.Notes} 
                 onChange={handleChange} 
                 required error={submitError.Notes} helperText={submitError.Notes ? 'Please indicate whether notes exist for this wine' : ''}
             >
@@ -171,11 +155,11 @@ export default function AlertDialog({ ID, categories}: AlertDialogProps) {
             <TextField 
                 fullWidth 
                 name='Quantity' id="Quantity" label="Quantity" variant="standard" 
-                value={newWine.Quantity} 
+                value={wineState.Quantity} 
                 onChange={handleChange} 
                 required error={submitError.Quantity} helperText={submitError.Quantity ? 'Please enter a Quantity' : ''}
             />
-            <TextField fullWidth name='Comments' id="Comments" label="Comments" variant="standard" value={newWine.Comments} onChange={handleChange} multiline rows={4} />
+            <TextField fullWidth name='Comments' id="Comments" label="Comments" variant="standard" value={wineState.Comments} onChange={handleChange} multiline rows={4} />
           </DialogContent>
           <DialogActions>
             <Button onClick={handleSubmit}>Submit</Button>
