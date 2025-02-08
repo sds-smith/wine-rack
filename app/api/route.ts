@@ -37,6 +37,36 @@ export async function POST(req: Request) {
     }
 }
 
+export async function PATCH(req: Request) {
+    const updatedWine = await req.json();
+    const _id = new ObjectId(updatedWine._id);
+
+    try {
+        const updateResponse = await db.collection("wines").replaceOne({_id}, {
+            ...updatedWine,
+            _id
+        });
+        if (!updateResponse) {
+            return Response.json({
+                status: 500,
+                success: false,
+                message: 'Wine not updated in database'
+            });
+        }
+        return Response.json({
+            status: 201,
+            success: true,
+            message: `Wine with id ${_id} updated in database`
+        })
+    } catch(err) {
+        console.error(err)
+        return Response.json({
+            status: 400,
+            success: false,
+        })
+    }
+}
+
 export async function DELETE(request: Request) {
     const wineToDelete = await request.json();
     const _id = new ObjectId(wineToDelete._id)
