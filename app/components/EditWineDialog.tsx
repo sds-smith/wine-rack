@@ -11,16 +11,16 @@ type EditWineDialogProps = {
 
 export default function EditWineDialog({wine, categories}: EditWineDialogProps) {
 
-    const handleSubmit = async (wineState: Wine) => {
-        console.log({wineState})
-    }
+  const handleSubmit = async (wineState: Wine) => {
+    console.log({wineState})
+  }
 
-    return (
-      <WineDialogBase
-        mode='EDIT'
-        defaultWineState={wine}
-        categories={categories}
-        onSubmit={handleSubmit}
-      />
-    )
+  return (
+    <WineDialogBase
+      mode='EDIT'
+      defaultWineState={wine}
+      categories={categories}
+      onSubmit={handleSubmit}
+    />
+  )
 }

@@ -10,39 +10,38 @@ type AddWineDialogProps = {
 } 
 
 export default function AddWineDialog({ID, categories}: AddWineDialogProps) {
-    const defaultWineState: Wine = {
-        ID,
-        Category: '',
-        Varietal: '',
-        Country: '',
-        Vintage: '',
-        Producer: '',
-        Label: '',
-        Appellation: '',
-        Ready: '',
-        Source: '',
-        Price: '',
-        Acquired: '',
-        Notes: '',
-        Quantity: '',
-        Comments: '',
-    }
+  const defaultWineState: Wine = {
+    ID,
+    Category: '',
+    Varietal: '',
+    Country: '',
+    Vintage: '',
+    Producer: '',
+    Label: '',
+    Appellation: '',
+    Ready: '',
+    Source: '',
+    Price: '',
+    Acquired: '',
+    Notes: '',
+    Quantity: '',
+    Comments: '',
+  }
 
-    const handleSubmit = async (wineState: Wine) => {
-        const resp = await fetch('http://localhost:3000/api', {
-            method: 'POST',
-            body: JSON.stringify(wineState)
-        });
-        const responsey = await resp.json();
-        console.log({responsey})
-    }
+  const handleSubmit = async (wineState: Wine) => {
+    const resp = await fetch('http://localhost:3000/api', {
+      method: 'POST',
+      body: JSON.stringify(wineState)
+    });
+    return await resp.json();
+  }
 
-    return (
-      <WineDialogBase
-        mode='ADD'
-        defaultWineState={defaultWineState}
-        categories={categories}
-        onSubmit={handleSubmit}
-      />
-    )
+  return (
+    <WineDialogBase
+      mode='ADD'
+      defaultWineState={defaultWineState}
+      categories={categories}
+      onSubmit={handleSubmit}
+    />
+  )
 }
