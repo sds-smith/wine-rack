@@ -12,7 +12,7 @@ type EditWineDialogProps = {
 export default function EditWineDialog({wine, categories}: EditWineDialogProps) {
 
   const handleSubmit = async (wineState: Wine) => {
-    const resp = await fetch('http://localhost:3000/api', {
+    const resp = await fetch(`/api`, {
       method: 'PATCH',
       body: JSON.stringify(wineState)
     });

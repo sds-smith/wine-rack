@@ -52,6 +52,7 @@ export default function WineInputDialog({ mode, defaultWineState, categories, on
   const handleClickOpen = () => setOpen(true);
   const handleClose = () => {
     setSubmitError(defaultErrorState);
+    setWineState(defaultWineState)
     setOpen(false);
   };
 
@@ -83,12 +84,11 @@ export default function WineInputDialog({ mode, defaultWineState, categories, on
     if (error) return;
     const response = await onSubmit(wineState);
     if (response.success) router.refresh();
-    // setWineState(defaultWineState);
     handleClose();
   }
 
   const handleDelete = async () => {
-    const resp = await fetch('http://localhost:3000/api', {
+    const resp = await fetch(`/api`, {
       method: 'DELETE',
       body: JSON.stringify(wineState)
     });

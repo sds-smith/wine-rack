@@ -29,7 +29,7 @@ export default function AddWineDialog({ID, categories}: AddWineDialogProps) {
   }
 
   const handleSubmit = async (wineState: Wine) => {
-    const resp = await fetch('http://localhost:3000/api', {
+    const resp = await fetch(`/api`, {
       method: 'POST',
       body: JSON.stringify(wineState)
     });

@@ -47,7 +47,7 @@ const initialMetaData = {
 }
 
 export async function useWines() {
-    const data = await fetch('http://localhost:3000/api');
+    const data = await fetch(`${process.env.BASE_URL}/api`);
     const wineData = await data.json();
     const wineList = wineData.sort((a: Wine, b: Wine) => parseInt(a.Category) - parseInt(b.Category) || parseInt(a.Vintage) - parseInt(b.Vintage));
     const chunkedWineList = chunk(wineList, 40)
