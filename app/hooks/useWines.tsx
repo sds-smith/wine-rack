@@ -35,13 +35,29 @@ export type Columns = {
     O: string,
 }
 
+type Metadata = {
+    nextId: number,
+    totalBottles: number
+}
+
+const initialMetaData = {
+    nextId: 0,
+    totalBottles: 0
+}
+
 export async function useWines() {
     const data = await fetch('http://localhost:3000/api');
     const wineData = await data.json();
-    const wineList = wineData.sort((a: Wine, b: Wine) => parseInt(a.Category) - parseInt(b.Category))
+    const wineList = wineData.sort((a: Wine, b: Wine) => parseInt(a.Category) - parseInt(b.Category) || parseInt(a.Vintage) - parseInt(b.Vintage))
 
     const categories = [...new Set(wineList.map(({Category}: Wine) => Category))] as string[]
-    const nextId = wineList.reduce((acc: number, curr: Wine) => Math.max(acc, curr.ID), 0) + 1
+
+    const metaData = wineList.reduce(
+        (acc: Metadata, curr: Wine) => ({
+            nextId: Math.max(acc.nextId, curr.ID) + 1, 
+            totalBottles: Number(acc.totalBottles) + Number(curr.Quantity || 0)
+        }), initialMetaData
+    )
 
     const columns = [
         'ID',
@@ -61,5 +77,5 @@ export async function useWines() {
         "Comments",
     ]
 
-    return { wineList, columns, nextId, categories };
+    return { wineList, columns, metaData, categories };
 };

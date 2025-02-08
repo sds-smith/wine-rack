@@ -5,6 +5,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import TableFooter from '@mui/material/TableFooter';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import AddWineDialog from './AddWineDialog';
@@ -12,7 +13,8 @@ import EditWineDialog from './EditWineDialog';
 import { useWines, Wine } from '../hooks/useWines';
 
 export default async function WineTable() {
-  const { wineList, columns, nextId, categories } = await useWines();
+  const { wineList, columns, metaData, categories } = await useWines();
+  const { nextId, totalBottles } = metaData;
   const columnHeadings = columns.filter(h => ![ 'ID', 'Category' ].includes(h));
 
   return (
@@ -45,6 +47,13 @@ export default async function WineTable() {
               </TableRow>
             ))}
           </TableBody>
+          <TableFooter sx={{position: 'sticky', bottom: 0}}>
+            <TableRow sx={{background: 'black'}}>
+              <TableCell sx={{color: 'white'}} align='center' >{`Total`}</TableCell>
+              { columnHeadings.map((h)=> <TableCell key={h} align="center" sx={{color: 'white'}}>{h === 'Quantity' ? `${totalBottles}` : ''}</TableCell>)}
+
+            </TableRow>
+          </TableFooter>
         </Table>
       </TableContainer>
     </Box>
