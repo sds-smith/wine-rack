@@ -1,3 +1,4 @@
+import chunk from "../utils/chunkArray";
 
 export type Wine = {
     ID: number;
@@ -48,7 +49,8 @@ const initialMetaData = {
 export async function useWines() {
     const data = await fetch('http://localhost:3000/api');
     const wineData = await data.json();
-    const wineList = wineData.sort((a: Wine, b: Wine) => parseInt(a.Category) - parseInt(b.Category) || parseInt(a.Vintage) - parseInt(b.Vintage))
+    const wineList = wineData.sort((a: Wine, b: Wine) => parseInt(a.Category) - parseInt(b.Category) || parseInt(a.Vintage) - parseInt(b.Vintage));
+    const chunkedWineList = chunk(wineList, 40)
 
     const categories = [...new Set(wineList.map(({Category}: Wine) => Category))] as string[]
 
@@ -77,5 +79,5 @@ export async function useWines() {
         "Comments",
     ]
 
-    return { wineList, columns, metaData, categories };
+    return { wineList, columns, metaData, categories, chunkedWineList };
 };

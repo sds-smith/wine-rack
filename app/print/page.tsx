@@ -1,7 +1,17 @@
-import React from 'react'
 
-export default function Print() {
+
+import PrintableTable from '../components/PrintableTable';
+import { useWines, Wine } from '../hooks/useWines';
+
+export default async function Print() {
+  const { chunkedWineList, columns, metaData: {totalBottles} } = await useWines();
+  const columnHeadings = columns.filter(h => ![ 'ID', 'Category' ].includes(h));
+
   return (
-    <div>PRINTTTTTTTT</div>
-  )
+    <PrintableTable
+      chunkedWineList={chunkedWineList}
+      columnHeadings={columnHeadings}
+      totalBottles={totalBottles}
+    />
+  );
 }

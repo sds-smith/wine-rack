@@ -8,6 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import TableFooter from '@mui/material/TableFooter';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
+import PrintButton from './PrintButton';
 import AddWineDialog from './AddWineDialog';
 import EditWineDialog from './EditWineDialog';
 import { useWines, Wine } from '../hooks/useWines';
@@ -23,6 +24,7 @@ export default async function WineTable() {
         ID={nextId}
         categories={categories}
       />
+      <PrintButton />
       <TableContainer component={Paper} sx={{ overflow: "auto", height: "78vh" }}>
         <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
           <TableHead sx={{position: 'sticky', top: 0}}>
