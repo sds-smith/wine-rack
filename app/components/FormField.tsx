@@ -4,7 +4,7 @@ import { ChangeEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import TableCell from '@mui/material/TableCell';
 import TextField from '@mui/material/TextField';
-import { Wine } from '../hooks/useWines';
+import { Wine } from '../utils/getWines';
 
 type FormFieldProps = {
     value: string,

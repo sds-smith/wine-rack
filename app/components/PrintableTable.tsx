@@ -11,7 +11,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableFooter from '@mui/material/TableFooter';
 import Paper from '@mui/material/Paper';
-import { Wine } from '../hooks/useWines';
+import { Wine } from '../utils/getWines';
 
 type Chunk = Wine[];
 type PrintableTableProps = {
@@ -22,10 +22,11 @@ type PrintableTableProps = {
 
 export default function PrintableTable({ chunkedWineList, columnHeadings, totalBottles}: PrintableTableProps) {
   const router = useRouter();
+  
   useEffect(() => {
     window.print();
     router.push('/')
-  }, [])
+  }, [router])
 
   return (
     <Box >

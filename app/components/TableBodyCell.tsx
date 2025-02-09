@@ -1,7 +1,7 @@
 import React from 'react'
 import TableCell from '@mui/material/TableCell';
 import FormField from './FormField';
-import { Wine } from '../hooks/useWines';
+import { Wine } from '../utils/getWines';
 
 type TableBodyCellProps = {
     wine: Wine,

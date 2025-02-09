@@ -1,10 +1,10 @@
 
 
 import PrintableTable from '../components/PrintableTable';
-import { useWines, Wine } from '../hooks/useWines';
+import { getWines } from '../utils/getWines';
 
 export default async function Print() {
-  const { chunkedWineList, columns, metaData: {totalBottles} } = await useWines();
+  const { chunkedWineList, columns, metaData: {totalBottles} } = await getWines();
   const columnHeadings = columns.filter(h => ![ 'ID', 'Category' ].includes(h));
 
   return (

@@ -12,10 +12,10 @@ import PrintButton from './PrintButton';
 import AddWineDialog from './AddWineDialog';
 import EditWineDialog from './EditWineDialog';
 import TableBodyCell from './TableBodyCell';
-import { useWines, Wine } from '../hooks/useWines';
+import { getWines, Wine } from '../utils/getWines';
 
 export default async function WineTable() {
-  const { wineList, columns, metaData, categories } = await useWines();
+  const { wineList, columns, metaData, categories } = await getWines();
   const { nextId, totalBottles } = metaData;
   const columnHeadings = columns.filter(h => ![ 'ID', 'Category' ].includes(h));
 
