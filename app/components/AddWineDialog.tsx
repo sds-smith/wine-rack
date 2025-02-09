@@ -2,7 +2,7 @@
 
 import React from 'react';
 import WineDialogBase from './WineDialogBase';
-import { Wine } from '../utils/getWines';
+import { Wine } from '../types/wine';
 
 type AddWineDialogProps = {
   ID: number,

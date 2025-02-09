@@ -1,50 +1,5 @@
-import chunk from "../utils/chunkArray";
-
-export type Wine = {
-    ID: number;
-    Category: string;
-    Varietal: string;
-    Country: string;
-    Vintage: string;
-    Producer: string;
-    Label: string;
-    Appellation: string;
-    Ready: string;
-    Source: string;
-    Price: string;
-    Acquired: Date | string;
-    Notes: string;
-    Quantity: number | string;
-    Comments: string;
-};
-
-export type Columns = {
-    A: string,
-    B: string,
-    C: string,
-    D: string,
-    E: string,
-    F: string,
-    G: string,
-    H: string,
-    I: string,
-    J: string,
-    K: string,
-    L: string,
-    M: string,
-    N: string,
-    O: string,
-}
-
-type Metadata = {
-    nextId: number,
-    totalBottles: number
-}
-
-const initialMetaData = {
-    nextId: 0,
-    totalBottles: 0
-}
+import chunk from "./chunkArray";
+import { Wine, Metadata, initialMetaData } from "../types/wine";
 
 export async function getWines() {
     const data = await fetch(`${process.env.BASE_URL}/api`);

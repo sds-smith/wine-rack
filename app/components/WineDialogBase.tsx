@@ -15,7 +15,7 @@ import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import WineInputButton from './WineInputButton';
-import { Wine } from '../utils/getWines';
+import { Wine } from '../types/wine';
 
 type MongoResponse = {
   status: number,

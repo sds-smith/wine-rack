@@ -11,7 +11,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableFooter from '@mui/material/TableFooter';
 import Paper from '@mui/material/Paper';
-import { Wine } from '../utils/getWines';
+import { Wine } from '../types/wine';
 
 type Chunk = Wine[];
 type PrintableTableProps = {
