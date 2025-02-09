@@ -50,6 +50,39 @@ export async function useWines() {
     const data = await fetch(`${process.env.BASE_URL}/api`);
     const wineData = await data.json();
     const wineList = wineData.sort((a: Wine, b: Wine) => parseInt(a.Category) - parseInt(b.Category) || parseInt(a.Vintage) - parseInt(b.Vintage));
+
+//     const winesToUpdate = []
+//     for (const wine of wineList) {
+//         for (const key of ['Label', 'Appellation']) {
+//             // console.log({wine, key, type: typeof(wine[key])})
+//             if (wine[key as keyof Wine] && wine[key as keyof Wine].toString().includes('&#39;')) winesToUpdate.push(wine)
+//         }
+//     }
+//     console.log({winesToUpdate: winesToUpdate.length})
+
+//     for (const wine of winesToUpdate) {
+//         for (const key of ['Label', 'Appellation']) {
+//             if (wine[key]) wine[key] = wine[key].toString().replaceAll('&#39;', `'`)
+//         }
+//     }
+//     console.log({winesToUpdate: winesToUpdate.map(({Label, Appellation})=> ({Label,Appellation}))})
+
+//     const updateWine = async (wine: Wine) => {
+//         await fetch(`${process.env.BASE_URL}/api/wines`, {
+//             method: 'PATCH',
+//             body: JSON.stringify({
+//                 Label: wine.Label, 
+//                 Appellation: wine.Appellation,
+//                 wine
+
+//             })
+//         });
+//     }
+
+//     const promiseArray = winesToUpdate.map(async wine => await updateWine(wine))
+//     const promiseResults = await Promise.allSettled(promiseArray)
+// console.log({promiseResults})
+
     const chunkedWineList = chunk(wineList, 40)
 
     const categories = [...new Set(wineList.map(({Category}: Wine) => Category))] as string[]
