@@ -11,6 +11,7 @@ import Box from '@mui/material/Box';
 import PrintButton from './PrintButton';
 import AddWineDialog from './AddWineDialog';
 import EditWineDialog from './EditWineDialog';
+import TableBodyCell from './TableBodyCell';
 import { useWines, Wine } from '../hooks/useWines';
 
 export default async function WineTable() {
@@ -45,7 +46,13 @@ export default async function WineTable() {
                     categories={categories}
                   />
                 </TableCell>
-                { columnHeadings.map(h => <TableCell key={h} align="center">{row[h as keyof Wine]?.toString()}</TableCell>)}
+                { columnHeadings.map(h => (
+                  <TableBodyCell 
+                    key={h} 
+                    columnId={h}
+                    wine={row}
+                  />
+                ))}
               </TableRow>
             ))}
           </TableBody>
@@ -53,7 +60,6 @@ export default async function WineTable() {
             <TableRow sx={{background: 'black'}}>
               <TableCell sx={{color: 'white'}} align='center' >{`Total`}</TableCell>
               { columnHeadings.map((h)=> <TableCell key={h} align="center" sx={{color: 'white'}}>{h === 'Quantity' ? `${totalBottles}` : ''}</TableCell>)}
-
             </TableRow>
           </TableFooter>
         </Table>

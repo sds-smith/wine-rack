@@ -37,7 +37,7 @@ export async function POST(req: Request) {
     }
 }
 
-export async function PATCH(req: Request) {
+export async function PUT(req: Request) {
     const updatedWine = await req.json();
     const _id = new ObjectId(updatedWine._id);
 
@@ -93,6 +93,37 @@ export async function DELETE(request: Request) {
         })
     } catch (e) {
         console.error(e)
+        return Response.json({
+            status: 400,
+            success: false,
+        })
+    }
+}
+
+export async function PATCH(req: Request) {
+    const request = await req.json();
+    const Quantity = Number(request.Quantity);
+    const _id = new ObjectId(request.wine._id);
+
+    try {
+        const updateResponse = await db.collection("wines").updateOne(
+            {_id}, 
+            { $set: { Quantity }}
+        );
+        if (!updateResponse) {
+            return Response.json({
+                status: 500,
+                success: false,
+                message: 'Wine not updated in database'
+            });
+        }
+        return Response.json({
+            status: 201,
+            success: true,
+            message: `Wine with id ${_id} updated in database`
+        })
+    } catch(err) {
+        console.error(err)
         return Response.json({
             status: 400,
             success: false,
