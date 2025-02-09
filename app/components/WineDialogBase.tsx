@@ -48,6 +48,7 @@ export default function WineInputDialog({ mode, defaultWineState, categories, on
   const [open, setOpen] = useState(false);
   const [ wineState, setWineState ] = useState(defaultWineState)
   const [ submitError, setSubmitError ] = useState(defaultErrorState)
+  const [ loading, setLoading ] = useState(false)
 
   const handleClickOpen = () => setOpen(true);
   const handleClose = () => {
@@ -71,6 +72,7 @@ export default function WineInputDialog({ mode, defaultWineState, categories, on
   }
 
   const handleSubmit = async () => {
+    setLoading(true)
     let error = false;
     Object.keys(submitError).forEach(key => {
       if (!wineState![key as keyof typeof wineState]) {
@@ -81,18 +83,24 @@ export default function WineInputDialog({ mode, defaultWineState, categories, on
         error = true;
       }
     })
-    if (error) return;
+    if (error) {
+      setLoading(false)
+      return
+    };
     const response = await onSubmit(wineState);
+    setLoading(false)
     if (response.success) router.refresh();
     handleClose();
   }
 
   const handleDelete = async () => {
+    setLoading(true)
     const resp = await fetch(`/api`, {
       method: 'DELETE',
       body: JSON.stringify(wineState)
     });
     const response = await resp.json();
+    setLoading(false)
     if (response.success) router.refresh();
     handleClose();
   }
@@ -188,13 +196,50 @@ export default function WineInputDialog({ mode, defaultWineState, categories, on
           <TextField fullWidth name='Comments' id="Comments" label="Comments" variant="standard" value={wineState.Comments} onChange={handleChange} multiline rows={4} />
         </DialogContent>
         <DialogActions>
-          { mode === 'EDIT' && <Button onClick={handleDelete}>Delete</Button> }
-          <Button onClick={handleSubmit}>Submit</Button>
-          <Button onClick={handleClose} autoFocus>
+          { mode === 'EDIT' && <ConfirmationDialog handleConfirm={handleDelete} disabled={loading} /> }
+          <Button onClick={handleSubmit} disabled={loading} >Submit</Button>
+          <Button onClick={handleClose} disabled={loading} autoFocus>
             Cancel
           </Button>
         </DialogActions>
       </Dialog>
     </>
   );
+}
+
+function ConfirmationDialog({handleConfirm, disabled}: {handleConfirm: ()=>void, disabled: boolean}) {
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  return (
+    <>
+      <Button onClick={handleOpen} disabled={disabled}>Delete</Button>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="add-wine-dialog-title"
+        aria-describedby="add-wine-dialog-description"
+      >
+        <DialogTitle id="add-wine-dialog-title">
+          Are you Sure?
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            You are about to permanently delete this wine entry from the database.
+          </DialogContentText>
+          <DialogContentText>
+            This will be irreversible.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleConfirm}>Confirm</Button>
+          <Button onClick={handleClose} autoFocus>
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
+  )
 }
