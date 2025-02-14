@@ -17,13 +17,12 @@ import { Wine } from '../types/wine';
 
 export default async function WineTable() {
   const { wineList, columns, metaData, categories } = await getWines();
-  const { nextId, totalBottles } = metaData;
-  const columnHeadings = columns.filter(h => ![ 'ID', 'Category' ].includes(h));
+  const { totalBottles } = metaData;
+  const columnHeadings = columns.filter(h => ![ 'Category' ].includes(h));
 
   return (
     <Box >
       <AddWineDialog
-        ID={nextId}
         categories={categories}
       />
       <PrintButton />
@@ -38,7 +37,7 @@ export default async function WineTable() {
           <TableBody>
             {wineList.map((row: Wine) => (
               <TableRow
-                key={`${row.ID}-${row.Producer}`}
+                key={`${row.Producer}-${row.Label}-${row.Vintage}`}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell align="center" size='small' sx={{width: '10px'}}>

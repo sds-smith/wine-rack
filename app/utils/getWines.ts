@@ -11,13 +11,11 @@ export async function getWines() {
 
     const metaData = wineList.reduce(
         (acc: Metadata, curr: Wine) => ({
-            nextId: Math.max(acc.nextId, curr.ID) + 1, 
             totalBottles: Number(acc.totalBottles) + Number(curr.Quantity || 0)
         }), initialMetaData
     )
 
     const columns = [
-        'ID',
         "Category",
         "Varietal",
         "Country",

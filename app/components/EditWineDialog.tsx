@@ -2,11 +2,11 @@
 
 import React from 'react';
 import WineDialogBase from './WineDialogBase';
-import { Wine } from '../types/wine';
+import { Wine, Categories } from '../types/wine';
 
 type EditWineDialogProps = {
   wine: Wine,
-  categories: string[],
+  categories: typeof Categories,
 } 
 
 export default function EditWineDialog({wine, categories}: EditWineDialogProps) {

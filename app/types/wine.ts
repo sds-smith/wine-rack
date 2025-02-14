@@ -1,7 +1,10 @@
 
+export type Ready = {
+    open: string;
+    close: string;
+}
 
 export type Wine = {
-    ID: number;
     Category: string;
     Varietal: string;
     Country: string;
@@ -9,11 +12,11 @@ export type Wine = {
     Producer: string;
     Label: string;
     Appellation: string;
-    Ready: string;
+    Ready: Ready;
     Source: string;
-    Price: string;
-    Acquired: Date | string;
-    Notes: string;
+    Price: number | null;
+    Acquired: string;
+    Notes: boolean | null;
     Quantity: number;
     Comments: string;
 };

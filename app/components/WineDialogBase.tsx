@@ -14,8 +14,9 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+import Box from '@mui/material/Box';
 import WineInputButton from './WineInputButton';
-import { Wine } from '../types/wine';
+import { Wine, Categories, Ready } from '../types/wine';
 
 type MongoResponse = {
   status: number,
@@ -25,10 +26,12 @@ type MongoResponse = {
 
 type WineInputDialogProps = {
   mode: string,
-  categories: string[],
+  categories: typeof Categories,
   defaultWineState: Wine,
   onSubmit: (wineState: Wine) => Promise<MongoResponse>
 } 
+
+type WineField = string | number | boolean | Ready | null;
 
 const defaultErrorState = {
   Category: false,
@@ -57,13 +60,40 @@ export default function WineInputDialog({ mode, defaultWineState, categories, on
     setOpen(false);
   };
 
+  const handleType = (name: string, value: string | number | boolean | null | Ready) => {
+    const stringToBool = {
+      true: true,
+      false: false
+    }
+    return name === 'Notes'
+      ? stringToBool[value as keyof typeof stringToBool]
+      : name === 'Quantity'
+      ? Number(value)
+      : name === 'Price'
+      ? parseFloat(`${value}`)
+      : value;
+  }
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setWineState((ws) => ({
-      ...ws,
-      [name]: value
-    }))
-    if (value.length && submitError[name as keyof typeof submitError]) {
+    const newWineState = (ws: Wine) => {
+      const { key, val } = name.startsWith('Ready')
+        ? {
+          key: 'Ready',
+          val: {
+            ...ws.Ready,
+            [name.split('-')[1]] : value
+          }
+        }
+        : { key: name, val: value }
+      return {
+        ...ws,
+        [key] : val
+      }
+    }
+    setWineState((ws) => newWineState(ws))
+    
+    if (value.toString().length && submitError[name as keyof typeof submitError]) {
       setSubmitError(se => ({
         ...se,
         [name]: false
@@ -71,11 +101,11 @@ export default function WineInputDialog({ mode, defaultWineState, categories, on
     }
   }
 
-  const handleSubmit = async () => {
-    setLoading(true)
+  const validateRequiredFields = () => {
     let error = false;
+    const getErrorState = (wineField: WineField) => !wineField && wineField !== false && wineField !== 0;
     Object.keys(submitError).forEach(key => {
-      if (!wineState![key as keyof typeof wineState]) {
+      if (getErrorState(wineState[key as keyof typeof wineState])) {
         setSubmitError(se => ({
           ...se,
           [key]: true
@@ -83,11 +113,22 @@ export default function WineInputDialog({ mode, defaultWineState, categories, on
         error = true;
       }
     })
+    return error
+  }
+
+  const handleSubmit = async () => {
+    setLoading(true)
+    const error = validateRequiredFields();
     if (error) {
       setLoading(false)
       return
     };
-    const response = await onSubmit(wineState);
+    const typedWine: Wine = Object.entries(wineState).reduce((acc, [name, value]) => ({
+      ...acc,
+      [name] : handleType(name, value)
+    }), defaultWineState)
+    console.log({typedWine})
+    const response = await onSubmit(typedWine);
     setLoading(false)
     if (response.success) router.refresh();
     handleClose();
@@ -160,7 +201,10 @@ export default function WineInputDialog({ mode, defaultWineState, categories, on
             required error={submitError.Label} helperText={submitError.Label ? 'Label cannot be empty' : ''}
           />
           <TextField fullWidth name='Appellation' id="Appellation" label="Appellation" variant="standard" value={wineState.Appellation} onChange={handleChange} />
-          <TextField fullWidth name='Ready' id="Ready" label="Ready" variant="standard" value={wineState.Ready} onChange={handleChange} />
+          <Box sx={{width: '100%', marginTop: '15px'}}>
+            <TextField sx={{width: '50%'}}  name='Ready-open' id="Ready-open" label="Ready (window open)" variant="standard" value={wineState.Ready.open} onChange={handleChange} />
+            <TextField sx={{width: '50%'}}  name='Ready-close' id="Ready-close" label="Ready (window close)" variant="standard" value={wineState.Ready.close} onChange={handleChange} />
+          </Box>
           <TextField fullWidth name='Source' id="Source" label="Source" variant="standard" value={wineState.Source} onChange={handleChange} />
           <FormControl sx={{width: '100%', marginTop: '15px'}}>
             <InputLabel htmlFor="Price">Price</InputLabel>
@@ -168,7 +212,7 @@ export default function WineInputDialog({ mode, defaultWineState, categories, on
               fullWidth 
               name='Price' 
               id="Price" 
-              value={wineState.Price} 
+              value={wineState.Price ?? ''} 
               onChange={handleChange}
               type='text'
               startAdornment={<InputAdornment position="start">$</InputAdornment>}
@@ -179,12 +223,13 @@ export default function WineInputDialog({ mode, defaultWineState, categories, on
             fullWidth 
             select 
             name='Notes' id="Notes" label="Notes" variant="standard" 
-            value={wineState.Notes} 
+            value={`${wineState.Notes}`} 
             onChange={handleChange} 
             required error={submitError.Notes} helperText={submitError.Notes ? 'Please indicate whether notes exist for this wine' : ''}
           >
-            <MenuItem value='Yes' >Yes</MenuItem>
-            <MenuItem value='No' >No</MenuItem>
+            <MenuItem value={'null'} ></MenuItem>
+            <MenuItem value={'true'} >Yes</MenuItem>
+            <MenuItem value={'false'} >No</MenuItem>
           </TextField>
           <TextField 
             fullWidth 

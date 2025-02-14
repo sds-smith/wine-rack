@@ -4,17 +4,28 @@ import FormField from './FormField';
 import { Wine } from '../types/wine';
 
 type TableBodyCellProps = {
-    wine: Wine,
-    columnId: string
+  wine: Wine,
+  columnId: string
+}
+
+const boolToYesNo = {
+  true: 'Yes',
+  false: 'No',
+  null: ''
 }
 
 export default function TableBodyCell({columnId, wine}: TableBodyCellProps) {
+  const cellContent = columnId === 'Ready'
+    ? !wine.Ready.close || wine.Ready.close === wine.Ready.open ? wine.Ready.open : `${wine.Ready.open} - ${wine.Ready.close}`
+    : columnId === 'Notes' ? boolToYesNo[`${wine.Notes}`] 
+    : wine[columnId as keyof Wine] ? `${wine[columnId as keyof Wine]}` : '';
+
   return (
     <>
-        { columnId === 'Quantity'
-            ? <FormField value={wine[columnId as keyof Wine]?.toString()} wine={wine} />
-            : <TableCell align="center">{wine[columnId as keyof Wine]?.toString()}</TableCell>
-        }
+      { columnId === 'Quantity'
+        ? <FormField value={cellContent} wine={wine} />
+        : <TableCell align="center">{cellContent}</TableCell>
+      }
     </>
   )
 }

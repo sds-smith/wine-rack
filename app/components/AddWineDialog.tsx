@@ -2,16 +2,14 @@
 
 import React from 'react';
 import WineDialogBase from './WineDialogBase';
-import { Wine } from '../types/wine';
+import { Wine, Categories } from '../types/wine';
 
 type AddWineDialogProps = {
-  ID: number,
-  categories: string[],
+  categories: typeof Categories,
 } 
 
-export default function AddWineDialog({ID, categories}: AddWineDialogProps) {
+export default function AddWineDialog({categories}: AddWineDialogProps) {
   const defaultWineState: Wine = {
-    ID,
     Category: '',
     Varietal: '',
     Country: '',
@@ -19,11 +17,11 @@ export default function AddWineDialog({ID, categories}: AddWineDialogProps) {
     Producer: '',
     Label: '',
     Appellation: '',
-    Ready: '',
+    Ready: {open: '', close: ''},
     Source: '',
-    Price: '',
+    Price: null,
     Acquired: '',
-    Notes: '',
+    Notes: null,
     Quantity: 0,
     Comments: '',
   }

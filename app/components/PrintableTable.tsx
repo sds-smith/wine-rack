@@ -41,7 +41,7 @@ export default function PrintableTable({ chunkedWineList, columnHeadings, totalB
             <TableBody>
               {wineList.map((row: Wine) => (
                 <TableRow
-                  key={`${row.ID}-${row.Producer}`}
+                  key={`${row.Producer}-${row.Label}-${row.Vintage}`}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   { columnHeadings.map(h => <TableCell key={h} align="center">{row[h as keyof Wine]?.toString()}</TableCell>)}

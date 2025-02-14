@@ -37,6 +37,7 @@ export default function FormField({value, wine}: FormFieldProps) {
               value={valueState} 
               onChange={handleChange}
               disabled={loading}
+              sx={{width: '45px'}}
               InputProps={{
                 disableUnderline: true, 
               }}
