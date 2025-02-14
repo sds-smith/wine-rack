@@ -14,54 +14,6 @@ export async function GET() {
 
 export async function POST(req: Request) {
     const wine = await req.json();
-    const {
-        Category, 
-        Varietal, 
-        Country, 
-        Vintage, 
-        Producer, 
-        Label, 
-        Appellation, 
-        Ready, 
-        Source, 
-        Price, 
-        Acquired,
-        Notes, 
-        Quantity, 
-        Comments
-    } = wine;
-    console.log({
-        Category, 
-        Varietal, 
-        Country, 
-        Vintage, 
-        Producer, 
-        Label, 
-        Appellation, 
-        Ready, 
-        Source, 
-        Price, 
-        Acquired,
-        Notes, 
-        Quantity, 
-        Comments
-    })
-    console.log({
-        Category: typeof Category, 
-        Varietal: typeof Varietal, 
-        Country: typeof Country, 
-        Vintage: typeof Vintage, 
-        Producer: typeof Producer, 
-        Label: typeof Label, 
-        Appellation: typeof Appellation, 
-        Ready: typeof Ready, 
-        Source: typeof Source, 
-        Price: typeof Price, 
-        Acquired: typeof Acquired,
-        Notes: typeof Notes, 
-        Quantity: typeof Quantity, 
-        Comments: typeof Comments
-    })
 
     Object.entries(wine).forEach(([key, value]) => {
         if (value === null || value === '') delete wine[key]
