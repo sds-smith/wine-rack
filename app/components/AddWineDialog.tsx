@@ -24,7 +24,7 @@ export default function AddWineDialog({ID, categories}: AddWineDialogProps) {
     Price: '',
     Acquired: '',
     Notes: '',
-    Quantity: '',
+    Quantity: 0,
     Comments: '',
   }
 

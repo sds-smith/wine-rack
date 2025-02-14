@@ -12,7 +12,8 @@ import PrintButton from './PrintButton';
 import AddWineDialog from './AddWineDialog';
 import EditWineDialog from './EditWineDialog';
 import TableBodyCell from './TableBodyCell';
-import { getWines, Wine } from '../utils/getWines';
+import { getWines } from '../utils/getWines';
+import { Wine } from '../types/wine';
 
 export default async function WineTable() {
   const { wineList, columns, metaData, categories } = await getWines();

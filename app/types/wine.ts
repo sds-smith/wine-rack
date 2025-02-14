@@ -14,7 +14,7 @@ export type Wine = {
     Price: string;
     Acquired: Date | string;
     Notes: string;
-    Quantity: number | string;
+    Quantity: number;
     Comments: string;
 };
 
