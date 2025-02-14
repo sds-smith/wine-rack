@@ -136,7 +136,7 @@ export default function WineInputDialog({ mode, defaultWineState, categories, on
             error={submitError.Category}
             helperText={submitError.Category ? 'Please select a Category' : ''}
           >
-            {categories?.map((option) => (
+            {Object.values(categories)?.map((option) => (
               <MenuItem key={option} value={option}>
                 {option}
               </MenuItem>
