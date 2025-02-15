@@ -76,9 +76,11 @@ export async function PUT(req: Request) {
 
 export async function DELETE(request: Request) {
     const wineToDelete = await request.json();
+    console.log('[DELETE] wineToDelete',wineToDelete)
     const _id = new ObjectId(wineToDelete._id)
     try {
         const deleteResponse = await db.collection("wines").deleteOne({_id})
+        console.log('[DELETE] deleteResponse',deleteResponse)
         if (!deleteResponse) {
             return Response.json({
                 status: 400,
@@ -109,6 +111,7 @@ export async function DELETE(request: Request) {
 
 export async function PATCH(req: Request) {
     const { wine, ...updateFields } = await req.json();
+    console.log('[PATCH] updateFields',updateFields)
     const _id = new ObjectId(wine._id);
 
     try {
@@ -116,6 +119,7 @@ export async function PATCH(req: Request) {
             {_id}, 
             { $set: updateFields}
         );
+        console.log('[PATCH] updateResponse',updateResponse)
         if (!updateResponse) {
             return Response.json({
                 status: 500,
