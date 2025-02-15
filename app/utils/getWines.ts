@@ -1,10 +1,32 @@
+import client from "../../services/mongodb";
 import chunk from "./chunkArray";
 import { Wine, Metadata, initialMetaData } from "../types/wine";
 
+const db = client.db("wine_rack");
+
+const getWineData = async () => {
+    try {
+        const data = await db.collection("wines").find({ Archived: { $ne: true } }).toArray();
+        return Response.json({
+            status: 200,
+            success: true,
+            wineData: data,
+            message: 'Success!'
+        })
+    } catch (e) {
+        console.error(e);
+        return Response.json({
+            status: 400,
+            success: false,
+            wineData: [],
+            message: `Error: ${e}`
+        })
+    }
+}
+
 export async function getWines() {
-    // const data = await fetch(`${process.env.BASE_URL}/api`);
-    const data = await fetch(`/api`);
-    const wineData = await data.json();
+    const data = await getWineData();
+    const { wineData } = await data.json();
     const wineList = wineData.sort((a: Wine, b: Wine) => parseInt(a.Category) - parseInt(b.Category) || parseInt(a.Vintage || '') - parseInt(b.Vintage || ''));
     const chunkedWineList = chunk(wineList, 40)
 
