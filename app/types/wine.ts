@@ -95,11 +95,9 @@ export type Columns = {
 }
 
 export type Metadata = {
-    nextId: number,
     totalBottles: number
 }
 
 export const initialMetaData = {
-    nextId: 0,
     totalBottles: 0
 }

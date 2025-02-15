@@ -6,9 +6,20 @@ const db = client.db("wine_rack");
 export async function GET() {
     try {
         const data = await db.collection("wines").find({ Archived: { $ne: true } }).toArray();
-        return Response.json(data)
+        return Response.json({
+            status: 200,
+            success: true,
+            wineData: data,
+            message: 'Success!'
+        })
     } catch (e) {
         console.error(e);
+        return Response.json({
+            status: 400,
+            success: false,
+            wineData: [],
+            message: `Error: ${e}`
+        })
     }
 }
 
