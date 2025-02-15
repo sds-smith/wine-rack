@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -16,7 +16,7 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Box from '@mui/material/Box';
 import WineInputButton from './WineInputButton';
-import { Wine, WineInput, Categories, Ready, defaultWineState } from '../types/wine';
+import { Wine, WineInput, Ready, defaultWineState } from '../types/wine';
 
 type MongoResponse = {
   status: number,
@@ -26,7 +26,7 @@ type MongoResponse = {
 
 type WineInputDialogProps = {
   mode: string,
-  categories: Categories,
+  categories: string[],
   defaultWineInputState: WineInput,
   onSubmit: (wineState: Wine) => Promise<MongoResponse>
 } 
@@ -54,6 +54,7 @@ export default function WineInputDialog({ mode, defaultWineInputState, categorie
   const [ loading, setLoading ] = useState(false)
 
   const handleClickOpen = () => setOpen(true);
+
   const handleClose = () => {
     setSubmitError(defaultErrorState);
     setWineState(defaultWineInputState)
@@ -127,7 +128,6 @@ export default function WineInputDialog({ mode, defaultWineInputState, categorie
       ...acc,
       [name] : handleType(name, value)
     }), defaultWineState)
-    console.log({typedWine})
     const response = await onSubmit(typedWine);
     setLoading(false)
     if (response.success) router.refresh();
@@ -145,6 +145,10 @@ export default function WineInputDialog({ mode, defaultWineInputState, categorie
     if (response.success) router.refresh();
     handleClose();
   }
+
+  useEffect(() => {
+    setWineState(defaultWineInputState)
+  }, [defaultWineInputState])
 
   return (
     <>

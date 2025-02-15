@@ -1,23 +1,23 @@
 'use client'
 
-import React from 'react';
+import { useMemo } from 'react';
 import WineDialogBase from './WineDialogBase';
-import { Wine, Categories, defaultWineInputState } from '../types/wine';
+import { Wine, defaultWineInputState } from '../types/wine';
 
 type EditWineDialogProps = {
   wine: Wine,
-  categories: Categories,
+  categories: string[],
 } 
 
-export default function EditWineDialog({wine, categories}: EditWineDialogProps) {
-  const defaultWineEditState = Object.entries(wine).reduce((acc, [key, value]) => ({
+export default function EditWineDialog({wine, categories}: EditWineDialogProps) {  
+  const defaultWineEditState = useMemo(() => Object.entries(wine).reduce((acc, [key, value]) => ({
     ...acc,
     [key]: key === 'Ready' 
       ? value 
       : Boolean(value) || key === 'Notes'
       ? `${value}`
       : ''
-  }), defaultWineInputState)
+  }), defaultWineInputState), [wine])
 
   const handleSubmit = async (wineState: Wine) => {
     const resp = await fetch(`/api`, {

@@ -5,7 +5,7 @@ import WineDialogBase from './WineDialogBase';
 import { Wine, defaultWineInputState, Categories } from '../types/wine';
 
 type AddWineDialogProps = {
-  categories: Categories,
+  categories: string[],
 } 
 
 export default function AddWineDialog({categories}: AddWineDialogProps) {
