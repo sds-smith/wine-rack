@@ -6,36 +6,36 @@ export type Ready = {
 
 export type Wine = {
     Category    : string;
-    Varietal    : string;
-    Country     : string;
-    Vintage     : string;
+    Varietal?   : string;
+    Country?    : string;
+    Vintage?    : string;
     Producer    : string;
     Label       : string;
-    Appellation : string;
-    Ready       : Ready;
-    Source      : string;
-    Price       : number;
-    Acquired    : string;
+    Appellation?: string;
+    Ready?      : Ready;
+    Source?     : string;
+    Price?      : number;
+    Acquired?   : string;
     Notes       : boolean;
     Quantity    : number;
-    Comments    : string;
+    Comments?   : string;
 };
 
 export type WineInput = {
     Category    : string;
-    Varietal    : string;
-    Country     : string;
-    Vintage     : string;
+    Varietal?   : string;
+    Country?    : string;
+    Vintage?    : string;
     Producer    : string;
     Label       : string;
-    Appellation : string;
-    Ready       : Ready;
-    Source      : string;
-    Price       : string;
-    Acquired    : string;
+    Appellation?: string;
+    Ready?      : Ready;
+    Source?     : string;
+    Price?      : string;
+    Acquired?   : string;
     Notes       : string;
     Quantity    : string;
-    Comments    : string;
+    Comments?   : string;
 };
 
 export const defaultWineState: Wine = {
