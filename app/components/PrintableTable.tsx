@@ -22,8 +22,6 @@ type PrintableTableProps = {
 export default function PrintableTable({ columns, chunkedWineList, totalBottles }: PrintableTableProps) {
   const router = useRouter();
 
-  // const { chunkedWineList, metaData: { totalBottles } } = useWineData();
-
   const columnHeadings = columns.filter(h => ![ 'Category' ].includes(h));
   
   useEffect(() => {
