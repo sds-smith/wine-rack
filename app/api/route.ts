@@ -44,6 +44,9 @@ export async function POST(req: Request) {
 export async function PUT(req: Request) {
     const updatedWine = await req.json();
     const _id = new ObjectId(updatedWine._id);
+    Object.entries(updatedWine).forEach(([key, value]) => {
+        if (value === null || value === '') delete updatedWine[key]
+    })
 
     try {
         const updateResponse = await db.collection("wines").replaceOne({_id}, {

@@ -16,6 +16,7 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Box from '@mui/material/Box';
 import WineInputButton from './WineInputButton';
+import ArchiveModal from './ArchiveModal';
 import { Wine, WineInput, Ready, defaultWineState } from '../types/wine';
 
 type MongoResponse = {
@@ -31,7 +32,7 @@ type WineInputDialogProps = {
   onSubmit: (wineState: Wine) => Promise<MongoResponse>
 } 
 
-type WineField = string | number | boolean | Ready | null;
+type WineField = string | number | boolean | Ready | null | undefined;
 
 const defaultErrorState = {
   Category: false,
@@ -48,10 +49,12 @@ const dialogTitle = {
 
 export default function WineInputDialog({ mode, defaultWineInputState, categories, onSubmit }: WineInputDialogProps) {
   const router = useRouter();
-  const [open, setOpen] = useState(false);
+
+  const [ open, setOpen ] = useState(false);
   const [ wineState, setWineState ] = useState(defaultWineInputState)
   const [ submitError, setSubmitError ] = useState(defaultErrorState)
   const [ loading, setLoading ] = useState(false)
+  const [ openArchiveModal, setOpenArchiveModal ] = useState(false)
 
   const handleClickOpen = () => setOpen(true);
 
@@ -61,12 +64,22 @@ export default function WineInputDialog({ mode, defaultWineInputState, categorie
     setOpen(false);
   };
 
-  const handleType = (name: string, value: string | number | boolean | null | Ready) => {
+  const handleOpenArchiveModal  = () => setOpenArchiveModal(true);
+  const handleCloseArchiveModal = () => {
+    setWineState((ws) => ({
+      ...ws,
+      Quantity: '0'
+    }))
+    setOpenArchiveModal(false);
+    setTimeout(() => handleSubmit(), 100);
+  };
+
+  const handleType = (name: string, value: WineField) => {
     const stringToBool = {
       true: true,
       false: false
     }
-    return name === 'Notes'
+    return ['Notes', 'Archived'].includes(name) 
       ? stringToBool[value as keyof typeof stringToBool]
       : name === 'Quantity'
       ? Number(value)
@@ -104,9 +117,9 @@ export default function WineInputDialog({ mode, defaultWineInputState, categorie
 
   const validateRequiredFields = () => {
     let error = false;
-    const getErrorState = (wineField: WineField) => !wineField && wineField !== false && wineField !== 0;
+    const getErrorState = (wineField: WineField) => !wineField;
     Object.keys(submitError).forEach(key => {
-      if (getErrorState(wineState[key as keyof typeof wineState])) {
+      if (!(mode === 'EDIT' && key === 'Quantity') && getErrorState(wineState[key as keyof typeof wineState])) {
         setSubmitError(se => ({
           ...se,
           [key]: true
@@ -117,16 +130,32 @@ export default function WineInputDialog({ mode, defaultWineInputState, categorie
     return error
   }
 
+  const handleArchive = () => {
+    setWineState((ws) => ({
+      ...ws,
+      Archived: 'true'
+    }));
+    handleCloseArchiveModal();
+  }
+
+  const handleClickSubmit = async () => {
+    if (!Number(wineState.Quantity)) {
+      handleOpenArchiveModal()
+    } else {
+      handleSubmit();
+    };
+  }
+
   const handleSubmit = async () => {
     setLoading(true)
     const error = validateRequiredFields();
     if (error) {
       setLoading(false)
-      return
+      return error
     };
     const typedWine: Wine = Object.entries(wineState).reduce((acc, [name, value]) => ({
       ...acc,
-      [name] : handleType(name, value)
+      [name]    : handleType(name, value),
     }), defaultWineState)
     const response = await onSubmit(typedWine);
     setLoading(false)
@@ -247,12 +276,13 @@ export default function WineInputDialog({ mode, defaultWineInputState, categorie
         </DialogContent>
         <DialogActions>
           { mode === 'EDIT' && <ConfirmationDialog handleConfirm={handleDelete} disabled={loading} /> }
-          <Button onClick={handleSubmit} disabled={loading} >Submit</Button>
+          <Button onClick={handleClickSubmit} disabled={loading} >Submit</Button>
           <Button onClick={handleClose} disabled={loading} autoFocus>
             Cancel
           </Button>
         </DialogActions>
       </Dialog>
+      <ArchiveModal open={openArchiveModal} handleClose={handleCloseArchiveModal} handleConfirm={handleArchive} />
     </>
   );
 }

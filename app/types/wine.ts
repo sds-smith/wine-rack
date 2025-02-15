@@ -1,7 +1,7 @@
 
 export type Ready = {
-    open    : string;
-    close   : string;
+    open?    : string;
+    close?   : string;
 }
 
 export type Wine = {
@@ -12,13 +12,14 @@ export type Wine = {
     Producer    : string;
     Label       : string;
     Appellation?: string;
-    Ready?      : Ready;
+    Ready       : Ready;
     Source?     : string;
     Price?      : number;
     Acquired?   : string;
     Notes       : boolean;
     Quantity    : number;
     Comments?   : string;
+    Archived?   : boolean;
 };
 
 export type WineInput = {
@@ -29,13 +30,14 @@ export type WineInput = {
     Producer    : string;
     Label       : string;
     Appellation?: string;
-    Ready?      : Ready;
+    Ready       : Ready;
     Source?     : string;
     Price?      : string;
     Acquired?   : string;
     Notes       : string;
     Quantity    : string;
     Comments?   : string;
+    Archived?   : string;
 };
 
 export const defaultWineState: Wine = {
@@ -53,6 +55,7 @@ export const defaultWineState: Wine = {
     Notes: false,
     Quantity: 0,
     Comments: '',
+    Archived: false
 };
 
 export const defaultWineInputState: WineInput = {
@@ -70,6 +73,7 @@ export const defaultWineInputState: WineInput = {
     Notes: '',
     Quantity: '',
     Comments: '',
+    Archived: ''
 };
 
 export type Columns = {
