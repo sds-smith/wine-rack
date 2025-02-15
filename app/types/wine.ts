@@ -1,41 +1,41 @@
 
 export type Ready = {
-    open: string;
-    close: string;
+    open    : string;
+    close   : string;
 }
 
 export type Wine = {
-    Category: string;
-    Varietal: string;
-    Country: string;
-    Vintage: string;
-    Producer: string;
-    Label: string;
-    Appellation: string;
-    Ready: Ready;
-    Source: string;
-    Price: number | null;
-    Acquired: string;
-    Notes: boolean | null;
-    Quantity: number;
-    Comments: string;
+    Category    : string;
+    Varietal    : string;
+    Country     : string;
+    Vintage     : string;
+    Producer    : string;
+    Label       : string;
+    Appellation : string;
+    Ready       : Ready;
+    Source      : string;
+    Price       : number;
+    Acquired    : string;
+    Notes       : boolean;
+    Quantity    : number;
+    Comments    : string;
 };
 
 export type WineInput = {
-    Category: string;
-    Varietal: string;
-    Country: string;
-    Vintage: string;
-    Producer: string;
-    Label: string;
-    Appellation: string;
-    Ready: Ready;
-    Source: string;
-    Price: string;
-    Acquired: string;
-    Notes: string;
-    Quantity: string;
-    Comments: string;
+    Category    : string;
+    Varietal    : string;
+    Country     : string;
+    Vintage     : string;
+    Producer    : string;
+    Label       : string;
+    Appellation : string;
+    Ready       : Ready;
+    Source      : string;
+    Price       : string;
+    Acquired    : string;
+    Notes       : string;
+    Quantity    : string;
+    Comments    : string;
 };
 
 export const defaultWineState: Wine = {

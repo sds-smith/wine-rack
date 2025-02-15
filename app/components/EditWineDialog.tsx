@@ -6,7 +6,7 @@ import { Wine, Categories, defaultWineInputState } from '../types/wine';
 
 type EditWineDialogProps = {
   wine: Wine,
-  categories: typeof Categories,
+  categories: Categories,
 } 
 
 export default function EditWineDialog({wine, categories}: EditWineDialogProps) {

@@ -26,7 +26,7 @@ type MongoResponse = {
 
 type WineInputDialogProps = {
   mode: string,
-  categories: typeof Categories,
+  categories: Categories,
   defaultWineInputState: WineInput,
   onSubmit: (wineState: Wine) => Promise<MongoResponse>
 } 
