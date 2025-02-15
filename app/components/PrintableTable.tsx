@@ -1,7 +1,7 @@
 'use client'
 
-// import { useEffect } from "react";
-// import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -21,12 +21,12 @@ type PrintableTableProps = {
 }
 
 export default function PrintableTable({ chunkedWineList, columnHeadings, totalBottles}: PrintableTableProps) {
-  // const router = useRouter();
+  const router = useRouter();
   
-  // useEffect(() => {
-  //   window.print();
-  //   router.push('/')
-  // }, [router])
+  useEffect(() => {
+    window.print();
+    router.push('/')
+  }, [router])
 
   return (
     <Box >
