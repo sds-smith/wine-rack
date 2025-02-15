@@ -21,9 +21,7 @@ export default async function WineTable() {
     columns, 
     metaData, 
     categories 
-
   } = await getWines();
-  // const { wineList, metaData } = useWineData();
   const { totalBottles } = metaData;
   const columnHeadings = columns.filter(h => ![ 'Category' ].includes(h));
 

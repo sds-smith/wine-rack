@@ -12,12 +12,16 @@ import TableRow from '@mui/material/TableRow';
 import TableFooter from '@mui/material/TableFooter';
 import Paper from '@mui/material/Paper';
 import { Wine } from '../types/wine';
-import { getWines } from "../utils/getWines";
 
-export default async function PrintableTable() {
+type PrintableTableProps = {
+  columns: string[], 
+  chunkedWineList: Wine[][], 
+  totalBottles: number
+}
+
+export default function PrintableTable({ columns, chunkedWineList, totalBottles }: PrintableTableProps) {
   const router = useRouter();
 
-  const { columns, chunkedWineList, metaData: { totalBottles } } = await getWines();
   // const { chunkedWineList, metaData: { totalBottles } } = useWineData();
 
   const columnHeadings = columns.filter(h => ![ 'Category' ].includes(h));
