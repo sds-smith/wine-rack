@@ -2,7 +2,7 @@
 
 import React from 'react';
 import WineDialogBase from './WineDialogBase';
-import { Wine, defaultWineInputState, Categories } from '../types/wine';
+import { Wine, defaultWineInputState } from '../types/wine';
 
 type AddWineDialogProps = {
   categories: string[],

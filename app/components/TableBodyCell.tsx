@@ -16,7 +16,7 @@ const boolToYesNo = {
 
 export default function TableBodyCell({columnId, wine}: TableBodyCellProps) {
   const cellContent = columnId === 'Ready'
-    ? !wine.Ready.close || wine.Ready.close === wine.Ready.open ? wine.Ready.open : `${wine.Ready.open} - ${wine.Ready.close}`
+    ? !wine.Ready.close || wine.Ready.close === wine.Ready.open ? `${wine.Ready.open }`: `${wine.Ready.open} - ${wine.Ready.close}`
     : columnId === 'Notes' ? boolToYesNo[`${wine.Notes}`] 
     : wine[columnId as keyof Wine] ? `${wine[columnId as keyof Wine]}` : '';
 
