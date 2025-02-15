@@ -25,7 +25,7 @@ export default function FormField({value, wine}: FormFieldProps) {
     const updateQuantity = async (value: string) => {
         await fetch(`/api`, {
             method: 'PATCH',
-            body: JSON.stringify({Quantity: value, wine})
+            body: JSON.stringify({Quantity: Number(value), wine})
         });
         setLoading(false);
         router.refresh();
@@ -43,10 +43,12 @@ export default function FormField({value, wine}: FormFieldProps) {
 
     const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
-        setLoading(true);
-        setValueState(value);
-        await updateQuantity(value);
-        if (!Number(value)) handleOpenArchiveModal();
+        if (Number(value) >= 0) {
+            setLoading(true);
+            setValueState(value);
+            await updateQuantity(value);
+            if (!Number(value)) handleOpenArchiveModal();
+        }
     }
 
     useEffect(() => setValueState(value), [value])

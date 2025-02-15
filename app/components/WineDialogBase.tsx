@@ -90,6 +90,7 @@ export default function WineInputDialog({ mode, defaultWineInputState, categorie
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    if (name === 'Quantity' && Number(value) < 0) return
     const newWineState = (ws: WineInput) => {
       const { key, val } = name.startsWith('Ready')
         ? {

@@ -5,7 +5,7 @@ const db = client.db("wine_rack");
 
 export async function GET() {
     try {
-        const data = await db.collection("wines").find({}).toArray();
+        const data = await db.collection("wines").find({ Archived: { $ne: true } }).toArray();
         return Response.json(data)
     } catch (e) {
         console.error(e);
@@ -108,14 +108,13 @@ export async function DELETE(request: Request) {
 }
 
 export async function PATCH(req: Request) {
-    const request = await req.json();
-    const Quantity = Number(request.Quantity);
-    const _id = new ObjectId(request.wine._id);
+    const { wine, ...updateFields } = await req.json();
+    const _id = new ObjectId(wine._id);
 
     try {
         const updateResponse = await db.collection("wines").updateOne(
             {_id}, 
-            { $set: { Quantity }}
+            { $set: updateFields}
         );
         if (!updateResponse) {
             return Response.json({
