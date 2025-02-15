@@ -2,29 +2,13 @@
 
 import React from 'react';
 import WineDialogBase from './WineDialogBase';
-import { Wine, Categories } from '../types/wine';
+import { Wine, defaultWineInputState, Categories } from '../types/wine';
 
 type AddWineDialogProps = {
   categories: typeof Categories,
 } 
 
 export default function AddWineDialog({categories}: AddWineDialogProps) {
-  const defaultWineState: Wine = {
-    Category: '',
-    Varietal: '',
-    Country: '',
-    Vintage: '',
-    Producer: '',
-    Label: '',
-    Appellation: '',
-    Ready: {open: '', close: ''},
-    Source: '',
-    Price: null,
-    Acquired: '',
-    Notes: null,
-    Quantity: 0,
-    Comments: '',
-  }
 
   const handleSubmit = async (wineState: Wine) => {
     const resp = await fetch(`/api`, {
@@ -37,7 +21,7 @@ export default function AddWineDialog({categories}: AddWineDialogProps) {
   return (
     <WineDialogBase
       mode='ADD'
-      defaultWineState={defaultWineState}
+      defaultWineInputState={defaultWineInputState}
       categories={categories}
       onSubmit={handleSubmit}
     />

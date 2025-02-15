@@ -16,7 +16,7 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Box from '@mui/material/Box';
 import WineInputButton from './WineInputButton';
-import { Wine, Categories, Ready } from '../types/wine';
+import { Wine, WineInput, Categories, Ready, defaultWineState } from '../types/wine';
 
 type MongoResponse = {
   status: number,
@@ -27,7 +27,7 @@ type MongoResponse = {
 type WineInputDialogProps = {
   mode: string,
   categories: typeof Categories,
-  defaultWineState: Wine,
+  defaultWineInputState: WineInput,
   onSubmit: (wineState: Wine) => Promise<MongoResponse>
 } 
 
@@ -46,17 +46,17 @@ const dialogTitle = {
   EDIT: 'Edit Wine Inventory Entry'
 }
 
-export default function WineInputDialog({ mode, defaultWineState, categories, onSubmit }: WineInputDialogProps) {
+export default function WineInputDialog({ mode, defaultWineInputState, categories, onSubmit }: WineInputDialogProps) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
-  const [ wineState, setWineState ] = useState(defaultWineState)
+  const [ wineState, setWineState ] = useState(defaultWineInputState)
   const [ submitError, setSubmitError ] = useState(defaultErrorState)
   const [ loading, setLoading ] = useState(false)
 
   const handleClickOpen = () => setOpen(true);
   const handleClose = () => {
     setSubmitError(defaultErrorState);
-    setWineState(defaultWineState)
+    setWineState(defaultWineInputState)
     setOpen(false);
   };
 
@@ -76,7 +76,7 @@ export default function WineInputDialog({ mode, defaultWineState, categories, on
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    const newWineState = (ws: Wine) => {
+    const newWineState = (ws: WineInput) => {
       const { key, val } = name.startsWith('Ready')
         ? {
           key: 'Ready',
@@ -233,6 +233,7 @@ export default function WineInputDialog({ mode, defaultWineState, categories, on
           </TextField>
           <TextField 
             fullWidth 
+            type='number'
             name='Quantity' id="Quantity" label="Quantity" variant="standard" 
             value={wineState.Quantity} 
             onChange={handleChange} 

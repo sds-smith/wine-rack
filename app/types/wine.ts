@@ -21,6 +21,57 @@ export type Wine = {
     Comments: string;
 };
 
+export type WineInput = {
+    Category: string;
+    Varietal: string;
+    Country: string;
+    Vintage: string;
+    Producer: string;
+    Label: string;
+    Appellation: string;
+    Ready: Ready;
+    Source: string;
+    Price: string;
+    Acquired: string;
+    Notes: string;
+    Quantity: string;
+    Comments: string;
+};
+
+export const defaultWineState: Wine = {
+    Category: '',
+    Varietal: '',
+    Country: '',
+    Vintage: '',
+    Producer: '',
+    Label: '',
+    Appellation: '',
+    Ready: {open: '', close: ''},
+    Source: '',
+    Price: 0,
+    Acquired: '',
+    Notes: false,
+    Quantity: 0,
+    Comments: '',
+};
+
+export const defaultWineInputState: WineInput = {
+    Category: '',
+    Varietal: '',
+    Country: '',
+    Vintage: '',
+    Producer: '',
+    Label: '',
+    Appellation: '',
+    Ready: {open: '', close: ''},
+    Source: '',
+    Price: '',
+    Acquired: '',
+    Notes: '',
+    Quantity: '',
+    Comments: '',
+};
+
 export type Columns = {
     A: string,
     B: string,

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import WineDialogBase from './WineDialogBase';
-import { Wine, Categories } from '../types/wine';
+import { Wine, Categories, defaultWineInputState } from '../types/wine';
 
 type EditWineDialogProps = {
   wine: Wine,
@@ -10,6 +10,14 @@ type EditWineDialogProps = {
 } 
 
 export default function EditWineDialog({wine, categories}: EditWineDialogProps) {
+  const defaultWineEditState = Object.entries(wine).reduce((acc, [key, value]) => ({
+    ...acc,
+    [key]: key === 'Ready' 
+      ? value 
+      : Boolean(value) || key === 'Notes'
+      ? `${value}`
+      : ''
+  }), defaultWineInputState)
 
   const handleSubmit = async (wineState: Wine) => {
     const resp = await fetch(`/api`, {
@@ -22,7 +30,7 @@ export default function EditWineDialog({wine, categories}: EditWineDialogProps) 
   return (
     <WineDialogBase
       mode='EDIT'
-      defaultWineState={wine}
+      defaultWineInputState={defaultWineEditState}
       categories={categories}
       onSubmit={handleSubmit}
     />
