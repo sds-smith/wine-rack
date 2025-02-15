@@ -1,13 +1,13 @@
 import { ObjectId } from "mongodb";
 import client from "../../services/mongodb";
-// import { revalidatePath } from 'next/cache'
+import { revalidatePath } from 'next/cache'
 
 const db = client.db("wine_rack");
 
 export async function GET() {
     try {
         const data = await db.collection("wines").find({ Archived: { $ne: true } }).toArray();
-        // revalidatePath('/')
+        revalidatePath('/')
         return Response.json({
             status: 200,
             success: true,
@@ -33,7 +33,7 @@ export async function POST(req: Request) {
     })
     try {
         const insertResponse = await db.collection("wines").insertOne(wine);
-        // revalidatePath('/')
+        revalidatePath('/')
         if (!insertResponse) {
             return Response.json({
                 status: 500,
@@ -67,7 +67,7 @@ export async function PUT(req: Request) {
             ...updatedWine,
             _id
         });
-        // revalidatePath('/')
+        revalidatePath('/')
         if (!updateResponse) {
             return Response.json({
                 status: 500,
@@ -94,7 +94,7 @@ export async function DELETE(request: Request) {
     const _id = new ObjectId(wineToDelete._id)
     try {
         const deleteResponse = await db.collection("wines").deleteOne({_id})
-        // revalidatePath('/')
+        revalidatePath('/')
         if (!deleteResponse) {
             return Response.json({
                 status: 400,
@@ -133,7 +133,7 @@ export async function PATCH(req: Request) {
             {_id}, 
             { $set: updateFields}
         );
-        // revalidatePath('/')
+        revalidatePath('/')
         if (!updateResponse) {
             return Response.json({
                 status: 500,
