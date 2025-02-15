@@ -1,34 +1,34 @@
-// import client from "../../services/mongodb";
-// import chunk from "./chunkArray";
-// import { Wine, Metadata, initialMetaData } from "../types/wine";
+import client from "../../services/mongodb";
+import chunk from "./chunkArray";
+import { Wine, Metadata, initialMetaData } from "../types/wine";
 
-// const db = client.db("wine_rack");
+const db = client.db("wine_rack");
 
-// const getWineData = async () => {
-//     try {
-//         const data = await db.collection("wines").find({ Archived: { $ne: true } }).toArray();
-//         return Response.json({
-//             status: 200,
-//             success: true,
-//             wineData: data,
-//             message: 'Success!'
-//         })
-//     } catch (e) {
-//         console.error(e);
-//         return Response.json({
-//             status: 400,
-//             success: false,
-//             wineData: [],
-//             message: `Error: ${e}`
-//         })
-//     }
-// }
+const getWineData = async () => {
+    try {
+        const data = await db.collection("wines").find({ Archived: { $ne: true } }).toArray();
+        return Response.json({
+            status: 200,
+            success: true,
+            wineData: data,
+            message: 'Success!'
+        })
+    } catch (e) {
+        console.error(e);
+        return Response.json({
+            status: 400,
+            success: false,
+            wineData: [],
+            message: `Error: ${e}`
+        })
+    }
+}
 
-export function getWines() {
-    // const data = await getWineData();
-    // const { wineData } = await data.json();
-    // const wineList = wineData.sort((a: Wine, b: Wine) => parseInt(a.Category) - parseInt(b.Category) || parseInt(a.Vintage || '') - parseInt(b.Vintage || ''));
-    // const chunkedWineList = chunk(wineList, 40)
+export async function getWines() {
+    const data = await getWineData();
+    const { wineData } = await data.json();
+    const wineList = wineData.sort((a: Wine, b: Wine) => parseInt(a.Category) - parseInt(b.Category) || parseInt(a.Vintage || '') - parseInt(b.Vintage || ''));
+    const chunkedWineList = chunk(wineList, 40)
 
     const categories: string[] = [
         "01-W",
@@ -54,11 +54,11 @@ export function getWines() {
         "25-M",
     ];
 
-    // const metaData = wineList.reduce(
-    //     (acc: Metadata, curr: Wine) => ({
-    //         totalBottles: Number(acc.totalBottles) + Number(curr.Quantity || 0)
-    //     }), initialMetaData
-    // )
+    const metaData = wineList.reduce(
+        (acc: Metadata, curr: Wine) => ({
+            totalBottles: Number(acc.totalBottles) + Number(curr.Quantity || 0)
+        }), initialMetaData
+    )
 
     const columns = [
         "Category",
@@ -78,10 +78,10 @@ export function getWines() {
     ]
 
     return { 
-        // wineList, 
+        wineList, 
         columns, 
-        // metaData, 
+        metaData, 
         categories, 
-        // chunkedWineList 
+        chunkedWineList 
     };
 };

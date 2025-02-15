@@ -1,11 +1,13 @@
 import { ObjectId } from "mongodb";
 import client from "../../services/mongodb";
+// import { revalidatePath } from 'next/cache'
 
 const db = client.db("wine_rack");
 
 export async function GET() {
     try {
         const data = await db.collection("wines").find({ Archived: { $ne: true } }).toArray();
+        // revalidatePath('/')
         return Response.json({
             status: 200,
             success: true,
@@ -31,6 +33,7 @@ export async function POST(req: Request) {
     })
     try {
         const insertResponse = await db.collection("wines").insertOne(wine);
+        // revalidatePath('/')
         if (!insertResponse) {
             return Response.json({
                 status: 500,
@@ -64,6 +67,7 @@ export async function PUT(req: Request) {
             ...updatedWine,
             _id
         });
+        // revalidatePath('/')
         if (!updateResponse) {
             return Response.json({
                 status: 500,
@@ -87,11 +91,10 @@ export async function PUT(req: Request) {
 
 export async function DELETE(request: Request) {
     const wineToDelete = await request.json();
-    console.log('[DELETE] wineToDelete',wineToDelete)
     const _id = new ObjectId(wineToDelete._id)
     try {
         const deleteResponse = await db.collection("wines").deleteOne({_id})
-        console.log('[DELETE] deleteResponse',deleteResponse)
+        // revalidatePath('/')
         if (!deleteResponse) {
             return Response.json({
                 status: 400,
@@ -130,7 +133,7 @@ export async function PATCH(req: Request) {
             {_id}, 
             { $set: updateFields}
         );
-        console.log('[PATCH] updateResponse',updateResponse)
+        // revalidatePath('/')
         if (!updateResponse) {
             return Response.json({
                 status: 500,

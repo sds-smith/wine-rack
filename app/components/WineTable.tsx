@@ -1,4 +1,3 @@
-'use client'
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -15,17 +14,16 @@ import EditWineDialog from './EditWineDialog';
 import TableBodyCell from './TableBodyCell';
 import { getWines } from '../utils/getWines';
 import { Wine } from '../types/wine';
-import { useWineData } from '../hooks/useWineData';
 
-export default /*async*/ function WineTable() {
+export default async function WineTable() {
   const { 
-    // wineList, 
+    wineList, 
     columns, 
-    // metaData, 
+    metaData, 
     categories 
 
-  } = getWines();
-  const { wineList, metaData } = useWineData();
+  } = await getWines();
+  // const { wineList, metaData } = useWineData();
   const { totalBottles } = metaData;
   const columnHeadings = columns.filter(h => ![ 'Category' ].includes(h));
 
