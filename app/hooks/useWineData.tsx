@@ -8,7 +8,7 @@ export function useWineData() {
 
     useEffect(() => {
         const getWineData = async () => {
-            const data = await fetch('/api');
+            const data = await fetch('/api', { cache: 'no-store' });
             const { wineData } = await data.json();
             const wineList = (wineData|| []).sort((a: Wine, b: Wine) => parseInt(a.Category) - parseInt(b.Category) || parseInt(a.Vintage || '') - parseInt(b.Vintage || ''));
             const chunkedWineList = chunk(wineList, 40)
