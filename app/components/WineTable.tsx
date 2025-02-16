@@ -12,6 +12,7 @@ import PrintButton from './PrintButton';
 import AddWineDialog from './AddWineDialog';
 import EditWineDialog from './EditWineDialog';
 import TableBodyCell from './TableBodyCell';
+import FooterRow from './FooterRow';
 import { getWines } from '../utils/getWines';
 import { Wine } from '../types/wine';
 
@@ -23,7 +24,7 @@ export default async function WineTable() {
     categories 
   } = await getWines();
   const { totalBottles } = metaData;
-  const columnHeadings = columns.filter(h => ![ 'Category' ].includes(h));
+  const columnHeadings = columns//.filter(h => ![ 'Category' ].includes(h));
 
   return (
     <Box >
@@ -42,7 +43,7 @@ export default async function WineTable() {
           <TableBody>
             {wineList.map((row: Wine) => (
               <TableRow
-                key={`${row.Producer}-${row.Label}-${row.Vintage}`}
+                key={row.ID}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell align="center" size='small' sx={{width: '10px'}}>
@@ -62,10 +63,10 @@ export default async function WineTable() {
             ))}
           </TableBody>
           <TableFooter sx={{position: 'sticky', bottom: 0}}>
-            <TableRow sx={{background: 'black'}}>
-              <TableCell sx={{color: 'white'}} align='center' >{`Total`}</TableCell>
-              { columnHeadings.map((h)=> <TableCell key={h} align="center" sx={{color: 'white'}}>{h === 'Quantity' ? `${totalBottles}` : ''}</TableCell>)}
-            </TableRow>
+            <FooterRow
+              totalBottles={totalBottles}
+              columnHeadings={columnHeadings}
+            />
           </TableFooter>
         </Table>
       </TableContainer>

@@ -33,7 +33,7 @@ export async function POST(req: Request) {
     })
     try {
         const insertResponse = await db.collection("wines").insertOne(wine);
-        revalidatePath('/')
+        // revalidatePath('/')
         if (!insertResponse) {
             return Response.json({
                 status: 500,
@@ -67,7 +67,7 @@ export async function PUT(req: Request) {
             ...updatedWine,
             _id
         });
-        revalidatePath('/')
+        // revalidatePath('/')
         if (!updateResponse) {
             return Response.json({
                 status: 500,
@@ -94,7 +94,7 @@ export async function DELETE(request: Request) {
     const _id = new ObjectId(wineToDelete._id)
     try {
         const deleteResponse = await db.collection("wines").deleteOne({_id})
-        revalidatePath('/')
+        // revalidatePath('/')
         if (!deleteResponse) {
             return Response.json({
                 status: 400,

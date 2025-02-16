@@ -1,6 +1,7 @@
 import client from "../../services/mongodb";
 import chunk from "./chunkArray";
 import { Wine, Metadata, initialMetaData } from "../types/wine";
+import { importFromExcel } from './importFromExcel'
 
 const db = client.db("wine_rack");
 
@@ -24,10 +25,29 @@ const getWineData = async () => {
     }
 }
 
+async function loadWines() {
+    const response = await getWineData();
+    const { wineData } = await response.json();
+
+    if (!wineData.length) {
+        try {
+            const wines = await importFromExcel();
+            const insertResponse = await db.collection("wines").insertMany(wines);
+            if (!insertResponse) return []
+            return await getWineData();
+        } catch(err) {
+            console.error(err)
+            return []
+        }
+    }
+    return wineData.map((w: { _id: any; }) => ({ ...w, ID: w._id}))
+}
+
 export async function getWines() {
-    const data = await getWineData();
-    const { wineData } = await data.json();
-    const wineList = wineData.sort((a: Wine, b: Wine) => parseInt(a.Category) - parseInt(b.Category) || parseInt(a.Vintage || '') - parseInt(b.Vintage || ''));
+    const wineData: Wine[] = await loadWines();
+
+    const wineList = wineData
+        .sort((a: Wine, b: Wine) => parseInt(a.Category) - parseInt(b.Category) || parseInt(a.Vintage || '') - parseInt(b.Vintage || ''));
     const chunkedWineList = chunk(wineList, 40)
 
     const categories: string[] = [

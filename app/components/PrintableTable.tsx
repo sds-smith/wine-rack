@@ -19,6 +19,19 @@ type PrintableTableProps = {
   totalBottles: number
 }
 
+const boolToYesNo = {
+  true: 'Yes',
+  false: 'No',
+  null: ''
+}
+
+const getCellContent = (columnId: string, wine: Wine) => {
+    return columnId === 'Ready'
+      ? !wine.Ready.close || wine.Ready.close === wine.Ready.open ? `${wine.Ready.open }`: `${wine.Ready.open} - ${wine.Ready.close}`
+      : columnId === 'Notes' ? boolToYesNo[`${wine.Notes}`] 
+      : wine[columnId as keyof Wine] ? `${wine[columnId as keyof Wine]}` : '';
+}
+
 export default function PrintableTable({ columns, chunkedWineList, totalBottles }: PrintableTableProps) {
   const router = useRouter();
 
@@ -42,10 +55,10 @@ export default function PrintableTable({ columns, chunkedWineList, totalBottles 
             <TableBody>
               {wineList.map((row: Wine) => (
                 <TableRow
-                  key={`${row.Producer}-${row.Label}-${row.Vintage}`}
+                  key={row.ID}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                  { columnHeadings.map(h => <TableCell key={h} align="center">{row[h as keyof Wine]?.toString()}</TableCell>)}
+                  { columnHeadings.map(h => <TableCell key={h} align="center">{getCellContent(h, row)}</TableCell>)}
                 </TableRow>
               ))}
             </TableBody>

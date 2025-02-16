@@ -5,6 +5,7 @@ export type Ready = {
 }
 
 export type Wine = {
+    ID?         : string;
     Category    : string;
     Varietal?   : string;
     Country?    : string;
@@ -23,6 +24,7 @@ export type Wine = {
 };
 
 export type WineInput = {
+    ID?         : string;
     Category    : string;
     Varietal?   : string;
     Country?    : string;
