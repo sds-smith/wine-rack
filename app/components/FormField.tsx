@@ -1,31 +1,42 @@
 'use client'
 
-import { ChangeEvent, useState, useEffect } from 'react';
+import { ChangeEvent, useState, useEffect, useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import TableCell from '@mui/material/TableCell';
 import TextField from '@mui/material/TextField';
 import ArchiveModal from './ArchiveModal';
+import { OptimisticFormContext } from '../context/OptimisticFormContext';
 import { Wine } from '../types/wine';
 
 type FormFieldProps = {
-    value: string,
-    wine: Wine
+    columnId: string,
+    wineID: string
 }
 
-export default function FormField({value, wine}: FormFieldProps) {
+export default function FormField({columnId, wineID}: FormFieldProps) {
     const router = useRouter();
+    const { winesByID, setWinesByID, loading, setLoading  } = useContext(OptimisticFormContext);
+    const value = winesByID[wineID as keyof typeof winesByID]
+        ? winesByID[wineID as keyof typeof winesByID][columnId as keyof Wine]
+        : 0
 
-    const [ valueState, setValueState ] = useState(value);
-    const [ loading, setLoading ] = useState(false);
     const [ openArchiveModal, setOpenArchiveModal ] = useState(false);
 
     const handleOpenArchiveModal    = () => setOpenArchiveModal(true);
     const handleCloseArchiveModal   = () => setOpenArchiveModal(false);
 
     const updateQuantity = async (value: string) => {
+        const newWinesByID = {
+            ...winesByID,
+            [wineID] : {
+                ...winesByID[wineID],
+                Quantity: Number(value)
+            }
+        }
+        setWinesByID(newWinesByID)
         await fetch(`/api`, {
             method: 'PATCH',
-            body: JSON.stringify({Quantity: Number(value), wine})
+            body: JSON.stringify({Quantity: Number(value), wineID})
         });
         setLoading(false);
         router.refresh();
@@ -34,7 +45,7 @@ export default function FormField({value, wine}: FormFieldProps) {
     const handleArchive = async () => {
         await fetch(`/api`, {
             method: 'PATCH',
-            body: JSON.stringify({Archived: true, wine})
+            body: JSON.stringify({Archived: true, wineID})
         });
         setLoading(false);
         handleCloseArchiveModal();
@@ -45,13 +56,10 @@ export default function FormField({value, wine}: FormFieldProps) {
         const { value } = e.target;
         if (Number(value) >= 0) {
             setLoading(true);
-            setValueState(value);
             await updateQuantity(value);
             if (!Number(value)) handleOpenArchiveModal();
         }
     }
-
-    useEffect(() => setValueState(value), [value])
 
     return (
       <TableCell align="right">
@@ -59,7 +67,7 @@ export default function FormField({value, wine}: FormFieldProps) {
               variant='standard' 
               size='small' 
               type='number' 
-              value={valueState} 
+              value={value} 
               onChange={handleChange}
               disabled={loading}
               sx={{width: '45px'}}

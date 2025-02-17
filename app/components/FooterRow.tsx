@@ -1,14 +1,18 @@
 'use client'
 
+import { useContext } from 'react';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
+import { OptimisticFormContext } from '../context/OptimisticFormContext';
 
 type FooterRowProps = {
     columnHeadings: string[],
     totalBottles: number
 }
 
-export default function FooterRow({ columnHeadings, totalBottles }: FooterRowProps) {
+export default function FooterRow({ columnHeadings }: FooterRowProps) {
+  const { metaData: { totalBottles }  } = useContext(OptimisticFormContext)
+
   return (
     <TableRow sx={{background: 'black'}}>
       <TableCell sx={{color: 'white'}} align='center' >{`Total`}</TableCell>

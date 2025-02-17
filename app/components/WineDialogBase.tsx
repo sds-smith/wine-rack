@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, ChangeEvent, useEffect } from 'react';
+import { useState, useContext, ChangeEvent, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -17,6 +17,7 @@ import FormControl from '@mui/material/FormControl';
 import Box from '@mui/material/Box';
 import WineInputButton from './WineInputButton';
 import ArchiveModal from './ArchiveModal';
+import { OptimisticFormContext } from '../context/OptimisticFormContext';
 import { Wine, WineInput, Ready, defaultWineState } from '../types/wine';
 
 type MongoResponse = {
@@ -49,11 +50,12 @@ const dialogTitle = {
 
 export default function WineInputDialog({ mode, defaultWineInputState, categories, onSubmit }: WineInputDialogProps) {
   const router = useRouter();
+  const { loading, setLoading } = useContext(OptimisticFormContext);
 
   const [ open, setOpen ] = useState(false);
   const [ wineState, setWineState ] = useState(defaultWineInputState)
   const [ submitError, setSubmitError ] = useState(defaultErrorState)
-  const [ loading, setLoading ] = useState(false)
+  const [ clicked, setClicked ] = useState(false)
   const [ openArchiveModal, setOpenArchiveModal ] = useState(false)
 
   const handleClickOpen = () => setOpen(true);
@@ -62,6 +64,7 @@ export default function WineInputDialog({ mode, defaultWineInputState, categorie
     setSubmitError(defaultErrorState);
     setWineState(defaultWineInputState)
     setOpen(false);
+    setClicked(false)
   };
 
   const handleOpenArchiveModal  = () => setOpenArchiveModal(true);
@@ -140,6 +143,7 @@ export default function WineInputDialog({ mode, defaultWineInputState, categorie
   }
 
   const handleClickSubmit = async () => {
+    setClicked(true)
     if (!Number(wineState.Quantity)) {
       handleOpenArchiveModal()
     } else {
@@ -159,19 +163,18 @@ export default function WineInputDialog({ mode, defaultWineInputState, categorie
       [name]    : handleType(name, value),
     }), defaultWineState)
     const response = await onSubmit(typedWine);
-    setLoading(false)
     if (response.success) router.refresh();
     handleClose();
   }
 
   const handleDelete = async () => {
+    setClicked(true)
     setLoading(true)
     const resp = await fetch(`/api`, {
       method: 'DELETE',
       body: JSON.stringify(wineState)
     });
     const response = await resp.json();
-    setLoading(false)
     if (response.success) router.refresh();
     handleClose();
   }
@@ -179,6 +182,10 @@ export default function WineInputDialog({ mode, defaultWineInputState, categorie
   useEffect(() => {
     setWineState(defaultWineInputState)
   }, [defaultWineInputState])
+
+  useEffect(() => {
+    if (clicked && !loading) handleClose();
+  }, [ loading ])
 
   return (
     <>

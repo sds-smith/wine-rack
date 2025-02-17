@@ -124,9 +124,9 @@ export async function DELETE(request: Request) {
 }
 
 export async function PATCH(req: Request) {
-    const { wine, ...updateFields } = await req.json();
+    const { wineID, ...updateFields } = await req.json();
     console.log('[PATCH] updateFields',updateFields)
-    const _id = new ObjectId(wine._id);
+    const _id = new ObjectId(wineID);
 
     try {
         const updateResponse = await db.collection("wines").updateOne(

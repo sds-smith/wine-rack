@@ -1,7 +1,7 @@
 import client from "../../services/mongodb";
 import chunk from "./chunkArray";
 import { Wine, Metadata, initialMetaData } from "../types/wine";
-import { importFromExcel } from './importFromExcel'
+// import { importFromExcel } from './importFromExcel'
 
 const db = client.db("wine_rack");
 
@@ -29,17 +29,17 @@ async function loadWines() {
     const response = await getWineData();
     const { wineData } = await response.json();
 
-    if (!wineData.length) {
-        try {
-            const wines = await importFromExcel();
-            const insertResponse = await db.collection("wines").insertMany(wines);
-            if (!insertResponse) return []
-            return await getWineData();
-        } catch(err) {
-            console.error(err)
-            return []
-        }
-    }
+    // if (wineData.length <= 100) {
+    //     try {
+    //         const wines = await importFromExcel();
+    //         const insertResponse = await db.collection("wines").insertMany(wines);
+    //         if (!insertResponse) return []
+    //         return await getWineData();
+    //     } catch(err) {
+    //         console.error(err)
+    //         return []
+    //     }
+    // }
     return wineData.map((w: { _id: any; }) => ({ ...w, ID: w._id}))
 }
 

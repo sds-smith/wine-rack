@@ -1,4 +1,4 @@
-
+import { ReactNode } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -13,6 +13,7 @@ import AddWineDialog from './AddWineDialog';
 import EditWineDialog from './EditWineDialog';
 import TableBodyCell from './TableBodyCell';
 import FooterRow from './FooterRow';
+import { OptimisticFormProvider } from '../context/OptimisticFormContext';
 import { getWines } from '../utils/getWines';
 import { Wine } from '../types/wine';
 
@@ -24,9 +25,10 @@ export default async function WineTable() {
     categories 
   } = await getWines();
   const { totalBottles } = metaData;
-  const columnHeadings = columns//.filter(h => ![ 'Category' ].includes(h));
+  const columnHeadings = columns.filter(h => ![ 'Category' ].includes(h));
 
   return (
+  <OptimisticFormProvider wineList={wineList} >
     <Box >
       <AddWineDialog
         categories={categories}
@@ -52,24 +54,26 @@ export default async function WineTable() {
                     categories={categories}
                   />
                 </TableCell>
-                { columnHeadings.map(h => (
-                  <TableBodyCell 
-                    key={h} 
-                    columnId={h}
-                    wine={row}
-                  />
-                ))}
+                  { columnHeadings.map(h => (
+                    <TableBodyCell 
+                      key={h} 
+                      columnId={h}
+                      wine={row}
+                    />
+                  ))}
               </TableRow>
             ))}
           </TableBody>
           <TableFooter sx={{position: 'sticky', bottom: 0}}>
-            <FooterRow
-              totalBottles={totalBottles}
-              columnHeadings={columnHeadings}
-            />
+              <FooterRow
+                totalBottles={totalBottles}
+                columnHeadings={columnHeadings}
+              />
           </TableFooter>
         </Table>
       </TableContainer>
     </Box>
+  </OptimisticFormProvider>
+
   );
 }

@@ -1,4 +1,4 @@
-'use client'
+// 'use client'
 
 import React from 'react'
 import TableCell from '@mui/material/TableCell';
@@ -22,10 +22,12 @@ export default function TableBodyCell({columnId, wine}: TableBodyCellProps) {
     : columnId === 'Notes' ? boolToYesNo[`${wine.Notes}`] 
     : wine[columnId as keyof Wine] ? `${wine[columnId as keyof Wine]}` : '';
 
+    const { ID } = wine;
+
   return (
     <>
       { columnId === 'Quantity'
-        ? <FormField value={cellContent} wine={wine} />
+        ? <FormField columnId={columnId} wineID={ID!}/>
         : <TableCell align="center">{cellContent}</TableCell>
       }
     </>
