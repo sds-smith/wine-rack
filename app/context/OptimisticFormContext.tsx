@@ -8,7 +8,7 @@ const buildWinesByID = (wineList: Wine[]): WinesByID => wineList?.reduce((acc, c
   [`${curr.ID}`] : curr
 }), {}) || {}
 
-type WinesByID = {
+export type WinesByID = {
   [key: string] : Wine
 }
 
@@ -17,7 +17,8 @@ export type OptimisticFormContextProps = {
   setWinesByID: Dispatch<SetStateAction<WinesByID>>,
   loading: boolean,
   setLoading: Dispatch<SetStateAction<boolean>>,
-  metaData: Metadata
+  metaData: Metadata,
+  resetWinesByID: () => void
 }
 
 export type ProviderProps = {
@@ -30,7 +31,8 @@ export const OptimisticFormContext = createContext<OptimisticFormContextProps>({
   setWinesByID: () => {},
   loading: false,
   setLoading: () => {},
-  metaData: initialMetaData
+  metaData: initialMetaData,
+  resetWinesByID: () => {}
 })
   
 export const OptimisticFormProvider: FC<ProviderProps> = ({wineList, children}) => {
@@ -43,12 +45,14 @@ export const OptimisticFormProvider: FC<ProviderProps> = ({wineList, children}) 
     }), initialMetaData
   )
 
+  const resetWinesByID = () => setWinesByID(buildWinesByID(wineList))
+
   useEffect(() => {
     setWinesByID(buildWinesByID(wineList))
     setLoading(false)
   }, [wineList])
 
-  const value = { winesByID, setWinesByID, loading, setLoading, metaData }
+  const value = { winesByID, setWinesByID, loading, setLoading, metaData, resetWinesByID }
 
   return <OptimisticFormContext.Provider value={value} >{children}</OptimisticFormContext.Provider>
 }

@@ -295,7 +295,7 @@ export default function WineInputDialog({ mode, defaultWineInputState, categorie
   );
 }
 
-function ConfirmationDialog({handleConfirm, disabled}: {handleConfirm: ()=>void, disabled: boolean}) {
+export function ConfirmationDialog({handleConfirm, disabled}: {handleConfirm: ()=>void, disabled: boolean}) {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);

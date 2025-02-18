@@ -50,7 +50,7 @@ export default async function WineTable() {
               >
                 <TableCell align="center" size='small' sx={{width: '10px'}}>
                   <EditWineDialog
-                    wine={row}
+                    wineID={row.ID!}
                     categories={categories}
                   />
                 </TableCell>

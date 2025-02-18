@@ -39,7 +39,7 @@ export default function FormField({columnId, wineID}: FormFieldProps) {
             body: JSON.stringify({Quantity: Number(value), wineID})
         });
         setLoading(false);
-        router.refresh();
+        // router.refresh();
     }
 
     const handleArchive = async () => {
@@ -49,7 +49,7 @@ export default function FormField({columnId, wineID}: FormFieldProps) {
         });
         setLoading(false);
         handleCloseArchiveModal();
-        router.refresh();
+        // router.refresh();
     }
 
     const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
