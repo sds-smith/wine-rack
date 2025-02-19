@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useState, useEffect, ReactNode, FC, Dispatch, SetStateAction } from "react";
+import { createContext, useState, useEffect, useCallback, ReactNode, FC, Dispatch, SetStateAction } from "react";
 import { Wine, WineInput, WineField, initialMetaData, Metadata, defaultWineState } from "../types/wine";
 
 const buildWinesByID = (wineList: Wine[]): WinesByID => wineList?.reduce((acc, curr) =>({
@@ -67,7 +67,7 @@ export const OptimisticFormProvider: FC<ProviderProps> = ({wineList, children}) 
     }), initialMetaData
   )
 
-  const resetWinesByID = () => setWinesByID(buildWinesByID(wineList))
+  const resetWinesByID = useCallback(() => setWinesByID(buildWinesByID(wineList)), [wineList])
 
   const onChangeWine = (wineID: string, columnId: string, value: string) => {
     const newValue = handleType(columnId, value)
@@ -156,7 +156,7 @@ export const OptimisticFormProvider: FC<ProviderProps> = ({wineList, children}) 
   useEffect(() => {
     resetWinesByID();
     setLoading(false)
-  }, [wineList])
+  }, [wineList, resetWinesByID])
 
   const value = { 
     winesByID, 

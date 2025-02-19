@@ -17,7 +17,7 @@ import FormControl from '@mui/material/FormControl';
 import Box from '@mui/material/Box';
 import WineInputButton from './WineInputButton';
 import { OptimisticFormContext } from '../context/OptimisticFormContext';
-import { Wine, WineField, WineInput, defaultWineState } from '../types/wine';
+import { Wine, WineField, WineInput } from '../types/wine';
 
 type MongoResponse = {
   status: number,
@@ -54,20 +54,6 @@ export default function WineInputDialog({ defaultWineInputState, categories }: W
     setWineState(defaultWineInputState)
     setOpen(false);
   };
-
-  const handleType = (name: string, value: WineField) => {
-    const stringToBool = {
-      true: true,
-      false: false
-    }
-    return ['Notes', 'Archived'].includes(name) 
-      ? stringToBool[value as keyof typeof stringToBool]
-      : name === 'Quantity'
-      ? Number(value)
-      : name === 'Price'
-      ? parseFloat(`${value}`)
-      : value;
-  }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
