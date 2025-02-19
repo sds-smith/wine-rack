@@ -69,7 +69,7 @@ export async function importFromExcel() {
     const wines: Wine[] = raw_data.map((row:RawData) => {
         return Object.entries(columns).reduce((acc, [key, {heading, convert}]) => ({
             ...acc,
-            ...(Boolean(row[key as keyof RawData]) && { [heading as keyof Wine]: convert(row[key as keyof RawData]) })
+            // ...(Boolean(row[key as keyof RawData]) && { [heading as keyof Wine]: convert(row[key as keyof RawData]) })
         }), defaultWineState)
     })
     return wines
