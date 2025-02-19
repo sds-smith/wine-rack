@@ -17,16 +17,14 @@ import FormControl from '@mui/material/FormControl';
 import Box from '@mui/material/Box';
 import WineInputButton from './WineInputButton';
 import ArchiveModal from './ArchiveModal';
-import { OptimisticFormContext, WinesByID } from '../context/OptimisticFormContext';
-import { Wine, Ready, defaultWineState } from '../types/wine';
-import { ConfirmationDialog } from './WineDialogBase';
+import ConfirmationDialog from './ConfirmationDialog';
+import { OptimisticFormContext } from '../context/OptimisticFormContext';
+import { Wine, WineField, defaultWineState } from '../types/wine';
 
 type EditWineDialogProps = {
   wineID: string,
   categories: string[],
 } 
-
-type WineField = string | number | boolean | Ready | null | undefined;
 
 const defaultErrorState = {
   Category: false,
@@ -38,7 +36,7 @@ const defaultErrorState = {
 
 export default function EditWineDialog({wineID, categories}: EditWineDialogProps) {  
   const router = useRouter();
-  const { loading, setLoading, winesByID, setWinesByID, resetWinesByID } = useContext(OptimisticFormContext);
+  const { loading, winesByID, onChangeWine, resetWinesByID, saveWine, deleteWine } = useContext(OptimisticFormContext);
 
   const [ open, setOpen ] = useState(false);
   const [ submitError, setSubmitError ] = useState(defaultErrorState)
@@ -51,137 +49,81 @@ export default function EditWineDialog({wineID, categories}: EditWineDialogProps
     setOpen(true);
   }
 
-  const onSubmit = async (wine: Wine) => {
-    const resp = await fetch(`/api`, {
-      method: 'PUT',
-      body: JSON.stringify(wine)
-    });
-    return await resp.json();
+  const handleClose = () => {
+    setSubmitError(defaultErrorState);
+    setOpen(false);
+  };
+
+  const handleCancel = () => {
+    resetWinesByID();
+    handleClose();
   }
   
-    const handleClose = () => {
-      setSubmitError(defaultErrorState);
-      setLoading(false)
-      setOpen(false);
-    };
-
-    const handleCancel = () => {
-      resetWinesByID();
-      handleClose();
-      // router.refresh();
-    }
+  const handleOpenArchiveModal  = () => setOpenArchiveModal(true);
+  const handleCloseArchiveModal = () => {
+    setOpenArchiveModal(false);
+  };
   
-    const handleOpenArchiveModal  = () => setOpenArchiveModal(true);
-    const handleCloseArchiveModal = (wine: Wine) => {
-      setOpenArchiveModal(false);
-      handleSubmit(wine)
-    };
-  
-    const handleType = (name: string, value: WineField) => {
-      const stringToBool = {
-        true: true,
-        false: false
-      }
-      return ['Notes', 'Archived'].includes(name) 
-        ? stringToBool[value as keyof typeof stringToBool]
-        : name === 'Quantity'
-        ? Number(value)
-        : name === 'Price'
-        ? parseFloat(`${value}`)
-        : value;
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (name === 'Quantity' && Number(value) < 0) return
+    onChangeWine(wineID, name, value)
+    if (value.toString().length && submitError[name as keyof typeof submitError]) {
+      setSubmitError(se => ({
+        ...se,
+        [name]: false
+      }))
     }
-
-    const handleChangeWinesByID = (category: string, value: string) => {
-      const newValue = handleType(category, value)
-      const newWinesByID = (ws: WinesByID) => {
-        const wine = ws[wineID]
-        const { key, val } = category.startsWith('Ready')
-          ? {
-            key: 'Ready',
-            val: {
-              ...wine.Ready,
-              [category.split('-')[1]] : newValue
-            }
-          }
-          : { key: category, val: newValue }
-        return {
-          ...ws,
-          [wineID] : {
-              ...wine,
-              [key]: val
-          }
-        }
-      }
-      setWinesByID(ws => newWinesByID(ws))
-    }
+  }
   
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target;
-      if (name === 'Quantity' && Number(value) < 0) return
-
-      handleChangeWinesByID(name, value)
-      
-      if (value.toString().length && submitError[name as keyof typeof submitError]) {
+  const validateRequiredFields = () => {
+    let error = false;
+    const getErrorState = (wineField: WineField) => !wineField && wineField !== false;
+    Object.keys(submitError).forEach(key => {
+      if (!(key === 'Quantity') && getErrorState(wine[key as keyof typeof wine])) {
         setSubmitError(se => ({
           ...se,
-          [name]: false
+          [key]: true
         }))
+        error = true;
       }
-    }
+    })
+    return error
+  }
   
-    const validateRequiredFields = () => {
-      let error = false;
-      const getErrorState = (wineField: WineField) => !wineField && wineField !== false;
-      Object.keys(submitError).forEach(key => {
-        if (!(key === 'Quantity') && getErrorState(wine[key as keyof typeof wine])) {
-          setSubmitError(se => ({
-            ...se,
-            [key]: true
-          }))
-          error = true;
-        }
-      })
+  const handleClickSubmit = async () => {
+    if (!Number(wine.Quantity)) {
+      handleOpenArchiveModal()
+    } else {
+      handleSubmit(wine);
+    };
+  }
+  
+  const handleSubmit = async (wine: Wine) => {
+    const error = validateRequiredFields();
+    if (error) {
       return error
-    }
+    };
+    const response = await saveWine(wine);
+    console.log('[handleSubmit]', {response})
+    if (response.success) router.refresh();
+    handleClose();
+  }
   
-    const handleArchive = () => {
-      const wineToArchive = {
-        ...wine,
-        Archived: true
-      }
-      handleCloseArchiveModal(wineToArchive);
+  const handleDelete = async () => {
+    const response = await deleteWine(wine);
+    if (response.success) router.refresh();
+    handleClose();
+  }
+
+  const handleConfirmArchive = async () => {
+    const wineToSave = {
+      ...wine,
+      Archived: true
     }
-  
-    const handleClickSubmit = async () => {
-      if (!Number(wine.Quantity)) {
-        handleOpenArchiveModal()
-      } else {
-        handleSubmit(wine);
-      };
-    }
-  
-    const handleSubmit = async (wine: Wine) => {
-      setLoading(true)
-      const error = validateRequiredFields();
-      if (error) {
-        setLoading(false)
-        return error
-      };
-      const response = await onSubmit(wine);
-      if (response.success) router.refresh();
-      handleClose();
-    }
-  
-    const handleDelete = async () => {
-      setLoading(true)
-      const resp = await fetch(`/api`, {
-        method: 'DELETE',
-        body: JSON.stringify(wine)
-      });
-      const response = await resp.json();
-      if (response.success) router.refresh();
-      handleClose();
-    }
+    handleCloseArchiveModal();
+    handleSubmit(wineToSave)
+  }
 
   return (
     <>
@@ -286,7 +228,7 @@ export default function EditWineDialog({wineID, categories}: EditWineDialogProps
           </Button>
         </DialogActions>
       </Dialog>
-      <ArchiveModal open={openArchiveModal} handleClose={()=>handleCloseArchiveModal(wine)} handleConfirm={handleArchive} />
+      <ArchiveModal open={openArchiveModal} handleClose={handleCloseArchiveModal} handleConfirm={handleConfirmArchive} />
     </>
   )
 }

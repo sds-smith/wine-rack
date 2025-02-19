@@ -15,50 +15,30 @@ type FormFieldProps = {
 
 export default function FormField({columnId, wineID}: FormFieldProps) {
     const router = useRouter();
-    const { winesByID, setWinesByID, loading, setLoading  } = useContext(OptimisticFormContext);
+    const { winesByID, loading, updateQuantity, handleArchive  } = useContext(OptimisticFormContext);
     const value = winesByID[wineID as keyof typeof winesByID]
         ? winesByID[wineID as keyof typeof winesByID][columnId as keyof Wine]
         : 0
 
     const [ openArchiveModal, setOpenArchiveModal ] = useState(false);
 
-    const handleOpenArchiveModal    = () => setOpenArchiveModal(true);
-    const handleCloseArchiveModal   = () => setOpenArchiveModal(false);
-
-    const updateQuantity = async (value: string) => {
-        const newWinesByID = {
-            ...winesByID,
-            [wineID] : {
-                ...winesByID[wineID],
-                Quantity: Number(value)
-            }
-        }
-        setWinesByID(newWinesByID)
-        await fetch(`/api`, {
-            method: 'PATCH',
-            body: JSON.stringify({Quantity: Number(value), wineID})
-        });
-        setLoading(false);
-        // router.refresh();
-    }
-
-    const handleArchive = async () => {
-        await fetch(`/api`, {
-            method: 'PATCH',
-            body: JSON.stringify({Archived: true, wineID})
-        });
-        setLoading(false);
-        handleCloseArchiveModal();
-        // router.refresh();
-    }
+    const handleOpenArchiveModal = () => setOpenArchiveModal(true);
+    const handleCloseArchiveModal = () => {
+        setOpenArchiveModal(false);
+        router.refresh();
+    };
 
     const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
         const { value } = e.target;
         if (Number(value) >= 0) {
-            setLoading(true);
-            await updateQuantity(value);
+            await updateQuantity(value, wineID);
             if (!Number(value)) handleOpenArchiveModal();
         }
+    }
+
+    const handleConfirmArchive = () => {
+        handleArchive(wineID)
+        handleCloseArchiveModal()
     }
 
     return (
@@ -75,7 +55,7 @@ export default function FormField({columnId, wineID}: FormFieldProps) {
                 disableUnderline: true, 
               }}
           />
-          <ArchiveModal open={openArchiveModal} handleClose={handleCloseArchiveModal} handleConfirm={handleArchive} />
+          <ArchiveModal open={openArchiveModal} handleClose={handleCloseArchiveModal} handleConfirm={handleConfirmArchive} />
       </TableCell>
     )
 }

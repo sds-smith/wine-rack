@@ -42,6 +42,8 @@ export type WineInput = {
     Archived?   : string;
 };
 
+export type WineField = string | number | boolean | Ready | null | undefined;
+
 export const defaultWineState: Wine = {
     Category: '',
     Varietal: '',

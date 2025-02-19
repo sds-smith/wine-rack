@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useContext, ChangeEvent, useEffect } from 'react';
+import { useState, useContext, ChangeEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -16,9 +16,8 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Box from '@mui/material/Box';
 import WineInputButton from './WineInputButton';
-import ArchiveModal from './ArchiveModal';
 import { OptimisticFormContext } from '../context/OptimisticFormContext';
-import { Wine, WineInput, Ready, defaultWineState } from '../types/wine';
+import { Wine, WineField, WineInput, defaultWineState } from '../types/wine';
 
 type MongoResponse = {
   status: number,
@@ -27,13 +26,10 @@ type MongoResponse = {
 }
 
 type WineInputDialogProps = {
-  mode: string,
   categories: string[],
   defaultWineInputState: WineInput,
   onSubmit: (wineState: Wine) => Promise<MongoResponse>
 } 
-
-type WineField = string | number | boolean | Ready | null | undefined;
 
 const defaultErrorState = {
   Category: false,
@@ -43,20 +39,13 @@ const defaultErrorState = {
   Notes: false
 }
 
-const dialogTitle = {
-  ADD: 'Add Wine to Inventory',
-  EDIT: 'Edit Wine Inventory Entry'
-}
-
-export default function WineInputDialog({ mode, defaultWineInputState, categories, onSubmit }: WineInputDialogProps) {
+export default function WineInputDialog({ defaultWineInputState, categories }: WineInputDialogProps) {
   const router = useRouter();
-  const { loading, setLoading } = useContext(OptimisticFormContext);
+  const { loading, saveWine } = useContext(OptimisticFormContext);
 
   const [ open, setOpen ] = useState(false);
   const [ wineState, setWineState ] = useState(defaultWineInputState)
   const [ submitError, setSubmitError ] = useState(defaultErrorState)
-  const [ clicked, setClicked ] = useState(false)
-  const [ openArchiveModal, setOpenArchiveModal ] = useState(false)
 
   const handleClickOpen = () => setOpen(true);
 
@@ -64,17 +53,6 @@ export default function WineInputDialog({ mode, defaultWineInputState, categorie
     setSubmitError(defaultErrorState);
     setWineState(defaultWineInputState)
     setOpen(false);
-    setClicked(false)
-  };
-
-  const handleOpenArchiveModal  = () => setOpenArchiveModal(true);
-  const handleCloseArchiveModal = () => {
-    setWineState((ws) => ({
-      ...ws,
-      Quantity: '0'
-    }))
-    setOpenArchiveModal(false);
-    setTimeout(() => handleSubmit(), 100);
   };
 
   const handleType = (name: string, value: WineField) => {
@@ -123,7 +101,7 @@ export default function WineInputDialog({ mode, defaultWineInputState, categorie
     let error = false;
     const getErrorState = (wineField: WineField) => !wineField;
     Object.keys(submitError).forEach(key => {
-      if (!(mode === 'EDIT' && key === 'Quantity') && getErrorState(wineState[key as keyof typeof wineState])) {
+      if (getErrorState(wineState[key as keyof typeof wineState])) {
         setSubmitError(se => ({
           ...se,
           [key]: true
@@ -134,63 +112,20 @@ export default function WineInputDialog({ mode, defaultWineInputState, categorie
     return error
   }
 
-  const handleArchive = () => {
-    setWineState((ws) => ({
-      ...ws,
-      Archived: 'true'
-    }));
-    handleCloseArchiveModal();
-  }
-
-  const handleClickSubmit = async () => {
-    setClicked(true)
-    if (!Number(wineState.Quantity)) {
-      handleOpenArchiveModal()
-    } else {
-      handleSubmit();
-    };
-  }
-
   const handleSubmit = async () => {
-    setLoading(true)
     const error = validateRequiredFields();
     if (error) {
-      setLoading(false)
       return error
     };
-    const typedWine: Wine = Object.entries(wineState).reduce((acc, [name, value]) => ({
-      ...acc,
-      [name]    : handleType(name, value),
-    }), defaultWineState)
-    const response = await onSubmit(typedWine);
+    const response = await saveWine(wineState, 'new')
     if (response.success) router.refresh();
     handleClose();
   }
-
-  const handleDelete = async () => {
-    setClicked(true)
-    setLoading(true)
-    const resp = await fetch(`/api`, {
-      method: 'DELETE',
-      body: JSON.stringify(wineState)
-    });
-    const response = await resp.json();
-    if (response.success) router.refresh();
-    handleClose();
-  }
-
-  useEffect(() => {
-    setWineState(defaultWineInputState)
-  }, [defaultWineInputState])
-
-  useEffect(() => {
-    if (clicked && !loading) handleClose();
-  }, [ loading ])
 
   return (
     <>
       <WineInputButton
-        mode={mode}
+        mode={'ADD'}
         onClick={handleClickOpen}
       />
       <Dialog
@@ -200,7 +135,7 @@ export default function WineInputDialog({ mode, defaultWineInputState, categorie
         aria-describedby="add-wine-dialog-description"
       >
         <DialogTitle id="add-wine-dialog-title">
-          {dialogTitle[mode as keyof typeof dialogTitle]}
+          Add Wine to Inventory
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="add-wine-dialog-description">
@@ -283,51 +218,12 @@ export default function WineInputDialog({ mode, defaultWineInputState, categorie
           <TextField fullWidth name='Comments' id="Comments" label="Comments" variant="standard" value={wineState.Comments} onChange={handleChange} multiline rows={4} />
         </DialogContent>
         <DialogActions>
-          { mode === 'EDIT' && <ConfirmationDialog handleConfirm={handleDelete} disabled={loading} /> }
-          <Button onClick={handleClickSubmit} disabled={loading} >Submit</Button>
+          <Button onClick={handleSubmit} disabled={loading} >Submit</Button>
           <Button onClick={handleClose} disabled={loading} autoFocus>
             Cancel
           </Button>
         </DialogActions>
       </Dialog>
-      <ArchiveModal open={openArchiveModal} handleClose={handleCloseArchiveModal} handleConfirm={handleArchive} />
     </>
   );
-}
-
-export function ConfirmationDialog({handleConfirm, disabled}: {handleConfirm: ()=>void, disabled: boolean}) {
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
-  return (
-    <>
-      <Button onClick={handleOpen} disabled={disabled}>Delete</Button>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="add-wine-dialog-title"
-        aria-describedby="add-wine-dialog-description"
-      >
-        <DialogTitle id="add-wine-dialog-title">
-          Are you Sure?
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            You are about to permanently delete this wine entry from the database.
-          </DialogContentText>
-          <DialogContentText>
-            This will be irreversible.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleConfirm}>Confirm</Button>
-          <Button onClick={handleClose} autoFocus>
-            Cancel
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </>
-  )
 }

@@ -6,8 +6,7 @@ import TableCell from '@mui/material/TableCell';
 import { OptimisticFormContext } from '../context/OptimisticFormContext';
 
 type FooterRowProps = {
-    columnHeadings: string[],
-    totalBottles: number
+  columnHeadings: string[],
 }
 
 export default function FooterRow({ columnHeadings }: FooterRowProps) {
@@ -16,7 +15,7 @@ export default function FooterRow({ columnHeadings }: FooterRowProps) {
   return (
     <TableRow sx={{background: 'black'}}>
       <TableCell sx={{color: 'white'}} align='center' >{`Total`}</TableCell>
-      { columnHeadings.map((h)=> <TableCell key={h} align="center" sx={{color: 'white'}}>{h === 'Quantity' ? `${totalBottles}` : ''}</TableCell>)}
+      { columnHeadings.map((h)=> <TableCell key={h} align="center" sx={{color: 'white'}}>{h === 'Quantity' ? `${totalBottles}` : ''}</TableCell>) }
     </TableRow>
   )
 }
