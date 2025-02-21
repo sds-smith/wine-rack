@@ -13,7 +13,7 @@ const handleType = (name: string, value: WineField) => {
     true: true,
     false: false
   }
-  return ['Notes', 'Archived'].includes(name) 
+  return ['Notes', 'Archived', 'GetMore'].includes(name) 
     ? stringToBool[value as keyof typeof stringToBool]
     : name === 'Quantity'
     ? Number(value)

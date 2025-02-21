@@ -21,6 +21,7 @@ export type Wine = {
     Quantity    : number;
     Comments?   : string;
     Archived?   : boolean;
+    GetMore?    : boolean;
 };
 
 export type WineInput = {
@@ -40,6 +41,7 @@ export type WineInput = {
     Quantity    : string;
     Comments?   : string;
     Archived?   : string;
+    GetMore?    : string;
 };
 
 export type WineField = string | number | boolean | Ready | null | undefined;
@@ -59,7 +61,7 @@ export const defaultWineState: Wine = {
     Notes: false,
     Quantity: 0,
     Comments: '',
-    Archived: false
+    Archived: false,
 };
 
 export const defaultWineInputState: WineInput = {
@@ -77,7 +79,8 @@ export const defaultWineInputState: WineInput = {
     Notes: '',
     Quantity: '',
     Comments: '',
-    Archived: ''
+    Archived: '',
+    GetMore: 'false'
 };
 
 export type Columns = {

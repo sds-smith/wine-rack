@@ -15,6 +15,8 @@ import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Box from '@mui/material/Box';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import WineInputButton from './WineInputButton';
 import ArchiveModal from './ArchiveModal';
 import ConfirmationDialog from './ConfirmationDialog';
@@ -62,6 +64,7 @@ export default function EditWineDialog({wineID, categories}: EditWineDialogProps
   const handleOpenArchiveModal  = () => setOpenArchiveModal(true);
   const handleCloseArchiveModal = () => {
     setOpenArchiveModal(false);
+    handleSubmit(wine)
   };
   
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -74,6 +77,12 @@ export default function EditWineDialog({wineID, categories}: EditWineDialogProps
         [name]: false
       }))
     }
+  }
+
+  const handleCheck = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = e.target;
+    console.log({ name, checked })
+    onChangeWine(wineID, name, `${checked}`)
   }
   
   const validateRequiredFields = () => {
@@ -221,6 +230,11 @@ export default function EditWineDialog({wineID, categories}: EditWineDialogProps
           <TextField fullWidth name='Comments' id="Comments" label="Comments" variant="standard" value={wine.Comments} onChange={handleChange} multiline rows={4} />
         </DialogContent>
         <DialogActions>
+          <FormControlLabel 
+            sx={{width: '55%', color: 'rgba(0, 0, 0, 0.6)' }} 
+            control={<Checkbox checked={wine.GetMore || false } onChange={handleCheck} name='GetMore' inputProps={{ 'aria-label': 'controlled' }} />} 
+            label="Get More" 
+          />
           <ConfirmationDialog handleConfirm={handleDelete} disabled={loading} /> 
           <Button onClick={handleClickSubmit} disabled={loading} >Submit</Button>
           <Button onClick={handleCancel} disabled={loading} autoFocus>
