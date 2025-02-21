@@ -80,7 +80,6 @@ export const defaultWineInputState: WineInput = {
     Quantity: '',
     Comments: '',
     Archived: '',
-    GetMore: 'false'
 };
 
 export type Columns = {
