@@ -1,4 +1,5 @@
 
+import { Fragment } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -16,6 +17,8 @@ import FooterRow from './FooterRow';
 import { OptimisticFormProvider } from '../context/OptimisticFormContext';
 import { getWines } from '../utils/getWines';
 import { Wine } from '../types/wine';
+
+const Spacer = () => <TableRow sx={{height: '20px', borderBottom: '1px solid rgba(128, 128, 128, 0.2)'}}/>
 
 export default async function WineTable() {
   const { 
@@ -41,26 +44,31 @@ export default async function WineTable() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {wineList.map((row: Wine) => (
-                <TableRow
-                  key={row.ID}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell align="center" size='small' sx={{width: '10px'}}>
-                    <EditWineDialog
-                      wineID={row.ID!}
-                      categories={categories}
-                    />
-                  </TableCell>
-                    { columnHeadings.map(h => (
-                      <TableBodyCell 
-                        key={h} 
-                        columnId={h}
-                        wine={row}
-                      />
-                    ))}
-                </TableRow>
-              ))}
+              {wineList.map((row: Wine, idx: number) => {
+
+                return (
+                  <Fragment key={row.ID}>
+                    { idx > 0 && row.Category !== wineList[idx-1].Category && <Spacer />}
+                    <TableRow
+                      
+                      sx={{ '&:last-child td, &:last-child th': { border: 0 }, }}
+                    >
+                      <TableCell align="center" size='small' sx={{width: '10px'}}>
+                        <EditWineDialog
+                          wineID={row.ID!}
+                          categories={categories}
+                        />
+                      </TableCell>
+                        { columnHeadings.map(h => (
+                          <TableBodyCell 
+                            key={h} 
+                            columnId={h}
+                            wine={row}
+                          />
+                        ))}
+                    </TableRow>
+                  </Fragment>
+              )})}
             </TableBody>
             <TableFooter sx={{position: 'sticky', bottom: 0}}>
               <FooterRow
