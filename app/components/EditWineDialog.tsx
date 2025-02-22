@@ -31,7 +31,6 @@ type EditWineDialogProps = {
 const defaultErrorState = {
   Category: false,
   Producer: false,
-  Label: false,
   Quantity: false,
   Notes: false
 }
@@ -186,7 +185,6 @@ export default function EditWineDialog({wineID, categories}: EditWineDialogProps
             name='Label' id="Label" label="Label" variant="standard" 
             value={wine.Label} 
             onChange={handleChange} 
-            required error={submitError.Label} helperText={submitError.Label ? 'Label cannot be empty' : ''}
           />
           <TextField fullWidth name='Appellation' id="Appellation" label="Appellation" variant="standard" value={wine.Appellation} onChange={handleChange} />
           <Box sx={{width: '100%', marginTop: '15px'}}>
