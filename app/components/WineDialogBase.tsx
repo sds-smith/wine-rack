@@ -34,7 +34,6 @@ type WineInputDialogProps = {
 const defaultErrorState = {
   Category: false,
   Producer: false,
-  Label: false,
   Quantity: false,
   Notes: false
 }
@@ -160,7 +159,6 @@ export default function WineInputDialog({ defaultWineInputState, categories }: W
             name='Label' id="Label" label="Label" variant="standard" 
             value={wineState.Label} 
             onChange={handleChange} 
-            required error={submitError.Label} helperText={submitError.Label ? 'Label cannot be empty' : ''}
           />
           <TextField fullWidth name='Appellation' id="Appellation" label="Appellation" variant="standard" value={wineState.Appellation} onChange={handleChange} />
           <Box sx={{width: '100%', marginTop: '15px'}}>

@@ -11,7 +11,7 @@ export type Wine = {
     Country?    : string;
     Vintage?    : string;
     Producer    : string;
-    Label       : string;
+    Label?      : string;
     Appellation?: string;
     Ready       : Ready;
     Source?     : string;
@@ -31,7 +31,7 @@ export type WineInput = {
     Country?    : string;
     Vintage?    : string;
     Producer    : string;
-    Label       : string;
+    Label?      : string;
     Appellation?: string;
     Ready       : Ready;
     Source?     : string;
