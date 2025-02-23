@@ -17,8 +17,6 @@ const handleType = (name: string, value: WineField) => {
     ? stringToBool[value as keyof typeof stringToBool]
     : name === 'Quantity'
     ? Number(value)
-    // : name === 'Price'
-    // ? Number(value)
     : value;
 }
 
