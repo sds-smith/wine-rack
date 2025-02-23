@@ -172,7 +172,7 @@ export default function WineInputDialog({ defaultWineInputState, categories }: W
               fullWidth 
               name='Price' 
               id="Price" 
-              value={wineState.Price ?? ''} 
+              value={wineState.Price ? wineState.Price : ''} 
               onChange={handleChange}
               type='text'
               startAdornment={<InputAdornment position="start">$</InputAdornment>}

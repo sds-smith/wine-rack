@@ -2,7 +2,7 @@ import client from "../../services/mongodb";
 import chunk from "./chunkArray";
 import { Wine, Metadata, initialMetaData } from "../types/wine";
 
-const db = client.db("wine_rack");
+const db = client.db(process.env.MONGODB_DATABASE);
 
 const getWineData = async () => {
     try {
@@ -28,7 +28,7 @@ async function loadWines() {
     const response = await getWineData();
     const { wineData } = await response.json();
 
-    return wineData.map((w: { _id: any; }) => ({ ...w, ID: w._id}))
+    return wineData.map((w: { _id: any; Price: number; }) => ({ ...w, ID: w._id, ...(w.Price && {Price: w.Price.toFixed(2)}) }))
 }
 
 export async function getWines() {

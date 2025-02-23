@@ -17,9 +17,11 @@ const boolToYesNo = {
 }
 
 export default function TableBodyCell({columnId, wine}: TableBodyCellProps) {
+  if (columnId === 'Price') console.log('wine.Price',wine.Price)
   const cellContent = columnId === 'Ready'
     ? !wine.Ready.close || wine.Ready.close === wine.Ready.open ? `${wine.Ready.open }`: `${wine.Ready.open} - ${wine.Ready.close}`
     : columnId === 'Notes' ? boolToYesNo[`${wine.Notes}`] 
+    : columnId === 'Price' ? (Boolean(wine.Price) && Number(wine.Price) > 0) ? `$${wine.Price}` : ''
     : wine[columnId as keyof Wine] ? `${wine[columnId as keyof Wine]}` : '';
 
     const { ID } = wine;

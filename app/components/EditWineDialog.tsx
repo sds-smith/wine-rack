@@ -198,7 +198,7 @@ export default function EditWineDialog({wineID, categories}: EditWineDialogProps
               fullWidth 
               name='Price' 
               id="Price" 
-              value={wine.Price ?? ''} 
+              value={wine.Price ? wine.Price : ''} 
               onChange={handleChange}
               type='text'
               startAdornment={<InputAdornment position="start">$</InputAdornment>}

@@ -17,8 +17,8 @@ const handleType = (name: string, value: WineField) => {
     ? stringToBool[value as keyof typeof stringToBool]
     : name === 'Quantity'
     ? Number(value)
-    : name === 'Price'
-    ? parseFloat(`${value}`)
+    // : name === 'Price'
+    // ? Number(value)
     : value;
 }
 
@@ -116,10 +116,15 @@ export const OptimisticFormProvider: FC<ProviderProps> = ({wineList, children}) 
       new :"POST"
     }
     const wineToSave = type === 'update'
-      ? wine
+      ? {
+        ...wine,
+        Price: Number(wine.Price)
+
+      }
       : Object.entries(wine).reduce((acc, [columnId, value]) => ({
         ...acc,
-        [columnId] : handleType(columnId, value)
+        [columnId] : handleType(columnId, value),
+        Price: Number(wine.Price)
       }), defaultWineState)
     setLoading(true)
     const resp = await fetch(`/api`, {

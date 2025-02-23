@@ -2,7 +2,7 @@ import { ObjectId } from "mongodb";
 import client from "../../services/mongodb";
 import { revalidatePath } from 'next/cache'
 
-const db = client.db("wine_rack");
+const db = client.db(process.env.MONGODB_DATABASE);
 
 export async function GET() {
     try {
