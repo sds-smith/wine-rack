@@ -36,10 +36,10 @@ export default async function WineTable() {
         />
         <PrintButton />
         <TableContainer component={Paper} sx={{ overflow: "auto", height: "78vh" }}>
-          <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+          <Table size="small" aria-label="a dense table">
             <TableHead sx={{position: 'sticky', top: 0}}>
               <TableRow sx={{background: 'black'}}>
-                <TableCell size='small' sx={{width: '10px'}}></TableCell>
+                <TableCell size='small' ></TableCell>
                 { columnHeadings.map(h => <TableCell key={h} align="center" sx={{color: 'white'}}>{h}</TableCell>)}
               </TableRow>
             </TableHead>
@@ -53,7 +53,7 @@ export default async function WineTable() {
                       
                       sx={{ '&:last-child td, &:last-child th': { border: 0 }, }}
                     >
-                      <TableCell align="center" size='small' sx={{width: '10px'}}>
+                      <TableCell align="center" size='small' >
                         <EditWineDialog
                           wineID={row.ID!}
                           categories={categories}
