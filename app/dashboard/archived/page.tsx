@@ -7,7 +7,7 @@ export default async function Rack() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <h3 style={{marginBottom: '16px'}}>Current Inventory</h3>
+        <h3 style={{marginBottom: '16px'}}>Wine Archive</h3>
         <WineTable/>
       </main>
     </div>

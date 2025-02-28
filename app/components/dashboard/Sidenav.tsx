@@ -2,16 +2,21 @@
 
 import { Suspense } from 'react';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
+import Link from 'next/link';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
+import ListSubheader from '@mui/material/ListSubheader';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import WineBarIcon from '@mui/icons-material/WineBar';
+import ArchiveIcon from '@mui/icons-material/Archive';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import IconButton from '@mui/material/IconButton';
 
 const NavDrawer = () => {
   const searchParams = useSearchParams();
@@ -32,31 +37,50 @@ const NavDrawer = () => {
   return (
     <div>
       <Drawer open={open} onClose={toggleDrawer(false)}>
-        <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
-          <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
+        <Box sx={{ width: 250 }} role="presentation" >
+          <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
+            <IconButton onClick={toggleDrawer(false)}>
+              <ChevronLeftIcon /> 
+            </IconButton>
+          </Box>
           <Divider />
-          <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-              <ListItem key={text} disablePadding>
+          <List
+            subheader={
+              <ListSubheader component="div" id="tables-list-subheader">
+                Tables
+              </ListSubheader>
+            }
+          >
+            <ListItem disablePadding >
+              <Link href='/dashboard/rack'>
                 <ListItemButton>
                   <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                    <WineBarIcon />
                   </ListItemIcon>
-                  <ListItemText primary={text} />
+                  <ListItemText primary={'Current Inventory'} />
                 </ListItemButton>
-              </ListItem>
-            ))}
+              </Link>
+            </ListItem>              
+            <ListItem  disablePadding >
+            <Link href='/dashboard/archived'>
+              <ListItemButton>
+                <ListItemIcon>
+                  <ArchiveIcon />
+                </ListItemIcon>
+                <ListItemText primary={'Archived'} />
+              </ListItemButton>
+            </Link >
+            </ListItem>              
+            <ListItem  disablePadding>
+              <Link href='/dashboard/get_more'>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <ShoppingCartIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={'Get More'} />
+                </ListItemButton>
+              </Link >
+            </ListItem>
           </List>
         </Box>
       </Drawer>
