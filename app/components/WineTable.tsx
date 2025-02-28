@@ -29,7 +29,7 @@ export default async function WineTable() {
 
   return (
     <Box >
-      <TableContainer component={Paper} sx={{ overflow: "auto", height: "78vh" }}>
+      <TableContainer component={Paper} sx={{ overflow: "auto", height: "85vh" }}>
         <Table size="small" aria-label="a dense table">
           <TableHead sx={{position: 'sticky', top: 0}}>
             <TableRow sx={{background: 'black'}}>
