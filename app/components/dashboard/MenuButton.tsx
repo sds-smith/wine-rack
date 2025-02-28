@@ -1,11 +1,11 @@
 'use client'
 
-import * as React from 'react';
+import { Suspense } from 'react';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 
-export default function MenuButton() {
+const MenuToggle = () => {
     const searchParams = useSearchParams();
     const open = searchParams.get('open') === 'true';
     const pathname = usePathname();
@@ -32,5 +32,15 @@ export default function MenuButton() {
       >
         <MenuIcon />
       </IconButton>
+    )
+}
+
+export default function MenuButton() {
+
+      
+    return (
+      <Suspense>
+        <MenuToggle />
+      </Suspense>
     )
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import * as React from 'react';
+import { Suspense } from 'react';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -13,22 +13,21 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 
-export default function Sidenav() {
+const NavDrawer = () => {
   const searchParams = useSearchParams();
   const open = searchParams.get('open') === 'true';
   const pathname = usePathname();
   const { replace } = useRouter();
 
   const toggleDrawer = (newOpen: boolean) => () => {
-    console.log({open, newOpen})
-  const params = new URLSearchParams(searchParams);
-  if (open) {
-    params.delete('open');
-  } else {
-    params.set('open', `${newOpen}`);
-  }
-  replace(`${pathname}?${params.toString()}`);
-};
+    const params = new URLSearchParams(searchParams);
+    if (open) {
+      params.delete('open');
+    } else {
+      params.set('open', `${newOpen}`);
+    }
+    replace(`${pathname}?${params.toString()}`);
+  };
 
   return (
     <div>
@@ -63,4 +62,12 @@ export default function Sidenav() {
       </Drawer>
     </div>
   );
+}
+
+export default function Sidenav() {
+  return (
+    <Suspense>
+      <NavDrawer />
+    </Suspense>
+  )
 }
