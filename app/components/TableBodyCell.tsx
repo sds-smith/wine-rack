@@ -2,7 +2,7 @@
 
 import React from 'react'
 import TableCell from '@mui/material/TableCell';
-import FormField from './FormField';
+// import FormField from './FormField';
 import { Wine } from '../types/wine';
 
 type TableBodyCellProps = {
@@ -23,12 +23,13 @@ export default function TableBodyCell({columnId, wine}: TableBodyCellProps) {
     : columnId === 'Price' ? (Boolean(wine.Price) && Number(wine.Price) > 0) ? `$${wine.Price}` : ''
     : wine[columnId as keyof Wine] ? `${wine[columnId as keyof Wine]}` : '';
 
-    const { ID } = wine;
+    // const { ID } = wine;
 
   return (
     <>
       { columnId === 'Quantity'
-        ? <FormField columnId={columnId} wineID={ID!}/>
+        // ? <FormField columnId={columnId} wineID={ID!}/>
+        ? <TableCell align="center">{cellContent}</TableCell>
         : <TableCell align="center">{cellContent}</TableCell>
       }
     </>
