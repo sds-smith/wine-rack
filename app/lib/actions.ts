@@ -47,6 +47,12 @@ const UpdateWineSchema = z.object({
     GetMore      : z.optional(z.coerce.boolean()),
 });
 
+
+const UpdateQuantitySchema = z.object({
+    ID           : z.optional(z.string()),
+    Quantity     : z.coerce.number(),
+});
+
 export async function createNewWine(formData: FormData) {
     const wineData = CreateWineSchema.parse(Object.fromEntries(formData.entries()))
     const wine = {
@@ -78,6 +84,23 @@ export async function updateWine(formData: FormData) {
         ...wine,
         _id
     });
+
+    revalidatePath('/dashboard/rack');
+    redirect('/dashboard/rack');
+}
+
+export async function updateQuantity(formData: FormData) {
+    const { ID, Quantity } = UpdateQuantitySchema.parse({
+        ID: formData.get('ID'),
+        Quantity: formData.get('Quantity')
+    })
+    const _id = new ObjectId(ID);
+    
+console.log('[updateQuantity]',{ID, Quantity})
+    await db.collection("wines").updateOne(
+        {_id}, 
+        { $set: { Quantity }}
+    );
 
     revalidatePath('/dashboard/rack');
     redirect('/dashboard/rack');
