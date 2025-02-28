@@ -42,16 +42,13 @@ export default function WineInputDialog({ defaultWineInputState, categories }: W
   const router = useRouter();
   const { loading, saveWine } = useContext(OptimisticFormContext);
 
-  const [ open, setOpen ] = useState(false);
   const [ wineState, setWineState ] = useState(defaultWineInputState)
   const [ submitError, setSubmitError ] = useState(defaultErrorState)
 
-  const handleClickOpen = () => setOpen(true);
 
   const handleClose = () => {
     setSubmitError(defaultErrorState);
     setWineState(defaultWineInputState)
-    setOpen(false);
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -109,13 +106,9 @@ export default function WineInputDialog({ defaultWineInputState, categories }: W
 
   return (
     <>
-      <WineInputButton
-        mode={'ADD'}
-        onClick={handleClickOpen}
-      />
+
       <Dialog
-        open={open}
-        onClose={handleClose}
+        open
         aria-labelledby="add-wine-dialog-title"
         aria-describedby="add-wine-dialog-description"
       >

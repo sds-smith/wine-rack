@@ -29,55 +29,48 @@ export default async function WineTable() {
   const columnHeadings = columns.filter(h => ![ 'Category' ].includes(h));
 
   return (
-    <OptimisticFormProvider wineList={wineList} >
-      <Box >
-        <AddWineDialog
-          categories={categories}
-        />
-        <PrintButton />
-        <TableContainer component={Paper} sx={{ overflow: "auto", height: "78vh" }}>
-          <Table size="small" aria-label="a dense table">
-            <TableHead sx={{position: 'sticky', top: 0}}>
-              <TableRow sx={{background: 'black'}}>
-                <TableCell size='small' ></TableCell>
-                { columnHeadings.map(h => <TableCell key={h} align="center" sx={{color: 'white'}}>{h}</TableCell>)}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {wineList.map((row: Wine, idx: number) => {
-
-                return (
-                  <Fragment key={row.ID}>
-                    { idx > 0 && row.Category !== wineList[idx-1].Category && <Spacer />}
-                    <TableRow
-                      
-                      sx={{ '&:last-child td, &:last-child th': { border: 0 }, }}
-                    >
-                      <TableCell align="center" size='small' >
-                        <EditWineDialog
-                          wineID={row.ID!}
-                          categories={categories}
+    <Box >
+      <TableContainer component={Paper} sx={{ overflow: "auto", height: "78vh" }}>
+        <Table size="small" aria-label="a dense table">
+          <TableHead sx={{position: 'sticky', top: 0}}>
+            <TableRow sx={{background: 'black'}}>
+              <TableCell size='small' ></TableCell>
+              { columnHeadings.map(h => <TableCell key={h} align="center" sx={{color: 'white'}}>{h}</TableCell>)}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {wineList.map((row: Wine, idx: number) => {
+              return (
+                <Fragment key={row.ID}>
+                  { idx > 0 && row.Category !== wineList[idx-1].Category && <Spacer />}
+                  <TableRow
+                    
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 }, }}
+                  >
+                    <TableCell align="center" size='small' >
+                      {/* <EditWineDialog
+                        wineID={row.ID!}
+                        categories={categories}
+                      /> */}
+                    </TableCell>
+                      { columnHeadings.map(h => (
+                        <TableBodyCell 
+                          key={h} 
+                          columnId={h}
+                          wine={row}
                         />
-                      </TableCell>
-                        { columnHeadings.map(h => (
-                          <TableBodyCell 
-                            key={h} 
-                            columnId={h}
-                            wine={row}
-                          />
-                        ))}
-                    </TableRow>
-                  </Fragment>
-              )})}
-            </TableBody>
-            <TableFooter sx={{position: 'sticky', bottom: 0}}>
-              <FooterRow
-                columnHeadings={columnHeadings}
-              />
-            </TableFooter>
-          </Table>
-        </TableContainer>
-      </Box>
-    </OptimisticFormProvider>
+                      ))}
+                  </TableRow>
+                </Fragment>
+            )})}
+          </TableBody>
+          <TableFooter sx={{position: 'sticky', bottom: 0}}>
+            <FooterRow
+              columnHeadings={columnHeadings}
+            />
+          </TableFooter>
+        </Table>
+      </TableContainer>
+    </Box>
   );
 }
