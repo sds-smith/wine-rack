@@ -15,7 +15,6 @@ import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Box from '@mui/material/Box';
-import WineInputButton from './WineInputButton';
 import { OptimisticFormContext } from '../context/OptimisticFormContext';
 import { Wine, WineField, WineInput } from '../types/wine';
 

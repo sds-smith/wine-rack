@@ -9,12 +9,11 @@ import TableRow from '@mui/material/TableRow';
 import TableFooter from '@mui/material/TableFooter';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
-import PrintButton from './PrintButton';
-import AddWineDialog from './AddWineDialog';
-import EditWineDialog from './EditWineDialog';
+// import PrintButton from './PrintButton';
+// import AddWineDialog from './AddWineDialog';
+// import EditWineDialog from './EditWineDialog';
 import TableBodyCell from './TableBodyCell';
 import FooterRow from './FooterRow';
-import { OptimisticFormProvider } from '../context/OptimisticFormContext';
 import { getWines } from '../utils/getWines';
 import { Wine } from '../types/wine';
 
@@ -24,7 +23,7 @@ export default async function WineTable() {
   const { 
     wineList, 
     columns, 
-    categories 
+    // categories 
   } = await getWines();
   const columnHeadings = columns.filter(h => ![ 'Category' ].includes(h));
 
