@@ -11,9 +11,9 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import TableBodyCell from './TableBodyCell';
 import FooterRow from './FooterRow';
-import { getWines } from '../utils/getWines';
-import { Wine } from '../types/wine';
-import EditButton from './EditButton';
+import { getWines } from '../../utils/getWines';
+import { Wine } from '../../types/wine';
+import EditButton from '../buttons/EditButton';
 
 const Spacer = () => <TableRow sx={{height: '20px', borderBottom: '1px solid rgba(128, 128, 128, 0.2)'}}/>
 

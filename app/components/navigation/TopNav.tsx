@@ -4,8 +4,8 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import MenuButton from './MenuButton';
-import PrintButton from '../PrintButton';
-import AddButton from '../AddButton';
+import PrintButton from '../buttons/PrintButton';
+import AddButton from '../buttons/AddButton';
 
 export default function TopNav() {
   return (

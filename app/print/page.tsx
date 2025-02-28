@@ -1,5 +1,5 @@
 
-import PrintableTable from '../components/PrintableTable';
+import PrintableTable from '../components/table/PrintableTable';
 import { getWines } from '../utils/getWines';
 
 export default async function Print() {

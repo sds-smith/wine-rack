@@ -13,8 +13,8 @@ import FormControl from '@mui/material/FormControl';
 import Box from '@mui/material/Box';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import { Wine } from '../types/wine';
-import { updateWine } from '../lib/actions';
+import { Wine } from '../../types/wine';
+import { updateWine } from '../../lib/actions';
 
 type EditWineDialogProps = {
   categories: string[],

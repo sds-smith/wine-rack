@@ -1,5 +1,4 @@
 
-
 import { redirect } from 'next/navigation';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -12,7 +11,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Input from '@mui/material/Input';
 import FormControl from '@mui/material/FormControl';
 import Box from '@mui/material/Box';
-import { createNewWine } from '../lib/actions';
+import { createNewWine } from '../../lib/actions';
 
 type AddWineDialogProps = {
   categories: string[],

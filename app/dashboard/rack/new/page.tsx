@@ -1,6 +1,6 @@
 
-import AddWineDialog from "@/app/components/AddWineDialog";
-import WineTable from "../../../components/WineTable";
+import AddWineDialog from "@/app/components/dialogs/AddWineDialog";
+import WineTable from "../../../components/table/WineTable";
 import styles from "../../../page.module.css";
 import { getWines } from "@/app/utils/getWines";
 

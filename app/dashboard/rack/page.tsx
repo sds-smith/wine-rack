@@ -1,5 +1,5 @@
 
-import WineTable from "../../components/WineTable";
+import WineTable from "../../components/table/WineTable";
 import styles from "../../page.module.css";
 
 export default async function Rack() {

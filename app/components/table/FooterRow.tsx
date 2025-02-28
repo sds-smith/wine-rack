@@ -1,7 +1,7 @@
 
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
-import { getWines } from '../utils/getWines';
+import { getWines } from '../../utils/getWines';
 
 type FooterRowProps = {
   columnHeadings: string[],
