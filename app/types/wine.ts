@@ -1,4 +1,4 @@
-import type { FindCursor, WithId, Document } from 'mongodb'
+import type { WithId, Document } from 'mongodb'
 
 export type Ready = {
     open?    : string;
