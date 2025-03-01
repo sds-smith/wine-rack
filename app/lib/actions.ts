@@ -89,6 +89,8 @@ export async function updateWine(formData: FormData) {
         _id
     });
 
+    if (wine.Archived) revalidatePath(`/dashboard/archived`)
+    if (wine.GetMore) revalidatePath(`/dashboard/get_more`)
     revalidatePath(`/dashboard/${page}`);
     redirect(`/dashboard/${page}`);
 }
