@@ -8,14 +8,16 @@ type FormFieldProps = {
     columnId: string,
     wineID: string,
     value: string,
+    page: string
 }
 
-export default function FormField({columnId, wineID, value}: FormFieldProps) {
+export default function FormField({columnId, wineID, value, page}: FormFieldProps) {
 
     return (
       <TableCell align="right">
         <form action={updateQuantity}>
           <Input type='hidden' name='ID' defaultValue={wineID} />
+          <Input type='hidden' name='page' defaultValue={page}/>
           <TextField 
             variant='standard' 
             size='small' 

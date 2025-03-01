@@ -28,6 +28,7 @@ const CreateWineSchema = z.object({
 
 const UpdateWineSchema = z.object({
     ID           : z.optional(z.string()),
+    page         : z.optional(z.string()),
     Category     : z.string(),
     Varietal     : z.optional(z.string()),
     Country      : z.optional(z.string()),
@@ -50,6 +51,7 @@ const UpdateWineSchema = z.object({
 
 const UpdateQuantitySchema = z.object({
     ID           : z.optional(z.string()),
+    page         : z.optional(z.string()),
     Quantity     : z.coerce.number(),
 });
 
@@ -71,6 +73,7 @@ export async function createNewWine(formData: FormData) {
 export async function updateWine(formData: FormData) {
     const wineData = UpdateWineSchema.parse(Object.fromEntries(formData.entries()))
     const _id = new ObjectId(wineData.ID);
+    const page = wineData.page;
     
     const wine = {
         ...wineData,
@@ -79,30 +82,31 @@ export async function updateWine(formData: FormData) {
     delete wine['Ready-open']
     delete wine['Ready-close']
     delete wine.ID
+    delete wine.page
 
     await db.collection("wines").replaceOne({_id}, {
         ...wine,
         _id
     });
 
-    revalidatePath('/dashboard/rack');
-    redirect('/dashboard/rack');
+    revalidatePath(`/dashboard/${page}`);
+    redirect(`/dashboard/${page}`);
 }
 
 export async function updateQuantity(formData: FormData) {
-    const { ID, Quantity } = UpdateQuantitySchema.parse({
+    const { ID, Quantity, page } = UpdateQuantitySchema.parse({
         ID: formData.get('ID'),
-        Quantity: formData.get('Quantity')
+        Quantity: formData.get('Quantity'),
+        page: formData.get('page')
     })
     const _id = new ObjectId(ID);
     
-console.log('[updateQuantity]',{ID, Quantity})
     await db.collection("wines").updateOne(
         {_id}, 
         { $set: { Quantity }}
     );
 
-    revalidatePath('/dashboard/rack');
-    redirect('/dashboard/rack');
+    revalidatePath(`/dashboard/${page}`);
+    redirect(`/dashboard/${page}`);
 }
 

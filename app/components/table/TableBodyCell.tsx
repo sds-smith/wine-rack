@@ -6,7 +6,8 @@ import { Wine } from '../../types/wine';
 
 type TableBodyCellProps = {
   wine: Wine,
-  columnId: string
+  columnId: string,
+  page: string
 }
 
 const boolToYesNo = {
@@ -15,7 +16,7 @@ const boolToYesNo = {
   null: ''
 }
 
-export default function TableBodyCell({columnId, wine}: TableBodyCellProps) {
+export default function TableBodyCell({columnId, wine, page}: TableBodyCellProps) {
   const cellContent = columnId === 'Ready'
     ? !wine.Ready.close || wine.Ready.close === wine.Ready.open ? `${wine.Ready.open }`: `${wine.Ready.open} - ${wine.Ready.close}`
     : columnId === 'Notes' ? boolToYesNo[`${wine.Notes}`] 
@@ -27,7 +28,7 @@ export default function TableBodyCell({columnId, wine}: TableBodyCellProps) {
   return (
     <>
       { columnId === 'Quantity'
-        ? <FormField columnId={columnId} wineID={ID!} value={cellContent}/>
+        ? <FormField columnId={columnId} wineID={ID!} value={cellContent} page={page}/>
         : <TableCell align="center">{cellContent}</TableCell>
       }
     </>

@@ -30,7 +30,8 @@ export async function getWineData(page: string) {
 export async function getWineByID(ID: string) {
     const _id = new ObjectId(ID);
     const wineArray = await db.collection("wines").find({ _id }).toArray()
-    return wineArray.find(wine => wine) as Wine
+    const wine = wineArray.find(wine => wine) as Wine
+    return { ...wine, ID }
 }
 
 export const categories: string[] = [

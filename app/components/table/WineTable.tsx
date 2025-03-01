@@ -55,6 +55,7 @@ export default async function WineTable({ page } : WineTableProps) {
                           key={h} 
                           columnId={h}
                           wine={row}
+                          page={page}
                         />
                       ))}
                   </TableRow>

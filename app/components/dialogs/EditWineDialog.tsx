@@ -41,6 +41,7 @@ export default function EditWineDialog({categories, wine, page}: EditWineDialogP
       <form action={updateWine} >
         <DialogContent sx={{paddingTop: '0px'}}>
           <Input type='hidden' name='ID' defaultValue={wine.ID}/>
+          <Input type='hidden' name='page' defaultValue={page}/>
           <TextField
             fullWidth
             select
