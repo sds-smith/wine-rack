@@ -13,8 +13,9 @@ import FormControl from '@mui/material/FormControl';
 import Box from '@mui/material/Box';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import ConfirmationDialog from './ConfirmationDialog';
 import { Wine } from '../../types/wine';
-import { updateWine } from '../../lib/actions';
+import { updateWine, deleteWine } from '../../lib/actions';
 
 type EditWineDialogProps = {
   categories: string[],
@@ -27,6 +28,11 @@ export default function EditWineDialog({categories, wine, page}: EditWineDialogP
   const handleClose = async () => {
     'use server'
     redirect(`/dashboard/${page}`)
+  }
+
+  const handleConfirm = async () => {
+    'use server'
+    await deleteWine(wine.ID!, page)
   }
 
   return (
@@ -114,9 +120,13 @@ export default function EditWineDialog({categories, wine, page}: EditWineDialogP
             label="Get More" 
           />
           <FormControlLabel 
-            sx={{width: '45%', color: 'rgba(0, 0, 0, 0.6)' }} 
+            sx={{width: '33%', color: 'rgba(0, 0, 0, 0.6)' }} 
             control={<Checkbox name='Archived' defaultChecked={wine.Archived} inputProps={{ 'aria-label': 'uncontrolled' }} />} 
             label="Archive" 
+          />
+          <ConfirmationDialog 
+            handleConfirm={handleConfirm}
+            disabled={false}
           />
           <Button type='submit' >Submit</Button>
           <Button onClick={handleClose} autoFocus>

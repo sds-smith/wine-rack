@@ -110,3 +110,10 @@ export async function updateQuantity(formData: FormData) {
     redirect(`/dashboard/${page}`);
 }
 
+export async function deleteWine(ID: string, page: string) {
+    const _id = new ObjectId(ID)
+    await db.collection("wines").deleteOne({_id})
+
+    revalidatePath(`/dashboard/${page}`);
+    redirect(`/dashboard/${page}`);
+}
