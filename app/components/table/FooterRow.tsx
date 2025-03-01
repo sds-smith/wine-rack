@@ -1,14 +1,13 @@
 
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
-import { getWines } from '../../utils/getWines';
 
 type FooterRowProps = {
   columnHeadings: string[],
+  totalBottles: number
 }
 
-export default async function FooterRow({ columnHeadings }: FooterRowProps) {
-  const { metaData: { totalBottles } } = await getWines();
+export default async function FooterRow({ columnHeadings, totalBottles }: FooterRowProps) {
 
   return (
     <TableRow sx={{background: 'black'}}>

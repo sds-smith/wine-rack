@@ -11,17 +11,18 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import TableBodyCell from './TableBodyCell';
 import FooterRow from './FooterRow';
-import { getWines } from '../../utils/getWines';
+import { getWineData, columns } from '@/app/utils/data';
 import { Wine } from '../../types/wine';
 import EditButton from '../buttons/EditButton';
 
 const Spacer = () => <TableRow sx={{height: '20px', borderBottom: '1px solid rgba(128, 128, 128, 0.2)'}}/>
 
-export default async function WineTable() {
-  const { 
-    wineList, 
-    columns, 
-  } = await getWines();
+type WineTableProps = {
+  page: string
+}
+
+export default async function WineTable({ page } : WineTableProps) {
+  const { wineList, metaData : { totalBottles } } = await getWineData(page);
   const columnHeadings = columns.filter(h => ![ 'Category' ].includes(h));
 
   return (
@@ -46,6 +47,7 @@ export default async function WineTable() {
                     <TableCell align="center" size='small' >
                       <EditButton
                         id={row.ID!}
+                        page={page}
                       />
                     </TableCell>
                       { columnHeadings.map(h => (
@@ -62,6 +64,7 @@ export default async function WineTable() {
           <TableFooter sx={{position: 'sticky', bottom: 0}}>
             <FooterRow
               columnHeadings={columnHeadings}
+              totalBottles={totalBottles}
             />
           </TableFooter>
         </Table>

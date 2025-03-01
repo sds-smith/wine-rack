@@ -1,10 +1,11 @@
+import type { FindCursor, WithId, Document } from 'mongodb'
 
 export type Ready = {
     open?    : string;
     close?   : string;
 }
 
-export type Wine = {
+export interface Wine extends WithId<Document> {
     ID?         : string;
     Category    : string;
     Varietal?   : string;
@@ -46,41 +47,6 @@ export type WineInput = {
 
 export type WineField = string | number | boolean | Ready | null | undefined;
 
-export const defaultWineState: Wine = {
-    Category: '',
-    Varietal: '',
-    Country: '',
-    Vintage: '',
-    Producer: '',
-    Label: '',
-    Appellation: '',
-    Ready: {open: '', close: ''},
-    Source: '',
-    Price: 0,
-    Acquired: '',
-    Notes: false,
-    Quantity: 0,
-    Comments: '',
-    Archived: false,
-};
-
-export const defaultWineInputState: WineInput = {
-    Category: '',
-    Varietal: '',
-    Country: '',
-    Vintage: '',
-    Producer: '',
-    Label: '',
-    Appellation: '',
-    Ready: {open: '', close: ''},
-    Source: '',
-    Price: '',
-    Acquired: '',
-    Notes: '',
-    Quantity: '',
-    Comments: '',
-    Archived: '',
-};
 
 export type Columns = {
     A: string,

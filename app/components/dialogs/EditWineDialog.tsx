@@ -18,14 +18,15 @@ import { updateWine } from '../../lib/actions';
 
 type EditWineDialogProps = {
   categories: string[],
-  wine: Wine
+  wine: Wine,
+  page: string
 } 
 
-export default function EditWineDialog({categories, wine}: EditWineDialogProps) {  
+export default function EditWineDialog({categories, wine, page}: EditWineDialogProps) {  
 
   const handleClose = async () => {
     'use server'
-    redirect('/dashboard/rack')
+    redirect(`/dashboard/${page}`)
   }
 
   return (
@@ -35,7 +36,7 @@ export default function EditWineDialog({categories, wine}: EditWineDialogProps) 
       aria-describedby="add-wine-dialog-description"
     >
       <DialogTitle id="add-wine-dialog-title" sx={{paddingBottom: '0px'}}>
-        Add Wine to Inventory
+        Edit Wine
       </DialogTitle>
       <form action={updateWine} >
         <DialogContent sx={{paddingTop: '0px'}}>
@@ -108,12 +109,12 @@ export default function EditWineDialog({categories, wine}: EditWineDialogProps) 
         <DialogActions>
           <FormControlLabel 
             sx={{width: '20%', color: 'rgba(0, 0, 0, 0.6)' }} 
-            control={<Checkbox name='GetMore' inputProps={{ 'aria-label': 'uncontrolled' }} />} 
+            control={<Checkbox name='GetMore' defaultChecked={wine.GetMore} inputProps={{ 'aria-label': 'uncontrolled' }} />} 
             label="Get More" 
           />
           <FormControlLabel 
             sx={{width: '45%', color: 'rgba(0, 0, 0, 0.6)' }} 
-            control={<Checkbox name='Archived' inputProps={{ 'aria-label': 'uncontrolled' }} />} 
+            control={<Checkbox name='Archived' defaultChecked={wine.Archived} inputProps={{ 'aria-label': 'uncontrolled' }} />} 
             label="Archive" 
           />
           <Button type='submit' >Submit</Button>

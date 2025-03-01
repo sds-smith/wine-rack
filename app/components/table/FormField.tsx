@@ -21,7 +21,7 @@ export default function FormField({columnId, wineID, value}: FormFieldProps) {
             size='small' 
             type='number' 
             name={columnId}
-            defaultValue={value} 
+            defaultValue={`${value || 0}`} 
             sx={{width: '35px'}}
             InputProps={{
               disableUnderline: true, 

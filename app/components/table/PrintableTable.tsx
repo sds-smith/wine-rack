@@ -16,7 +16,8 @@ import { Wine } from '../../types/wine';
 type PrintableTableProps = {
   columns: string[], 
   chunkedWineList: Wine[][], 
-  totalBottles: number
+  totalBottles: number,
+  page: string
 }
 
 const boolToYesNo = {
@@ -32,14 +33,14 @@ const getCellContent = (columnId: string, wine: Wine) => {
       : wine[columnId as keyof Wine] ? `${wine[columnId as keyof Wine]}` : '';
 }
 
-export default function PrintableTable({ columns, chunkedWineList, totalBottles }: PrintableTableProps) {
+export default function PrintableTable({ columns, chunkedWineList, totalBottles, page }: PrintableTableProps) {
   const router = useRouter();
 
   const columnHeadings = columns.filter(h => ![ 'Category' ].includes(h));
   
   useEffect(() => {
     window.print();
-    router.push('/')
+    router.push(`/dashboard/${page}`)
   }, [router])
 
   return (

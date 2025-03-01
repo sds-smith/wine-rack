@@ -1,15 +1,12 @@
 
-import WineTable from "../../components/table/WineTable";
-import styles from "../../page.module.css";
+import TablePage from "@/app/components/table/TablePage";
 
-export default async function Rack() {
+export default async function () {
 
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <h3 style={{marginBottom: '16px'}}>Current Inventory</h3>
-        <WineTable/>
-      </main>
-    </div>
+    <TablePage 
+      page={'rack'}
+      title='Current Inventory'
+    />
   );
 }
