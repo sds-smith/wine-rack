@@ -5,4 +5,5 @@ export interface User extends WithId<Document> {
     name: string;
     email: string;
     password: string;
+    firstLogin: boolean;
   };

@@ -8,7 +8,16 @@ import client from './services/mongodb';
  
 const db = client.db(process.env.MONGODB_DATABASE);
 
-async function getUser(email: string): Promise<User | undefined> {
+export async function getUser(email: string): Promise<User | undefined> {
+  try {
+    return await db.collection("users").findOne({ email }) as User;
+  } catch (error) {
+    console.error('Failed to fetch user:', error);
+    throw new Error('Failed to fetch user.');
+  }
+}
+
+export async function checkFirstLogin(email: string): Promise<User | undefined> {
   try {
     return await db.collection("users").findOne({ email }) as User;
   } catch (error) {
