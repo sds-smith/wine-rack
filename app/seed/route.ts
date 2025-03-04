@@ -1,6 +1,6 @@
 'use server'
 import client from "../../services/mongodb";
-import bcrypt from 'bcryptjs';
+// import bcrypt from 'bcryptjs';
 
 const db = client.db(process.env.MONGODB_DATABASE);
 
