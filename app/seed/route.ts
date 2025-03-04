@@ -21,57 +21,114 @@ const db = client.db(process.env.MONGODB_DATABASE);
 
 const categories = [
   {
-    title: 'White',
-    sub_categories: {
-      '01-W' : 'Sauvignon Blanc',
-      '02-W' : 'Chardonnay Burgundy',
-      '03-W' : 'Chardonnay Other',
-      '04-W' : 'All Other White',
-      '09-W' : 'Loire Valley Direct',
-
-    },
+    code    : '01-W',
+    title   : 'Sauvignon Blanc',
+    group   : 'White'
   },
   {
-    title: 'Sparkling',
-    sub_categories: {
-      '05-W' : 'Sparkling',
-    },
+    code    : '02-W',
+    title   : 'Chardonnay Burgundy',
+    group   : 'White'
   },
   {
-    title: 'Rose',
-    sub_categories: {
-      '06-R' : 'Rose'
-    },
+    code    : '03-W',
+    title   : 'Chardonnay Other',
+    group   : 'White'
   },
   {
-    title: 'Red',
-    sub_categories: {
-      '07-R'  : 'Pinot Noir',
-      '08-R'  : 'Pinot Noir Burgundy',
-      '09-R'  : 'Loire Valley Direct',
-      '10-R' : 'Bordeaux',
-      '11-R' : 'Beaujolais',
-      '12-R' : 'Merlot',
-      '13-R' : 'Zinfandel',
-      '14-R' : 'Cabernet Sauvignon',
-      '15-R' : 'Syrah',
-      '16-R' : 'Italy',
-      '17-R' : 'Italy Direct',
-      '18-R' : 'Red All Other',
-      '19-R' : 'South Africa Direct',
-    },
+    code    : '04-W',
+    title   : 'All Other White',
+    group   : 'White'
   },
   {
-    title: 'Dessert',
-    sub_categories: {
-      '20-D' : 'Dessert'
-    },
+    code    : '09-W',
+    title   : 'Loire Valley Direct',
+    group   : 'White'
   },
   {
-    title: 'Get More',
-    sub_categories: {
-      '25-M' : 'Get More'
-    },
+    code    : '05-W',
+    title   : 'Sparkling',
+    group   : 'Sparkling'
+  },
+  {
+    code    : '06-R',
+    title   : 'Rose',
+    group   : 'Rose'
+  },
+  {
+    code    : '07-R',
+    title   : 'Pinot Noir',
+    group   : 'Red'
+  },
+  {
+    code    : '08-R',
+    title   : 'Pinot Noir Burgundy',
+    group   : 'Red'
+  },
+  {
+    code    : '09-R',
+    title   : 'Loire Valley Direct',
+    group   : 'Red'
+  },
+  {
+    code    : '10-R',
+    title   : 'Bordeaux',
+    group   : 'Red'
+  },
+  {
+    code    : '11-R',
+    title   : 'Beaujolais',
+    group   : 'Red'
+  },
+  {
+    code    : '12-R',
+    title   : 'Merlot',
+    group   : 'Red'
+  },
+  {
+    code    : '13-R',
+    title   : 'Zinfandel',
+    group   : 'Red'
+  },
+  {
+    code    : '14-R',
+    title   : 'Cabernet Sauvignon',
+    group   : 'Red'
+  },
+  {
+    code    : '15-R',
+    title   : 'Syrah',
+    group   : 'Red'
+  },
+  {
+    code    : '16-R',
+    title   : 'Italy',
+    group   : 'Red'
+  },
+  {
+    code    : '17-R',
+    title   : 'Italy Direct',
+    group   : 'Red'
+  },
+  {
+    code    : '18-R',
+    title   : 'Red All Other',
+    group   : 'Red'
+  },
+  {
+    code    : '19-R',
+    title   : 'South Africa Direct',
+    group   : 'Red'
+  },
+  {
+    code    : '20-D',
+    title   : 'Dessert',
+    group   : 'Dessert'
+  },
+  {
+    code    : '25-M',
+    title   : 'Get More',
+    group   : 'Get More'
   },
 ]
 

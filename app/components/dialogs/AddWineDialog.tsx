@@ -12,9 +12,10 @@ import Input from '@mui/material/Input';
 import FormControl from '@mui/material/FormControl';
 import Box from '@mui/material/Box';
 import { createNewWine } from '../../utils/actions';
+import { Category } from '@/app/types/wine';
 
 type AddWineDialogProps = {
-  categories: string[],
+  categories: Category[],
 } 
 
 export default function AddWineDialog({categories}: AddWineDialogProps) {
@@ -46,8 +47,8 @@ export default function AddWineDialog({categories}: AddWineDialogProps) {
           >
             <MenuItem value={' '} ></MenuItem>
             {Object.values(categories)?.map((option) => (
-              <MenuItem key={option} value={option}>
-                {option}
+              <MenuItem key={option.code} value={option.code}>
+                {`${option.code}  ${option.title}`}
               </MenuItem>
             ))}
           </TextField>

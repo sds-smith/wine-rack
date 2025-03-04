@@ -1,7 +1,7 @@
 import { ObjectId } from "mongodb";
 import client from "../../services/mongodb";
 import chunk from "./chunkArray";
-import { Wine, Metadata, initialMetaData } from "../types/wine";
+import { Wine, Metadata, initialMetaData, Category } from "../types/wine";
 
 const db = client.db(process.env.MONGODB_DATABASE);
 
@@ -34,29 +34,14 @@ export async function getWineByID(ID: string) {
     return { ...wine, ID }
 }
 
-export const categories: string[] = [
-    "01-W",
-    "02-W",
-    "03-W",
-    "04-W",
-    "05-W",
-    "06-R",
-    "07-R",
-    "08-R",
-    "09-R",
-    "10-R",
-    "11-R",
-    "12-R",
-    "13-R",
-    "14-R",
-    "15-R",
-    "16-R",
-    "17-R",
-    "18-R",
-    "19-R",
-    "20-D",
-    "25-M",
-];
+export async function getCategories() {
+    const data = await db.collection("categories").find({}).toArray();
+    return data.map(({code, title, group}):Category => ({code, title, group}))
+}
+
+const categoryData = await getCategories();
+
+export const categories: Category[] = categoryData.sort((a,b)=>parseInt(a.code)-parseInt(b.code))
 
 export const columns = [
     "Category",
