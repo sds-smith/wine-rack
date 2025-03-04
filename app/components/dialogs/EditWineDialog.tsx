@@ -15,7 +15,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import ConfirmationDialog from './ConfirmationDialog';
 import { Wine } from '../../types/wine';
-import { updateWine, deleteWine } from '../../lib/actions';
+import { updateWine, deleteWine } from '../../utils/actions';
 
 type EditWineDialogProps = {
   categories: string[],
