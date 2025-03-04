@@ -1,6 +1,5 @@
 'use client'
 
-import { Suspense } from 'react';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Box from '@mui/material/Box';
@@ -16,13 +15,16 @@ import WineBarIcon from '@mui/icons-material/WineBar';
 import ArchiveIcon from '@mui/icons-material/Archive';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import LogoutIcon from '@mui/icons-material/Logout';
 import IconButton from '@mui/material/IconButton';
 
-const NavDrawer = () => {
+export default function Sidenav({ signOutUser } : { signOutUser: () => void }) {
   const searchParams = useSearchParams();
   const open = searchParams.get('open') === 'true';
   const pathname = usePathname();
   const { replace } = useRouter();
+
+
 
   const toggleDrawer = (newOpen: boolean) => () => {
     const params = new URLSearchParams(searchParams);
@@ -37,7 +39,7 @@ const NavDrawer = () => {
   return (
     <div>
       <Drawer open={open} onClose={toggleDrawer(false)}>
-        <Box sx={{ width: 250 }} role="presentation" >
+        <Box sx={{ width: 250, height: '90%' }} role="presentation" >
           <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
             <IconButton onClick={toggleDrawer(false)}>
               <ChevronLeftIcon /> 
@@ -83,15 +85,18 @@ const NavDrawer = () => {
             </ListItem>
           </List>
         </Box>
+        <Divider />
+        <form
+          action={signOutUser}
+        >
+          <ListItemButton component='button' type='submit' >
+            <ListItemIcon>
+              <LogoutIcon />
+            </ListItemIcon>
+            <ListItemText primary={'Sign Out'} />
+          </ListItemButton>
+        </form>
       </Drawer>
     </div>
   );
-}
-
-export default function Sidenav() {
-  return (
-    <Suspense>
-      <NavDrawer />
-    </Suspense>
-  )
 }

@@ -2,16 +2,24 @@
 import Grid from "@mui/material/Grid2";
 import TopNav from "../components/navigation/TopNav";
 import Sidenav from "../components/navigation/Sidenav";
+import { signOut } from "@/auth";
+import { Suspense } from "react";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-
-    return (
-      <Grid  container>
-        <TopNav />
-        <Sidenav />
-        <Grid size={{md: 12}}>
-          {children}
-        </Grid>
-      </Grid >
-    );
+  const signOutUser = async () => {
+    'use server';
+    await signOut({ redirectTo: '/' });
   }
+
+  return (
+    <Grid  container>
+      <TopNav />
+      <Suspense>
+        <Sidenav signOutUser={signOutUser} />
+      </Suspense>
+      <Grid size={{md: 12}}>
+        {children}
+      </Grid>
+    </Grid >
+  );
+}
