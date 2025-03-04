@@ -2,7 +2,7 @@
 import TableCell from '@mui/material/TableCell';
 import TextField from '@mui/material/TextField';
 import Input from '@mui/material/Input';
-import { updateQuantity } from '../../lib/actions';
+import { updateQuantity } from '../../utils/actions';
 
 type FormFieldProps = {
     columnId: string,
