@@ -1,5 +1,11 @@
 import type { WithId, Document } from 'mongodb'
 
+export interface Category /*extends WithId<Document>*/ {
+    code: string,
+    title: string,
+    group: string
+}
+
 export type Ready = {
     open?    : string;
     close?   : string;

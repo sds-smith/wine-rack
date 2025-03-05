@@ -11,6 +11,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import WineBarIcon from '@mui/icons-material/WineBar';
 import ArchiveIcon from '@mui/icons-material/Archive';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -23,8 +24,6 @@ export default function Sidenav({ signOutUser } : { signOutUser: () => void }) {
   const open = searchParams.get('open') === 'true';
   const pathname = usePathname();
   const { replace } = useRouter();
-
-
 
   const toggleDrawer = (newOpen: boolean) => () => {
     const params = new URLSearchParams(searchParams);
@@ -49,10 +48,20 @@ export default function Sidenav({ signOutUser } : { signOutUser: () => void }) {
           <List
             subheader={
               <ListSubheader component="div" id="tables-list-subheader">
-                Tables
+                Dashboard
               </ListSubheader>
             }
           >
+            <ListItem disablePadding >
+              <Link href='/dashboard'>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <DashboardIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={'Home'} />
+                </ListItemButton>
+              </Link>
+            </ListItem>   
             <ListItem disablePadding >
               <Link href='/dashboard/rack'>
                 <ListItemButton>
@@ -62,7 +71,7 @@ export default function Sidenav({ signOutUser } : { signOutUser: () => void }) {
                   <ListItemText primary={'Current Inventory'} />
                 </ListItemButton>
               </Link>
-            </ListItem>              
+            </ListItem>             
             <ListItem  disablePadding >
             <Link href='/dashboard/archived'>
               <ListItemButton>

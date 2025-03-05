@@ -14,11 +14,11 @@ import Box from '@mui/material/Box';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import ConfirmationDialog from './ConfirmationDialog';
-import { Wine } from '../../types/wine';
+import { Wine, Category } from '../../types/wine';
 import { updateWine, deleteWine } from '../../utils/actions';
 
 type EditWineDialogProps = {
-  categories: string[],
+  categories: Category[],
   wine: Wine,
   page: string
 } 
@@ -59,8 +59,8 @@ export default function EditWineDialog({categories, wine, page}: EditWineDialogP
           >
             <MenuItem value={' '} ></MenuItem>
             {Object.values(categories)?.map((option) => (
-              <MenuItem key={option} value={option}>
-                {option}
+              <MenuItem key={option.code} value={option.code}>
+                {`${option.code}  ${option.title}`}
               </MenuItem>
             ))}
           </TextField>
