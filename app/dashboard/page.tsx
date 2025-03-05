@@ -1,7 +1,6 @@
 
 import { redirect } from 'next/navigation';
 import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
 import { auth } from "@/auth"
 import { checkFirstLogin } from '@/auth';
 import BasicInventoryChart from '../components/graphs/BasicInventoryChart';
@@ -15,8 +14,7 @@ export default async function Dashboard() {
   const firstLogin = (await checkFirstLogin(email!))?.firstLogin;
 
   const { wineList } = await getWineData('rack');
-  // console.log({wineList})
-  console.log({categoriesByCode})
+  
   const winesByCategory = wineList.reduce((acc, curr) => ({
     ...acc,
     [curr.Category] : (acc[curr.Category as keyof typeof acc] || 0) + curr.Quantity

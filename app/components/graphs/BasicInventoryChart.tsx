@@ -9,7 +9,7 @@ type BasicInventoryChartProps = {
 
 export default async function BasicInventoryChart({sortedWineList, title} : BasicInventoryChartProps) {
   const data = Object.values(sortedWineList)
-  console.log({data})
+
   return (
     <Box maxWidth='sm'>
       <h6>{title}</h6>

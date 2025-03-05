@@ -13,7 +13,7 @@ export async function getWineData(page: string) {
     }
     const data = await db.collection("wines").find(filter[page as keyof typeof filter]).toArray();
     const wineList: Wine[] = data
-        .map((w) => ({ ...w, ID: w._id.toString(), ...(w.Price && {Price: w.Price.toFixed(2)}) }))
+        .map((w) => ({ ...w, ID: w._id.toString(), _id: w._id.toString(), ...(w.Price && {Price: w.Price.toFixed(2)}) }))
         .sort((a, b) => parseInt(a.Category || '') - parseInt(b.Category || '') || parseInt(a.Vintage || '') - parseInt(b.Vintage || ''));
 
     const metaData = wineList.reduce(
