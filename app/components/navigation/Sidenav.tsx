@@ -16,6 +16,7 @@ import WineBarIcon from '@mui/icons-material/WineBar';
 import ArchiveIcon from '@mui/icons-material/Archive';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import BuildIcon from '@mui/icons-material/Build';
 import LogoutIcon from '@mui/icons-material/Logout';
 import IconButton from '@mui/material/IconButton';
 
@@ -92,6 +93,24 @@ export default function Sidenav({ signOutUser } : { signOutUser: () => void }) {
                 </ListItemButton>
               </Link >
             </ListItem>
+          </List>
+          <List
+            subheader={
+              <ListSubheader component="div" id="tables-list-subheader">
+                Admin
+              </ListSubheader>
+            }
+          >
+            <ListItem disablePadding >
+              <Link href='/admin'>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <BuildIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={'Admin Panel'} />
+                </ListItemButton>
+              </Link>
+            </ListItem>   
           </List>
         </Box>
         <Divider />
