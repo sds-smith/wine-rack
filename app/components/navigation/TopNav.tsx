@@ -8,7 +8,11 @@ import PrintButton from '../buttons/PrintButton';
 import AddButton from '../buttons/AddButton';
 import { auth } from '@/auth';
 
-export default async function TopNav() {
+type TopNavProps = {
+  path: string,
+}
+
+export default async function TopNav({path}: TopNavProps) {
   const session = await auth()
   const user = session?.user || {};
 
@@ -23,8 +27,8 @@ export default async function TopNav() {
             <span style={{textDecoration: user?.name === 'Brenda' ? 'underline' : 'none'}}>Brenda's</span>
             {` Wine Rack`}
           </Typography>
-          <AddButton />
-          <PrintButton />
+          { path === 'dashboard' && <AddButton />}
+          { path === 'dashboard' && <PrintButton />}
         </Toolbar>
       </AppBar>
     </Box>

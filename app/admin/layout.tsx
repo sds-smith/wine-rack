@@ -13,7 +13,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <Grid  container>
-      <TopNav path='dashboard' />
+      <TopNav path='admin' />
       <Suspense>
         <Sidenav signOutUser={signOutUser} />
       </Suspense>
