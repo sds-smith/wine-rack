@@ -43,6 +43,15 @@ const categoryData = await getCategories();
 
 export const categories: Category[] = categoryData.sort((a,b)=>parseInt(a.code)-parseInt(b.code))
 
+type CategoriesByCode = {
+    [key: string] : Category
+}
+
+export const categoriesByCode: CategoriesByCode = categories.reduce((acc, curr) => ({
+    ...acc,
+    [curr.code] : curr
+}), {})
+
 export const columns = [
     "Category",
     "Varietal",

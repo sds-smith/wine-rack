@@ -8,3 +8,7 @@
   flex-direction: column;
 }
 
+.dashboard_main {
+  display: flex;
+}
+
