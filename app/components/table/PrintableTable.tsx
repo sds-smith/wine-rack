@@ -40,7 +40,7 @@ export default function PrintableTable({ columns, chunkedWineList, totalBottles,
   
   useEffect(() => {
     window.print();
-    router.push(`/dashboard/${page}`)
+    router.push(`/dashboard/${page !== 'dashboard' ? page : ''}`)
   }, [router, page])
 
   return (
