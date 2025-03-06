@@ -1,7 +1,7 @@
 import { ObjectId } from "mongodb";
 import client from "../../services/mongodb";
 import chunk from "./chunkArray";
-import { Wine, Metadata, initialMetaData, Category } from "../types/wine";
+import { Wine, Metadata, initialMetaData, Category, CategoriesByCode } from "../types/wine";
 
 const db = client.db(process.env.MONGODB_DATABASE);
 
@@ -42,10 +42,6 @@ export async function getCategories() {
 const categoryData = await getCategories();
 
 export const categories: Category[] = categoryData.sort((a,b)=>parseInt(a.code)-parseInt(b.code))
-
-type CategoriesByCode = {
-    [key: string] : Category
-}
 
 export const categoriesByCode: CategoriesByCode = categories.reduce((acc, curr) => ({
     ...acc,

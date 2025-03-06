@@ -6,6 +6,10 @@ export interface Category /*extends WithId<Document>*/ {
     group: string
 }
 
+export type CategoriesByCode = {
+    [key: string] : Category
+}
+
 export type Ready = {
     open?    : string;
     close?   : string;
