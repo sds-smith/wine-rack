@@ -10,6 +10,7 @@ import Box from '@mui/material/Box';
 import { getCategories } from '@/app/utils/data';
 import { Category } from '@/app/types/wine';
 import CategoriesTableRow from './CategoriesTableRow';
+import AddButton from './AddButton';
 
 type CategoriesTableProps = {
   disabled: boolean,
@@ -44,6 +45,7 @@ export default async function CategoriesTable({ disabled, editID } : CategoriesT
           </TableBody>
         </Table>
       </TableContainer>
+      <AddButton disabled={disabled} />
     </Box>
   )
 }
