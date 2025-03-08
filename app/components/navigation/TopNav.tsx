@@ -17,7 +17,7 @@ export default async function TopNav({path}: TopNavProps) {
   const user = session?.user || {};
 
   const title: string = process.env.TITLE || '';
-  const [first, second] = title.split(' and ');
+  const [ first, second ] = title.split(' and ');
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -26,11 +26,9 @@ export default async function TopNav({path}: TopNavProps) {
           <MenuButton />
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <span style={{textDecoration: user?.name === first ? 'underline' : 'none'}}>{first}</span>
-            
             { second && 
               <span style={{textDecoration: user?.name === second ? 'underline' : 'none'}}>{` and ${second}`}</span>
             }
-            
             {`'s Wine Rack`}
           </Typography>
           { path === 'dashboard' && <AddButton />}
