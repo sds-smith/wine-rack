@@ -2,9 +2,10 @@
 import AddWineDialog from "@/app/components/dialogs/AddWineDialog";
 import WineTable from "../../../components/table/WineTable";
 import styles from "../../../page.module.css";
-import { categories } from "@/app/utils/data";
+import { getCategories } from "@/app/utils/data";
 
 export default async function Rack() {
+  const { categories } = await getCategories();
 
   return (
     <div className={styles.page}>

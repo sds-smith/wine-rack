@@ -47,6 +47,19 @@ export const UpdateWineSchema = z.object({
     GetMore      : z.optional(z.coerce.boolean()),
 });
 
+export const CreateCategorySchema = z.object({
+    code: z.string(),
+    title: z.string(),
+    group: z.string(),
+});
+
+export const UpdateCategorySchema = z.object({
+    ID: z.optional(z.string()),
+    code: z.string(),
+    title: z.string(),
+    group: z.string(),
+});
+
 export const UpdateQuantitySchema = z.object({
     ID           : z.optional(z.string()),
     page         : z.optional(z.string()),

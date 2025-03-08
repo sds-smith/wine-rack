@@ -1,6 +1,7 @@
 import type { WithId, Document } from 'mongodb'
 
 export interface Category /*extends WithId<Document>*/ {
+    ID: string,
     code: string,
     title: string,
     group: string
