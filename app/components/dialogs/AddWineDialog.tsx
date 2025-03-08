@@ -11,7 +11,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Input from '@mui/material/Input';
 import FormControl from '@mui/material/FormControl';
 import Box from '@mui/material/Box';
-import { createNewWine } from '../../utils/actions';
+import { createNewWine } from '../../utils/actions.wine';
 import { Category } from '@/app/types/wine';
 
 type AddWineDialogProps = {

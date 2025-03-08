@@ -36,17 +36,17 @@ export async function getWineByID(ID: string) {
 
 export async function getCategories() {
     const data = await db.collection("categories").find({}).toArray();
-    return data.map(({code, title, group}):Category => ({code, title, group}))
+    const categoryData = data.map(({_id, code, title, group}):Category => ({ ID: _id.toString(), code, title, group }))
+    
+    const categories: Category[] = categoryData.sort((a,b)=>parseInt(a.code)-parseInt(b.code))
+
+    const categoriesByCode: CategoriesByCode = categories.reduce((acc, curr) => ({
+        ...acc,
+        [curr.code] : curr
+    }), {})
+
+    return { categories, categoriesByCode }
 }
-
-const categoryData = await getCategories();
-
-export const categories: Category[] = categoryData.sort((a,b)=>parseInt(a.code)-parseInt(b.code))
-
-export const categoriesByCode: CategoriesByCode = categories.reduce((acc, curr) => ({
-    ...acc,
-    [curr.code] : curr
-}), {})
 
 export const columns = [
     "Category",

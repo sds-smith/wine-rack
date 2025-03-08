@@ -2,7 +2,7 @@
 
 import Button from '@mui/material/Button';
 import { useActionState } from 'react';
-import { authenticate } from '@/app/utils/actions';
+import { authenticate } from '@/app/utils/actions.user';
 import { useSearchParams } from 'next/navigation';
  
 export default function LoginForm() {

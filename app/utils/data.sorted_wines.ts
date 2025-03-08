@@ -1,7 +1,8 @@
-import { getWineData, categoriesByCode } from '../utils/data';
+import { getWineData, getCategories } from '../utils/data';
 import { Category } from '../types/wine';
 
 const { wineList } = await getWineData('rack');
+const { categoriesByCode } = await getCategories();
 
 export const sorted_wines = {
     Category : wineList.reduce((acc, curr) => ({

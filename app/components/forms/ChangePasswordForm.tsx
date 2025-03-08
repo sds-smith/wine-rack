@@ -2,7 +2,7 @@
 
 import Button from '@mui/material/Button';
 import { useActionState } from 'react';
-import { changePassword } from '@/app/utils/actions';
+import { changePassword } from '@/app/utils/actions.user';
 import { useSearchParams } from 'next/navigation';
  
 export default function ChangePasswordForm() {
