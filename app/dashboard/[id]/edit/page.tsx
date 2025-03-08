@@ -14,7 +14,7 @@ export default async function EditPage(props: EditPageProps) {
   const params = await props.params;
   const id = params.id;
   const searchParams = await props.searchParams;
-  const page = searchParams?.page || 'rack';
+  const page = searchParams?.page || 'current_inventory';
   const wine: Wine = await getWineByID(id); 
   const { categories } = await getCategories();
 

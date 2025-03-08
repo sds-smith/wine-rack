@@ -23,8 +23,8 @@ export async function createNewWine(formData: FormData) {
 
     await db.collection("wines").insertOne(wine);
 
-    revalidatePath('/dashboard/rack');
-    redirect('/dashboard/rack');
+    revalidatePath('/dashboard/current_inventory');
+    redirect('/dashboard/current_inventory');
 }
 
 export async function updateWine(formData: FormData) {
