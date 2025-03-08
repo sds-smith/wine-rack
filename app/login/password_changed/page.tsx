@@ -1,5 +1,5 @@
-import ChangePasswordForm from '../../components/forms/ChangePasswordForm';
 import { Suspense } from 'react';
+import ChangePasswordForm from '../../components/forms/ChangePasswordForm';
 import PasswordChangedDialog from '../../components/dialogs/PasswordChangedDialog';
  
 export default function PasswordChanged() {

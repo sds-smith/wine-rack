@@ -1,4 +1,4 @@
-import React from 'react'
+
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -7,10 +7,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
-import { getCategories } from '@/app/utils/data';
-import { Category } from '@/app/types/wine';
 import CategoriesTableRow from './CategoriesTableRow';
 import AddButton from './AddButton';
+import { getCategories } from '@/app/utils/data';
+import { Category } from '@/app/types/wine';
 
 type CategoriesTableProps = {
   disabled: boolean,

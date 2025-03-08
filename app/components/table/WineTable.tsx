@@ -9,11 +9,11 @@ import TableRow from '@mui/material/TableRow';
 import TableFooter from '@mui/material/TableFooter';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
+import EditButton from '../buttons/EditButton';
 import TableBodyCell from './TableBodyCell';
 import FooterRow from './FooterRow';
 import { getWineData, columns } from '@/app/utils/data';
 import { Wine } from '../../types/wine';
-import EditButton from '../buttons/EditButton';
 
 const Spacer = () => <TableRow sx={{height: '20px', borderBottom: '1px solid rgba(128, 128, 128, 0.2)'}}/>
 

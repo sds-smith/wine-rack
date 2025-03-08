@@ -1,17 +1,14 @@
 'use client';
 
-import Button from '@mui/material/Button';
 import { useActionState } from 'react';
-import { authenticate } from '@/app/utils/actions.user';
 import { useSearchParams } from 'next/navigation';
+import Button from '@mui/material/Button';
+import { authenticate } from '@/app/utils/actions.user';
  
 export default function LoginForm() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
-  const [errorMessage, formAction, isPending] = useActionState(
-    authenticate,
-    undefined,
-  );
+  const [ errorMessage, formAction, isPending ] = useActionState( authenticate, undefined );
  
   return (
     <form action={formAction} >

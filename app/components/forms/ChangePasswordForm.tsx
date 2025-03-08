@@ -8,10 +8,7 @@ import { useSearchParams } from 'next/navigation';
 export default function ChangePasswordForm() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
-  const [errorMessage, formAction, isPending] = useActionState(
-    changePassword,
-    undefined,
-  );
+  const [ errorMessage, formAction, isPending ] = useActionState( changePassword, undefined );
  
   return (
     <form action={formAction} >

@@ -1,7 +1,6 @@
 
 import { redirect } from 'next/navigation';
-import { auth } from "@/auth"
-import { checkFirstLogin } from '@/auth';
+import { auth, checkFirstLogin } from "@/auth"
 
 export default async function Dashboard() {
   const session = await auth();

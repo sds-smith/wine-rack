@@ -7,11 +7,15 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-export default function ConfirmationDialog({handleConfirm, disabled}: {handleConfirm: ()=>void, disabled: boolean}) {
+type ConfirmationDialogProps = {
+  handleConfirm: () => void, 
+  disabled: boolean
+}
+
+export default function ConfirmationDialog({handleConfirm, disabled} : ConfirmationDialogProps) {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
