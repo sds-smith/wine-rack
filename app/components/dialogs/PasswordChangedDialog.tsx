@@ -9,8 +9,8 @@ import Button from '@mui/material/Button';
 export default function PasswordChangedDialog() {
   const handleClose = async () => {
     'use server'
-    revalidatePath('/dashboard/rack')
-    redirect('/dashboard/rack')
+    revalidatePath('/dashboard/current_inventory')
+    redirect('/dashboard/current_inventory')
   }
 
   return (

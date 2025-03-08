@@ -1,11 +1,10 @@
 
 import { redirect } from 'next/navigation';
 import Container from '@mui/material/Container';
-import { auth } from "@/auth"
-import { checkFirstLogin } from '@/auth';
-import styles from "../../../page.module.css";
 import CategoriesTable from '../../../components/admin/CategoriesTable';
 import EditCategoryForm from '@/app/components/admin/EditCategoryForm';
+import { auth, checkFirstLogin} from "@/auth";
+import styles from "../../../page.module.css";
 
 type EditCategoryPageProps = { 
   params: Promise<{ id: string }>, 

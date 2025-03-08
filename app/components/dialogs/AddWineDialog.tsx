@@ -22,7 +22,7 @@ export default function AddWineDialog({categories}: AddWineDialogProps) {
 
   const handleClose = async () => {
     'use server'
-    redirect('/dashboard/rack')
+    redirect('/dashboard/current_inventory')
   }
 
   return (

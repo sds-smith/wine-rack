@@ -5,7 +5,7 @@ export default async function Rack() {
 
   return (
     <TablePage 
-      page={'rack'}
+      page={'current_inventory'}
       title='Current Inventory'
     />
   );

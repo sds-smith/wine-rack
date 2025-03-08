@@ -1,7 +1,7 @@
 
 import { redirect } from 'next/navigation';
 import Container from '@mui/material/Container';
-import BasicInventoryChart from '../components/graphs/BasicInventoryChart';
+import BasicInventoryChart from '../components/charts/BasicInventoryChart';
 import { sorted_wines } from '../utils/data.sorted_wines';
 import { auth, checkFirstLogin } from '@/auth';
 import styles from "../page.module.css";

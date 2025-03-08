@@ -1,5 +1,4 @@
 
-import React from 'react'
 import TableCell from '@mui/material/TableCell';
 import FormField from './FormField';
 import { Wine } from '../../types/wine';

@@ -3,34 +3,10 @@ import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import { lightBlue } from '@mui/material/colors';
 import ConfirmationDialog from './ConfirmationDialog';
+import EditButton from './EditButton';
 import { Category } from '@/app/types/wine';
-
-import IconButton from '@mui/material/IconButton';
-import EditIcon from '@mui/icons-material/Edit';
-import Link from 'next/link';
 import { sorted_wines } from '@/app/utils/data.sorted_wines';
 import { deleteCategory } from '@/app/utils/actions.admin';
-
-type EditButtonProps = {
-  id: string,
-  disabled: boolean
-}
-function EditButton({id, disabled}: EditButtonProps) {
-  return (
-    <>
-      { disabled
-        ? <IconButton disabled aria-label="edit category" size='small'>
-            <EditIcon />
-          </IconButton>
-        : <Link href={`/admin/manage_categories/${id}`}>
-            <IconButton aria-label="edit category" size='small'>
-              <EditIcon />
-            </IconButton>
-          </Link>
-      }
-    </>
-  )
-}
 
 type CategoriesTableRowProps = {
   row: Category,

@@ -64,7 +64,7 @@ export default function Sidenav({ signOutUser } : { signOutUser: () => void }) {
               </Link>
             </ListItem>   
             <ListItem disablePadding >
-              <Link href='/dashboard/rack'>
+              <Link href='/dashboard/current_inventory'>
                 <ListItemButton>
                   <ListItemIcon>
                     <WineBarIcon />

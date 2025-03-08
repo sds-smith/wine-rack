@@ -8,7 +8,12 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function ConfirmationDialog({handleConfirm, disabled}: {handleConfirm: ()=>void, disabled: boolean}) {
+type ConfirmationDialogProps = {
+  handleConfirm: () => void, 
+  disabled: boolean
+}
+
+export default function ConfirmationDialog({handleConfirm, disabled} : ConfirmationDialogProps) {
     const [open, setOpen] = useState(false);
   
     const handleOpen = () => setOpen(true);

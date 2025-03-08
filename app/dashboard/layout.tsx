@@ -1,25 +1,21 @@
-
-import Grid from "@mui/material/Grid2";
+import { Suspense } from "react";
 import TopNav from "../components/navigation/TopNav";
 import Sidenav from "../components/navigation/Sidenav";
 import { signOut } from "@/auth";
-import { Suspense } from "react";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const signOutUser = async () => {
     'use server';
     await signOut({ redirectTo: '/' });
   }
 
   return (
-    <Grid  container>
+    <>
       <TopNav path='dashboard' />
       <Suspense>
         <Sidenav signOutUser={signOutUser} />
       </Suspense>
-      <Grid size={{md: 12}}>
-        {children}
-      </Grid>
-    </Grid >
+      {children}
+    </>
   );
 }

@@ -7,7 +7,7 @@ const db = client.db(process.env.MONGODB_DATABASE);
 
 export async function getWineData(page: string) {
     const filter = {
-        rack: { Archived: { $ne: true } },
+        current_inventory: { Archived: { $ne: true } },
         archived: { Archived: true },
         get_more: { GetMore: true }
     }

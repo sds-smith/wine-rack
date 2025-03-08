@@ -1,11 +1,10 @@
 
 import { redirect } from 'next/navigation';
 import Container from '@mui/material/Container';
-import { auth } from "@/auth"
-import { checkFirstLogin } from '@/auth';
-import styles from "../../../page.module.css";
 import CategoriesTable from '../../../components/admin/CategoriesTable';
 import AddCategoryForm from '@/app/components/admin/AddCategoryForm';
+import { auth, checkFirstLogin } from "@/auth"
+import styles from "../../../page.module.css";
 
 export default async function NewCategoryPage() {
   const session = await auth();
