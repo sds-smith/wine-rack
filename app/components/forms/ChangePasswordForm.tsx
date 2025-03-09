@@ -1,9 +1,13 @@
 'use client';
 
-import Button from '@mui/material/Button';
 import { useActionState } from 'react';
-import { changePassword } from '@/app/utils/actions.user';
 import { useSearchParams } from 'next/navigation';
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Input from '@mui/material/Input';
+import Button from '@mui/material/Button';
+import { changePassword } from '@/app/utils/actions.user';
  
 export default function ChangePasswordForm() {
   const searchParams = useSearchParams();
@@ -12,97 +16,76 @@ export default function ChangePasswordForm() {
  
   return (
     <form action={formAction} >
-      <div style={{display: 'flex', flexDirection: 'column', height: '100vh', justifyContent: 'space-evenly', alignItems: 'center'}} >
+      <Container style={{display: 'flex', flexDirection: 'column', height: '100vh', justifyContent: 'space-evenly', alignItems: 'center'}} >
         <h1 >
           Please Change your Password.
         </h1>
-        <h2 >
-          Password must be 6 or more characters in length. It may include any combination of alpha/numeric/special characters.
-        </h2>
-        <div >
-          <div>
-            <label
-              htmlFor="email"
-            >
-              Email
-            </label>
-            <div className="relative">
-              <input
-                id="email"
-                type="email"
-                name="email"
-                placeholder="Enter your email address"
-                required
-              />
-            </div>
-          </div>
-          <div className="mt-4">
-            <label
-              htmlFor="current_password"
-            >
-              Current Password
-            </label>
-            <div >
-              <input
-                id="current_password"
-                type="password"
-                name="current_password"
-                placeholder="Enter current password"
-                required
-                minLength={6}
-              />
-            </div>
-          </div>
-          <div className="mt-4">
-            <label
-              htmlFor="new_password"
-            >
-              New Password
-            </label>
-            <div >
-              <input
-                id="new_password"
-                type="password"
-                name="new_password"
-                placeholder="Enter new password"
-                required
-                minLength={6}
-              />
-            </div>
-          </div>
-          <div className="mt-4">
-            <label
-              htmlFor="retype_password"
-            >
-              Re-type New Password
-            </label>
-            <div >
-              <input
-                id="retype_password"
-                type="password"
-                name="retype_password"
-                placeholder="Enter password"
-                required
-                minLength={6}
-              />
-            </div>
-          </div>
-        </div>
-        <input type="hidden" name="redirectTo" value={callbackUrl} />
+        <h3 >
+          Password must be 6 or more characters in length.
+        </h3>
+        <h3 >
+          It may include any combination of alpha/numeric/special characters.
+        </h3>
+        <Box >
+          <TextField
+            fullWidth
+            variant="standard"
+            id="email"
+            type="email"
+            name="email"
+            label="Email"
+            placeholder="Enter your email address"
+            margin="normal"
+            required
+          />
+          <TextField
+            fullWidth
+            variant="standard"
+            id="current_password"
+            type="password"
+            name="current_password"
+            label="Current Password"
+            placeholder="Enter current password"
+            margin="normal"
+            required
+            slotProps={{htmlInput: {minLength: 6}}}
+          />
+          <TextField
+            fullWidth
+            variant="filled"
+            id="new_password"
+            type="password"
+            name="new_password"
+            label="New Password"
+            placeholder="Enter new password"
+            margin="normal"
+            required
+            slotProps={{htmlInput: {minLength: 6}}}
+          />
+          <TextField
+            fullWidth
+            variant="filled"
+            id="retype_password"
+            type="password"
+            name="retype_password"
+            label="Re-type New Password"
+            placeholder="Enter new password"
+            margin="normal"
+            required
+            slotProps={{htmlInput: {minLength: 6}}}
+          />
+        </Box>
+        <Input type="hidden" name="redirectTo" value={callbackUrl} />
         <Button type='submit' aria-disabled={isPending}>
           Submit 
         </Button> 
-        <div
+        <Box
           aria-live="polite"
           aria-atomic="true"
         >
-          {errorMessage && (
-            <>
-              <p >{errorMessage}</p>
-            </>
-          )}
-        </div>
-      </div>
+          { errorMessage && <p >{errorMessage}</p> }
+        </Box>
+      </Container>
     </form>
   );
 }
