@@ -5,7 +5,7 @@ import { auth, checkFirstLogin } from "@/auth"
 export default async function Dashboard() {
   const session = await auth();
   const email = session?.user?.email;
-  const firstLogin = (await checkFirstLogin(email!))?.firstLogin;
+  const firstLogin = await checkFirstLogin(email!);
 
   if (firstLogin) return redirect('/login/change_password')
   return (

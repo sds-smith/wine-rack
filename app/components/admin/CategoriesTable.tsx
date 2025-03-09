@@ -22,9 +22,9 @@ export default async function CategoriesTable({ disabled, editID } : CategoriesT
   const columnHeadings: string[] = ['Code', 'Title', 'Group'];
 
   return (
-    <Box >
+    <Box width={{xs: 350, lg: 'unset'}} >
       <h4>Categories</h4>
-      <TableContainer component={Paper} sx={{ overflow: "auto", height: "60vh", marginTop: '10px' }}>
+      <TableContainer component={Paper} sx={{ overflow: "auto", height: "60vh", width: 'inherit', marginTop: '10px' }}>
         <Table size="small" aria-label="a dense table">
           <TableHead sx={{position: 'sticky', top: 0}}>
             <TableRow sx={{background: 'black'}}>

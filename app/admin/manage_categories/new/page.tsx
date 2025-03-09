@@ -9,14 +9,14 @@ import styles from "../../../page.module.css";
 export default async function NewCategoryPage() {
   const session = await auth();
   const email = session?.user?.email;
-  const firstLogin = (await checkFirstLogin(email!))?.firstLogin;
+  const firstLogin = await checkFirstLogin(email!);
 
   if (firstLogin) return redirect('/login/change_password')
   return (
     <div className={styles.page}>
       <main className={styles.main}>
         <h3 >Manage Categories</h3>
-        <Container  sx={{display: 'flex', flexWrap: 'wrap', marginTop:'20px'}}>
+        <Container disableGutters sx={{display: 'flex', flexWrap: 'wrap', marginTop:'20px'}}>
           <CategoriesTable disabled={true} />
           <AddCategoryForm />
         </Container>

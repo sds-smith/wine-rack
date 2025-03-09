@@ -2,6 +2,10 @@
 
 import { useActionState } from 'react';
 import { useSearchParams } from 'next/navigation';
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Input from '@mui/material/Input';
 import Button from '@mui/material/Button';
 import { authenticate } from '@/app/utils/actions.user';
  
@@ -12,60 +16,46 @@ export default function LoginForm() {
  
   return (
     <form action={formAction} >
-      <div style={{display: 'flex', flexDirection: 'column', height: '100vh', justifyContent: 'space-evenly', alignItems: 'center'}} >
+      <Container style={{display: 'flex', flexDirection: 'column', height: '100vh', justifyContent: 'space-evenly', alignItems: 'center'}} >
         <h1 >
-          Please log in to continue.
+          Please Log In to Continue.
         </h1>
-        <div >
-          <div>
-            <label
-              htmlFor="email"
-            >
-              Email
-            </label>
-            <div className="relative">
-              <input
-                id="email"
-                type="email"
-                name="email"
-                placeholder="Enter your email address"
-                required
-              />
-            </div>
-          </div>
-          <div className="mt-4">
-            <label
-              htmlFor="password"
-            >
-              Password
-            </label>
-            <div >
-              <input
-                id="password"
-                type="password"
-                name="password"
-                placeholder="Enter password"
-                required
-                minLength={6}
-              />
-            </div>
-          </div>
-        </div>
-        <input type="hidden" name="redirectTo" value={callbackUrl} />
+        <Box >
+          <TextField
+            fullWidth
+            variant="standard"
+            id="email"
+            type="email"
+            name="email"
+            label="Email"
+            placeholder="Enter your email address"
+            margin="normal"
+            required
+          />
+          <TextField
+            fullWidth
+            variant="standard"
+            id="password"
+            type="password"
+            name="password"
+            label="Password"
+            placeholder="Enter password"
+            margin="normal"
+            required
+            slotProps={{htmlInput: {minLength: 6}}}
+          />
+        </Box>
+        <Input type="hidden" name="redirectTo" value={callbackUrl} />
         <Button type='submit' aria-disabled={isPending}>
           Log in 
         </Button> 
-        <div
+        <Box
           aria-live="polite"
           aria-atomic="true"
         >
-          {errorMessage && (
-            <>
-              <p >{errorMessage}</p>
-            </>
-          )}
-        </div>
-      </div>
+          { errorMessage && <p >{errorMessage}</p> }
+        </Box>
+      </Container>
     </form>
   );
 }

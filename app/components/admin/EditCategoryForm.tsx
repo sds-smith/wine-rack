@@ -18,7 +18,7 @@ export default async function EditCategoryForm({categoryID} : { categoryID: stri
   }
 
   return (
-    <Box sx={{margin: '30px 0 0 40px'}} >
+    <Box sx={{margin: {xs:'30px 0 0 0', lg: '30px 0 0 40px'}}} >
       <h4 style={{margin: '0 20px'}} >Edit Category</h4>
       <form action={updateCategory} style={{ margin: '20px 0px 20px 20px', padding: '0px'}}>
         <Input type='hidden' name='ID' defaultValue={categoryID}/>
