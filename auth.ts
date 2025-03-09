@@ -17,9 +17,9 @@ export async function getUser(email: string): Promise<User | undefined> {
   }
 }
 
-export async function checkFirstLogin(email: string): Promise<User | undefined> {
+export async function checkFirstLogin(email: string): Promise<boolean | undefined> {
   try {
-    return await db.collection("users").findOne({ email }) as User;
+    return (await db.collection("users").findOne({ email }) as User).firstLogin;
   } catch (error) {
     console.error('Failed to fetch user:', error);
     throw new Error('Failed to fetch user.');
@@ -42,7 +42,6 @@ export const { auth, signIn, signOut } = NextAuth({
 
           const passwordsMatch = await bcrypt.compare(password, user.password);
           if (passwordsMatch) return user;
-
         }
         
         console.log('Invalid credentials');

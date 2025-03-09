@@ -16,7 +16,7 @@ export default async function EditCategoryPage(props: EditCategoryPageProps) {
   const id = params.id;
 
   const email = session?.user?.email;
-  const firstLogin = (await checkFirstLogin(email!))?.firstLogin;
+  const firstLogin = await checkFirstLogin(email!);
 
   if (firstLogin) return redirect('/login/change_password')
   return (

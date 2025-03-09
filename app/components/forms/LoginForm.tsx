@@ -53,7 +53,7 @@ export default function LoginForm() {
           aria-live="polite"
           aria-atomic="true"
         >
-          { errorMessage && <p >{'errorMessage'}</p> }
+          { errorMessage && <p >{errorMessage}</p> }
         </Box>
       </Container>
     </form>

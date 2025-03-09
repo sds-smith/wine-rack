@@ -9,7 +9,7 @@ import styles from "../../../page.module.css";
 export default async function NewCategoryPage() {
   const session = await auth();
   const email = session?.user?.email;
-  const firstLogin = (await checkFirstLogin(email!))?.firstLogin;
+  const firstLogin = await checkFirstLogin(email!);
 
   if (firstLogin) return redirect('/login/change_password')
   return (
