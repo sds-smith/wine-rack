@@ -14,7 +14,7 @@ export default async function AddCategoryForm() {
   }
 
   return (
-    <Box sx={{margin: '30px 0 0 40px'}} >
+    <Box sx={{margin: {xs:'30px 0 0 0', lg: '30px 0 0 40px'}}} >
       <h4 style={{margin: '0 20px'}} >Add Category</h4>
       <form action={createNewCategory} style={{ margin: '20px 0px 20px 20px', padding: '0px'}}>
         <TextField

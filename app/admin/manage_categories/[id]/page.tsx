@@ -23,7 +23,7 @@ export default async function EditCategoryPage(props: EditCategoryPageProps) {
     <div className={styles.page}>
       <main className={styles.main}>
         <h3 >Manage Categories</h3>
-        <Container  sx={{display: 'flex', flexWrap: 'wrap', marginTop:'20px'}}>
+        <Container disableGutters sx={{display: 'flex', flexWrap: 'wrap', marginTop:'20px'}}>
           <CategoriesTable disabled={true} editID={id} />
           <EditCategoryForm categoryID={id} />
         </Container>

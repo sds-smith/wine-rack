@@ -11,12 +11,11 @@ export default async function BasicInventoryChart({sortedWineList, title} : Basi
   const data = Object.values(sortedWineList)
 
   return (
-    <Box maxWidth='sm'>
+    <Box width={{xs: 600, lg: 575}}>
       <h6>{title}</h6>
       <BarChart
         xAxis={[{ scaleType: 'band', data: Object.keys(sortedWineList)}]}
         series={[{ data }]}
-        width={575}
         height={300}
         barLabel="value"
       />
