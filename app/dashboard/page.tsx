@@ -17,10 +17,9 @@ export default async function Dashboard() {
       <main className={styles.main}>
         <h3 >Dashboard</h3>
         <Container  sx={{display: 'flex', flexWrap: 'wrap', marginTop:'60px'}}>
-          <BasicInventoryChart sortedWineList={sorted_wines.Group}    title='Current Inventory by Group' />
-          <BasicInventoryChart sortedWineList={sorted_wines.Category} title='Current Inventory by Category' />
-          <BasicInventoryChart sortedWineList={sorted_wines.Vintage}  title='Current Inventory by Vintage' />
-          <BasicInventoryChart sortedWineList={sorted_wines.Ready}    title='Current Inventory by Ready' />
+          { Object.entries(sorted_wines).map(([key, list]) => (
+            <BasicInventoryChart key={key} sortedWineList={list} title={`Current Inventory by ${key}`} />
+          ))}
         </Container>
       </main>
     </div>
