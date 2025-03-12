@@ -2,7 +2,7 @@
 import { redirect } from 'next/navigation';
 import { auth, checkFirstLogin } from "@/auth"
 
-export default async function Dashboard() {
+export default async function AdminPanel() {
   const session = await auth();
   const email = session?.user?.email;
   const firstLogin = await checkFirstLogin(email!);
