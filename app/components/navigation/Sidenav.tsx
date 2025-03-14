@@ -2,6 +2,7 @@
 
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useMediaQuery } from '@mui/material';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -20,12 +21,15 @@ import BuildIcon from '@mui/icons-material/Build';
 import LogoutIcon from '@mui/icons-material/Logout';
 import IconButton from '@mui/material/IconButton';
 import MobileFriendlyIcon from '@mui/icons-material/MobileFriendly';
+import theme from '@/app/theme';
 
 export default function Sidenav({ signOutUser } : { signOutUser: () => void }) {
   const searchParams = useSearchParams();
   const open = searchParams.get('open') === 'true';
   const pathname = usePathname();
   const { replace } = useRouter();
+
+  const isMobile = useMediaQuery(theme.breakpoints.down('lg'))
 
   const toggleDrawer = (newOpen: boolean) => () => {
     const params = new URLSearchParams(searchParams);
@@ -63,38 +67,72 @@ export default function Sidenav({ signOutUser } : { signOutUser: () => void }) {
                   <ListItemText primary={'Home'} />
                 </ListItemButton>
               </Link>
-            </ListItem>   
-            <ListItem disablePadding >
-              <Link href='/dashboard/current_inventory'>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <WineBarIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={'Current Inventory'} />
-                </ListItemButton>
-              </Link>
-            </ListItem>             
-            <ListItem  disablePadding >
-            <Link href='/dashboard/archived'>
-              <ListItemButton>
-                <ListItemIcon>
-                  <ArchiveIcon />
-                </ListItemIcon>
-                <ListItemText primary={'Archived'} />
-              </ListItemButton>
-            </Link >
-            </ListItem>              
-            <ListItem  disablePadding>
-              <Link href='/dashboard/get_more'>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <ShoppingCartIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={'Get More'} />
-                </ListItemButton>
-              </Link >
-            </ListItem>
+            </ListItem>  
+            { !isMobile && (
+              <>
+                <ListItem disablePadding >
+                  <Link href='/dashboard/current_inventory'>
+                    <ListItemButton>
+                      <ListItemIcon>
+                        <WineBarIcon />
+                      </ListItemIcon>
+                      <ListItemText primary={'Current Inventory'} />
+                    </ListItemButton>
+                  </Link>
+                </ListItem>             
+                <ListItem  disablePadding >
+                <Link href='/dashboard/archived'>
+                  <ListItemButton>
+                    <ListItemIcon>
+                      <ArchiveIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={'Archived'} />
+                  </ListItemButton>
+                </Link >
+                </ListItem>              
+                <ListItem  disablePadding>
+                  <Link href='/dashboard/get_more'>
+                    <ListItemButton>
+                      <ListItemIcon>
+                        <ShoppingCartIcon />
+                      </ListItemIcon>
+                      <ListItemText primary={'Get More'} />
+                    </ListItemButton>
+                  </Link >
+                </ListItem>
+              </>
+            )}
           </List>
+          { isMobile && (
+            <List
+              subheader={
+                <ListSubheader component="div" id="tables-list-subheader">
+                  Mobile
+                </ListSubheader>
+              }
+            >
+              <ListItem disablePadding >
+                <Link href='/mobile'>
+                  <ListItemButton>
+                    <ListItemIcon>
+                      <MobileFriendlyIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={'Mobile Search'} />
+                  </ListItemButton>
+                </Link>
+              </ListItem>
+              <ListItem disablePadding >
+                <Link href='/mobile/get_more'>
+                  <ListItemButton>
+                    <ListItemIcon>
+                      <MobileFriendlyIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={'View Get-more'} />
+                  </ListItemButton>
+                </Link>
+              </ListItem>    
+            </List>
+          )}
           <List
             subheader={
               <ListSubheader component="div" id="tables-list-subheader">
@@ -112,34 +150,6 @@ export default function Sidenav({ signOutUser } : { signOutUser: () => void }) {
                 </ListItemButton>
               </Link>
             </ListItem>   
-          </List>
-          <List
-            subheader={
-              <ListSubheader component="div" id="tables-list-subheader">
-                Mobile
-              </ListSubheader>
-            }
-          >
-            <ListItem disablePadding >
-              <Link href='/mobile'>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <MobileFriendlyIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={'Mobile Search'} />
-                </ListItemButton>
-              </Link>
-            </ListItem>
-            <ListItem disablePadding >
-              <Link href='/mobile/get_more'>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <MobileFriendlyIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={'View Get-more'} />
-                </ListItemButton>
-              </Link>
-            </ListItem>    
           </List>
         </Box>
         <Divider />

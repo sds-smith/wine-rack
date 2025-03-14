@@ -9,7 +9,6 @@ export default async function ViewWine(props: ViewWineProps) {
   const params = await props.params;
   const id = params.id;
   const wine = await getWineByID(id);
-  console.log({wine})
 
   return (
     <>

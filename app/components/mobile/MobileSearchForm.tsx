@@ -27,7 +27,6 @@ export default function MobileSearchForm({ categories, wineList } : MobileSearch
     const producerFilter = (wine: Wine) => selectedProducer    ? wine.Producer === selectedProducer      : true;
 
     const filteredWineList = wineList.filter(categoryFilter).filter(producerFilter);
-    console.log({filteredWineList})
 
     const producers: string[] = [ ...new Set(wineList.filter(categoryFilter).map(({ Producer }: Wine) => Producer).sort())]
 
