@@ -19,6 +19,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import BuildIcon from '@mui/icons-material/Build';
 import LogoutIcon from '@mui/icons-material/Logout';
 import IconButton from '@mui/material/IconButton';
+import MobileFriendlyIcon from '@mui/icons-material/MobileFriendly';
 
 export default function Sidenav({ signOutUser } : { signOutUser: () => void }) {
   const searchParams = useSearchParams();
@@ -111,6 +112,34 @@ export default function Sidenav({ signOutUser } : { signOutUser: () => void }) {
                 </ListItemButton>
               </Link>
             </ListItem>   
+          </List>
+          <List
+            subheader={
+              <ListSubheader component="div" id="tables-list-subheader">
+                Mobile
+              </ListSubheader>
+            }
+          >
+            <ListItem disablePadding >
+              <Link href='/mobile'>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <MobileFriendlyIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={'Mobile Search'} />
+                </ListItemButton>
+              </Link>
+            </ListItem>
+            <ListItem disablePadding >
+              <Link href='/mobile/get_more'>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <MobileFriendlyIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={'View Get-more'} />
+                </ListItemButton>
+              </Link>
+            </ListItem>    
           </List>
         </Box>
         <Divider />
