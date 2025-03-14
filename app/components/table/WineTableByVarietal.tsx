@@ -14,7 +14,6 @@ import TableBodyCell from './TableBodyCell';
 import FooterRow from './FooterRow';
 import { getWineData, columns } from '@/app/utils/data';
 import { Wine } from '../../types/wine';
-import { yellow } from '@mui/material/colors';
 
 const Spacer = () => <TableRow sx={{height: '20px', borderBottom: '1px solid rgba(128, 128, 128, 0.2)'}}/>
 
@@ -57,7 +56,7 @@ export default async function WineTable({ page } : WineTableProps) {
                           columnId={h}
                           wine={row}
                           page={page}
-                          table={'default'}
+                          table={'byVarietal'}
                         />
                       ))}
                   </TableRow>

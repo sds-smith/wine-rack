@@ -72,16 +72,36 @@ export default function Sidenav({ signOutUser } : { signOutUser: () => void }) {
                   <ListItemText primary={'Current Inventory'} />
                 </ListItemButton>
               </Link>
+            </ListItem> 
+            <ListItem disablePadding >
+              <Link href='/dashboard/current_inventory_by_varietal'>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <WineBarIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={'Current Inventory (Varietal Colors)'} />
+                </ListItemButton>
+              </Link>
+            </ListItem> 
+            <ListItem disablePadding >
+              <Link href='/dashboard/current_inventory_by_row'>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <WineBarIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={'Current Inventory (Category Shading)'} />
+                </ListItemButton>
+              </Link>
             </ListItem>             
             <ListItem  disablePadding >
-            <Link href='/dashboard/archived'>
-              <ListItemButton>
-                <ListItemIcon>
-                  <ArchiveIcon />
-                </ListItemIcon>
-                <ListItemText primary={'Archived'} />
-              </ListItemButton>
-            </Link >
+              <Link href='/dashboard/archived'>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <ArchiveIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={'Archived'} />
+                </ListItemButton>
+              </Link >
             </ListItem>              
             <ListItem  disablePadding>
               <Link href='/dashboard/get_more'>
