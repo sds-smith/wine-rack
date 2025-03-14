@@ -12,3 +12,8 @@
   display: flex;
 }
 
+.mobile_page {
+  min-height: 100svh;
+  padding: 20px 10px;
+}
+
