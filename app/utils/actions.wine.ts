@@ -18,13 +18,15 @@ export async function createNewWine(formData: FormData) {
         ...wineData,
         Ready: { open: wineData['Ready-open'], close: wineData['Ready-close'] }
     }
+    const page = wine.page
     delete wine['Ready-open']
     delete wine['Ready-close']
+    delete wine['page']
 
     await db.collection("wines").insertOne(wine);
 
-    revalidatePath('/dashboard/current_inventory');
-    redirect('/dashboard/current_inventory');
+    revalidatePath(`/${page}`);
+    redirect(`/${page}`);
 }
 
 export async function updateWine(formData: FormData) {
