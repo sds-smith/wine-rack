@@ -20,7 +20,8 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import BuildIcon from '@mui/icons-material/Build';
 import LogoutIcon from '@mui/icons-material/Logout';
 import IconButton from '@mui/material/IconButton';
-import MobileFriendlyIcon from '@mui/icons-material/MobileFriendly';
+// import MobileFriendlyIcon from '@mui/icons-material/MobileFriendly';
+import SearchIcon from '@mui/icons-material/Search';
 import theme from '@/app/theme';
 
 export default function Sidenav({ signOutUser } : { signOutUser: () => void }) {
@@ -115,9 +116,9 @@ export default function Sidenav({ signOutUser } : { signOutUser: () => void }) {
                 <Link href='/mobile'>
                   <ListItemButton>
                     <ListItemIcon>
-                      <MobileFriendlyIcon />
+                      <SearchIcon />
                     </ListItemIcon>
-                    <ListItemText primary={'Mobile Search'} />
+                    <ListItemText primary={'Search Wines'} />
                   </ListItemButton>
                 </Link>
               </ListItem>
@@ -125,9 +126,9 @@ export default function Sidenav({ signOutUser } : { signOutUser: () => void }) {
                 <Link href='/mobile/get_more'>
                   <ListItemButton>
                     <ListItemIcon>
-                      <MobileFriendlyIcon />
+                      <ShoppingCartIcon />
                     </ListItemIcon>
-                    <ListItemText primary={'View Get-more'} />
+                    <ListItemText primary={'Get More'} />
                   </ListItemButton>
                 </Link>
               </ListItem>    
