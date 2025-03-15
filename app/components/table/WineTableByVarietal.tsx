@@ -56,7 +56,7 @@ export default async function WineTable({ page } : WineTableProps) {
                           columnId={h}
                           wine={row}
                           page={page}
-                          table={'default'}
+                          table={'byVarietal'}
                         />
                       ))}
                   </TableRow>
