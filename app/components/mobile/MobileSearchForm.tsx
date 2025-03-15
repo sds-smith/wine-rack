@@ -72,7 +72,7 @@ export default function MobileSearchForm({ categories, wineList } : MobileSearch
                 variant={'contained'}
                 onClick={handleSearch}
             >
-                Select
+                View
             </Button>
         </Container> 
     )
