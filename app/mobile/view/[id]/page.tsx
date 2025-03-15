@@ -1,4 +1,5 @@
 
+import Link from 'next/link';
 import Stack from '@mui/material/Stack'
 import { getWineByID, getCategories } from '@/app/utils/data';
 import styles from '../../../page.module.css';
@@ -17,6 +18,9 @@ export default async function ViewWine(props: ViewWineProps) {
   return (
     <div className={styles.mobile_page}>
       <main className={styles.main}>
+        <Link href={`/mobile`} >
+          {`< back to search`}
+        </Link>
         <Stack spacing={2} sx={{margin: '40px'}}>
           <h2>{`${wine.Producer}  ${wine.Varietal || wine.Label} ${wine.Vintage}`}</h2>
           <div>{`Category: ${category}`}</div>

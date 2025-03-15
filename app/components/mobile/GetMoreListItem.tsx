@@ -50,7 +50,7 @@ export default function GetMoreListItem({wine} : GetMoreListItemProps) {
                 if (title !== 'ID') {
                     return (
                         <ListItem key={title} sx={{pl: 8}}>
-                            <ListItemText primary={<><span style={{fontWeight: 'bold'}}>{title}:</span>  {value}</>}/>
+                            <ListItemText primary={<><span style={{fontWeight: 'bold'}}>{title}:</span>  {value || ' '}</>}/>
                         </ListItem>
                 )}
 }             )}
