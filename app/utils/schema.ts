@@ -8,6 +8,7 @@ export const ChangePasswordSchema = z.object({
 });
 
 export const CreateWineSchema = z.object({
+    page         : z.optional(z.string()),
     Category     : z.string(),
     Varietal     : z.optional(z.string()),
     Country      : z.optional(z.string()),

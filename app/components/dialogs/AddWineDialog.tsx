@@ -36,6 +36,7 @@ export default function AddWineDialog({categories}: AddWineDialogProps) {
       </DialogTitle>
       <form action={createNewWine} >
         <DialogContent sx={{paddingTop: '0px'}}>
+          <Input type='hidden' name='page' id='page' value='dashboard/current_inventory'/>
           <TextField
             fullWidth
             select
