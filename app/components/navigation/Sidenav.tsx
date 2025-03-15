@@ -21,6 +21,7 @@ import BuildIcon from '@mui/icons-material/Build';
 import LogoutIcon from '@mui/icons-material/Logout';
 import IconButton from '@mui/material/IconButton';
 // import MobileFriendlyIcon from '@mui/icons-material/MobileFriendly';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 import SearchIcon from '@mui/icons-material/Search';
 import theme from '@/app/theme';
 
@@ -129,6 +130,16 @@ export default function Sidenav({ signOutUser } : { signOutUser: () => void }) {
                       <ShoppingCartIcon />
                     </ListItemIcon>
                     <ListItemText primary={'Get More'} />
+                  </ListItemButton>
+                </Link>
+              </ListItem> 
+              <ListItem disablePadding >
+                <Link href='/mobile/add_wine'>
+                  <ListItemButton>
+                    <ListItemIcon>
+                      <AddBoxIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={'Add a Wine'} />
                   </ListItemButton>
                 </Link>
               </ListItem>    
