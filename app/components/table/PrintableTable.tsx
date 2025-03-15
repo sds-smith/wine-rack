@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -33,6 +33,10 @@ const getCellContent = (columnId: string, wine: Wine) => {
       : wine[columnId as keyof Wine] ? `${wine[columnId as keyof Wine]}` : '';
 }
 
+const StyledTableCell = ({children, sx} : {children: ReactNode, sx?: {[key: string] : string}}) => {
+  return <TableCell align="center" sx={{...sx, fontSize: '18px'}}>{children}</TableCell>
+}
+
 export default function PrintableTable({ columns, chunkedWineList, totalBottles, page }: PrintableTableProps) {
   const router = useRouter();
 
@@ -50,7 +54,7 @@ export default function PrintableTable({ columns, chunkedWineList, totalBottles,
           <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
             <TableHead sx={{position: 'sticky', top: 0}}>
               <TableRow sx={{background: 'black'}}>
-                { columnHeadings.map(h => <TableCell key={h} align="center" sx={{color: 'white'}}>{h}</TableCell>)}
+                { columnHeadings.map(h => <StyledTableCell key={h} sx={{color: 'white'}}>{h}</StyledTableCell>)}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -59,7 +63,7 @@ export default function PrintableTable({ columns, chunkedWineList, totalBottles,
                   key={row.ID}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                  { columnHeadings.map(h => <TableCell key={h} align="center">{getCellContent(h, row)}</TableCell>)}
+                  { columnHeadings.map(h => <StyledTableCell key={h} >{getCellContent(h, row)}</StyledTableCell>)}
                 </TableRow>
               ))}
             </TableBody>
@@ -67,9 +71,9 @@ export default function PrintableTable({ columns, chunkedWineList, totalBottles,
               <TableFooter sx={{position: 'sticky', bottom: 0}}>
                 <TableRow sx={{background: 'black'}}>
                   { columnHeadings.map((h)=> 
-                    <TableCell key={h} align="center" sx={{color: 'white'}}>
+                    <StyledTableCell key={h} sx={{color: 'white'}}>
                       {h === 'Varietal' ? 'Total' : h === 'Quantity' ? `${totalBottles}` : ''}
-                    </TableCell>
+                    </StyledTableCell>
                   )}
                 </TableRow>
               </TableFooter>
