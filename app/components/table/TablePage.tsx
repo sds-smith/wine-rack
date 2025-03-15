@@ -7,10 +7,10 @@ import styles from "../../page.module.css";
 type TablePageProps = {
   page: string,
   title: string,
-  table: string
+  table?: string
 }
 
-export default function TablePage({page, title, table} : TablePageProps) {
+export default function TablePage({page, title, table='default'} : TablePageProps) {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
