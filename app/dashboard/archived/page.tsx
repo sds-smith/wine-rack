@@ -19,7 +19,6 @@ export default async function Rack(props: PageProps) {
   return (
     <TablePage
       page='archived'
-      title='Archived Wines'
       searchParams={{filter_by_category, order, orderBy}}
     />
   );

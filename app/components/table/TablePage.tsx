@@ -10,14 +10,12 @@ type TablePageProps = {
     orderBy?: string 
     
   }, 
-  title: string,
 }
 
-export default function TablePage({page, searchParams, title} : TablePageProps) {
+export default function TablePage({page, searchParams} : TablePageProps) {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <h3 style={{marginBottom: '16px'}}>{title}</h3>
         <WineTable page={page} searchParams={searchParams}/>
       </main>
     </div>

@@ -19,7 +19,6 @@ export default async function Rack(props: PageProps) {
   return (
     <TablePage 
       page='get_more'
-      title='Get More'
       searchParams={{filter_by_category, order, orderBy}}
     />
   );

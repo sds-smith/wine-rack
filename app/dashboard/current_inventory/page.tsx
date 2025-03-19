@@ -19,7 +19,6 @@ export default async function Rack(props: PageProps) {
   return (
     <TablePage 
       page={'current_inventory'}
-      title='Current Inventory'
       searchParams={{filter_by_category, order, orderBy}}
     />
   );

@@ -60,7 +60,7 @@ export default async function WineTable({ page, searchParams={}} : WineTableProp
                 <Fragment key={row.ID}>
                   { idx > 0 && row[orderBy || 'Category'] !== wineList[idx-1][orderBy || 'Category'] && <Spacer columns={columnHeadings} />}
                   <TableRow
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 }, }}
+                    // sx={{ '&:last-child td, &:last-child th': { border: 0 }, }}
                   >
                     <TableCell align="center" size='small' >
                       <EditButton
