@@ -28,7 +28,7 @@ function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   return 0;
 }
 
-const Spacer = ({columns} : {columns: string[]}) => <TableRow sx={{height: '20px', borderBottom: '1px solid rgba(128, 128, 128, 0.2)'}}><><TableCell sx={{ backgroundColor: grey[200], }}/>{columns.map(() => <TableCell sx={{ backgroundColor: grey[200], }}/>)}</></TableRow>
+const Spacer = ({columns} : {columns: string[]}) => <TableRow sx={{height: '20px', borderBottom: '1px solid rgba(128, 128, 128, 0.2)'}}><><TableCell sx={{ backgroundColor: grey[200], }}/>{columns.map(c => <TableCell key={c} sx={{ backgroundColor: grey[200], }}/>)}</></TableRow>
 
 type WineTableProps = {
   page: string,

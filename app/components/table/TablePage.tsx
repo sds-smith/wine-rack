@@ -18,7 +18,7 @@ export default function TablePage({page, searchParams, title} : TablePageProps) 
     <div className={styles.page}>
       <main className={styles.main}>
         <h3 style={{marginBottom: '16px'}}>{title}</h3>
-        <WineTable page={page}/>
+        <WineTable page={page} searchParams={searchParams}/>
       </main>
     </div>
   )

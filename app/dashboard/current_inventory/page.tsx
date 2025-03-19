@@ -21,7 +21,6 @@ export default async function Rack(props: PageProps) {
       page={'current_inventory'}
       title='Current Inventory'
       searchParams={{filter_by_category, order, orderBy}}
-      table='default'
     />
   );
 }
