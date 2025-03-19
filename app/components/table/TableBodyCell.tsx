@@ -8,7 +8,6 @@ type TableBodyCellProps = {
   wine: Wine,
   columnId: string,
   page: string,
-  table: string
 }
 
 const boolToYesNo = {
@@ -41,7 +40,7 @@ const varietalBackground = {
   "25-M" : yellow[50],
 }
 
-export default function TableBodyCell({columnId, wine, page, table}: TableBodyCellProps) {
+export default function TableBodyCell({columnId, wine, page}: TableBodyCellProps) {
   const cellContent = columnId === 'Ready'
     ? !wine.Ready.close || wine.Ready.close === wine.Ready.open ? `${wine.Ready.open }`: `${wine.Ready.open} - ${wine.Ready.close}`
     : columnId === 'Notes' ? boolToYesNo[`${wine.Notes}`] 
@@ -55,7 +54,7 @@ export default function TableBodyCell({columnId, wine, page, table}: TableBodyCe
     <>
       { columnId === 'Quantity'
         ? <FormField columnId={columnId} wineID={ID!} value={cellContent} page={page}/>
-        : <TableCell align="center" sx={ table==='byVarietal' && columnId === 'Varietal' ? { backgroundColor } : {}}>{cellContent}</TableCell>
+        : <TableCell align="center" sx={ columnId === 'Varietal' ? { backgroundColor } : {}}>{cellContent}</TableCell>
       }
     </>
   )

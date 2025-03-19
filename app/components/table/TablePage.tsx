@@ -1,7 +1,5 @@
 
 import WineTable from "./WineTable";
-import WineTableByVarietal from "./WineTableByVarietal";
-import WineTableByRow from "./WineTableByRow";
 import styles from "../../page.module.css";
 
 type TablePageProps = {
@@ -13,19 +11,14 @@ type TablePageProps = {
     
   }, 
   title: string,
-  table?: string
 }
 
-export default function TablePage({page, searchParams, table='default'} : TablePageProps) {
+export default function TablePage({page, searchParams, title} : TablePageProps) {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        { table==='default' && <WineTable 
-          page={page} 
-          searchParams={searchParams}
-        />}
-        { table==='byVarietal' && <WineTableByVarietal page={page} />}
-        { table==='byRow' && <WineTableByRow page={page} />}
+        <h3 style={{marginBottom: '16px'}}>{title}</h3>
+        <WineTable page={page}/>
       </main>
     </div>
   )
