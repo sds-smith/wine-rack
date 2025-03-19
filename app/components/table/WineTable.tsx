@@ -14,8 +14,9 @@ import TableBodyCell from './TableBodyCell';
 import FooterRow from './FooterRow';
 import { getWineData, columns } from '@/app/utils/data';
 import { Wine } from '../../types/wine';
+import { grey } from '@mui/material/colors';
 
-const Spacer = () => <TableRow sx={{height: '20px', borderBottom: '1px solid rgba(128, 128, 128, 0.2)'}}/>
+const Spacer = ({columns} : {columns: string[]}) => <TableRow sx={{height: '20px', borderBottom: '1px solid rgba(128, 128, 128, 0.2)'}}><><TableCell sx={{ backgroundColor: grey[200], }}/>{columns.map(() => <TableCell sx={{ backgroundColor: grey[200], }}/>)}</></TableRow>
 
 type WineTableProps = {
   page: string
@@ -39,7 +40,7 @@ export default async function WineTable({ page } : WineTableProps) {
             {wineList.map((row: Wine, idx: number) => {
               return (
                 <Fragment key={row.ID}>
-                  { idx > 0 && row.Category !== wineList[idx-1].Category && <Spacer />}
+                  { idx > 0 && row.Category !== wineList[idx-1].Category && <Spacer columns={columnHeadings} />}
                   <TableRow
                     
                     sx={{ '&:last-child td, &:last-child th': { border: 0 }, }}
@@ -56,7 +57,6 @@ export default async function WineTable({ page } : WineTableProps) {
                           columnId={h}
                           wine={row}
                           page={page}
-                          table={'default'}
                         />
                       ))}
                   </TableRow>
