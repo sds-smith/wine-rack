@@ -10,7 +10,7 @@ import WineSelect from "../controlled_inputs/WineSelect";
 import { Category, Wine } from "@/app/types/wine";
 
 
-const defaultCategory = { ID: '', code: ' ', title: 'Please select category', group: ''};
+const defaultCategory = { ID: '', code: ' ', title: 'Please select category', group: '', color: ''};
 
 
 type MobileSearchFormProps = {

@@ -19,7 +19,7 @@ type CategoriesTableProps = {
 
 export default async function CategoriesTable({ disabled, editID } : CategoriesTableProps) {
   const { categories } = await getCategories();
-  const columnHeadings: string[] = ['Code', 'Title', 'Group'];
+  const columnHeadings: string[] = ['Code', 'Title', 'Group', 'Color'];
 
   return (
     <Box width={{xs: 350, lg: 'unset'}} >

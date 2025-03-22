@@ -41,6 +41,13 @@ export default async function AddCategoryForm() {
           variant="standard"
           required
         />
+        <TextField
+          fullWidth
+          id="color" 
+          name="color" 
+          label="Category Color" 
+          variant="standard"
+        />
         <Stack spacing={2} direction='row'>
           <Button type='submit' >Submit</Button>
           <Button onClick={cancel} autoFocus>Cancel</Button>

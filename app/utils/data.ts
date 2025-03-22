@@ -36,7 +36,7 @@ export async function getWineByID(ID: string) {
 
 export async function getCategories() {
     const data = await db.collection("categories").find({}).toArray();
-    const categoryData = data.map(({_id, code, title, group}):Category => ({ ID: _id.toString(), code, title, group }))
+    const categoryData = data.map(({_id, code, title, group, color}):Category => ({ ID: _id.toString(), code, title, group, color }))
     
     const categories: Category[] = categoryData.sort((a,b)=>parseInt(a.code)-parseInt(b.code))
 

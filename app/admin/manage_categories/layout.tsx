@@ -14,7 +14,7 @@ export default async function ManageCategories({ children }: { children: React.R
     <div className={styles.page}>
       <main className={styles.main}>
         <h3 >Manage Categories</h3>
-        <Container disableGutters sx={{display: 'flex', flexWrap: 'wrap', marginTop:'20px'}}>
+        <Container disableGutters sx={{display: 'flex', marginTop:'20px'}}>
           { children }
         </Container>
       </main>

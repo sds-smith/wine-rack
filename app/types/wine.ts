@@ -1,10 +1,11 @@
 import type { WithId, Document } from 'mongodb'
 
-export interface Category /*extends WithId<Document>*/ {
+export interface Category {
     ID: string,
     code: string,
     title: string,
-    group: string
+    group: string,
+    color: string
 }
 
 export type CategoriesByCode = {
@@ -57,7 +58,6 @@ export type WineInput = {
 };
 
 export type WineField = string | number | boolean | Ready | null | undefined;
-
 
 export type Columns = {
     A: string,

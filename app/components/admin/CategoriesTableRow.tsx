@@ -15,10 +15,10 @@ type CategoriesTableRowProps = {
 }
 
 export default async function CategoriesTableRow({ row, disabled, isEdit } : CategoriesTableRowProps) {
-  const columnHeadings: string[] = ['Code', 'Title', 'Group'];
+  const columnHeadings: string[] = ['Code', 'Title', 'Group', 'Color'];
 
   const categoryKey = row.code as keyof typeof sorted_wines.Category;
-  const hasWines = sorted_wines.Category[categoryKey] >0;
+  const hasWines = sorted_wines.Category[categoryKey] > 0;
 
   async function handleConfirm() {
     'use server'
@@ -36,9 +36,9 @@ export default async function CategoriesTableRow({ row, disabled, isEdit } : Cat
       { columnHeadings.map(h => (
         <TableCell 
           key={h} 
-           align="center"
+          align="center"
         >
-            {row[h.toLocaleLowerCase() as keyof Category]}
+          {row[h.toLocaleLowerCase() as keyof Category]}
         </TableCell>
       ))}
       <TableCell>
