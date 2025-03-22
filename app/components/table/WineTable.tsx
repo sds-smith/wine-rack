@@ -42,8 +42,10 @@ type WineTableProps = {
 export default async function WineTable({ page, searchParams={}} : WineTableProps) {
   const { filter_by_category, order, orderBy } = searchParams;
   const { wineList: wines, metaData : { totalBottles } } = await getWineData(page);
+  console.log({wines, totalBottles})
   const columnHeadings = columns.filter(h => ![ 'Category' ].includes(h));
   const { categoriesByCode } = await getCategories();
+  console.log({categoriesByCode})
   const filterByCategory = (arr: Wine[]) => filter_by_category ? arr.filter(w => w.Category === filter_by_category) : arr;
   const sort = (arr: Wine[]) => orderBy ? arr.sort((a, b) => order === 'desc' ? descendingComparator(a, b, orderBy) : descendingComparator(b, a, orderBy)) : arr;
   const wineList = sort(filterByCategory(wines));

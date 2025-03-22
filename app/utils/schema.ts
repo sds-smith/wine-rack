@@ -52,6 +52,7 @@ export const CreateCategorySchema = z.object({
     code: z.string(),
     title: z.string(),
     group: z.string(),
+    color: z.optional(z.string())
 });
 
 export const UpdateCategorySchema = z.object({
@@ -59,6 +60,7 @@ export const UpdateCategorySchema = z.object({
     code: z.string(),
     title: z.string(),
     group: z.string(),
+    color: z.optional(z.string())
 });
 
 export const UpdateQuantitySchema = z.object({

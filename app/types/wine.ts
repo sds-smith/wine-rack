@@ -5,7 +5,7 @@ export interface Category {
     code: string,
     title: string,
     group: string,
-    color: string
+    color?: string
 }
 
 export type CategoriesByCode = {
