@@ -1,4 +1,4 @@
-
+import { Suspense } from 'react';
 import TableCell from '@mui/material/TableCell';
 import FormField from './FormField';
 import { Wine } from '../../types/wine';
@@ -29,13 +29,13 @@ export default async function TableBodyCell({columnId, wine, page}: TableBodyCel
   const { ID } = wine;
 
   return (
-    <>
+    <Suspense>
       { columnId === 'Quantity'
         ? <FormField columnId={columnId} wineID={ID!} value={cellContent} page={page}/>
         // : <TableCell align="center" sx={ columnId === 'Varietal' ? { backgroundColor } : {}}>{cellContent}</TableCell>
         : <TableCell align="center" >{columnId === 'Varietal' ? backgroundColor : cellContent}</TableCell>
         // : <TableCell align="center" >{cellContent}</TableCell>
       }
-    </>
+    </Suspense>
   )
 }
