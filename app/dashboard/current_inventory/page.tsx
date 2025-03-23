@@ -1,5 +1,5 @@
 
-import TablePage from "@/app/components/table/TablePage";
+// import TablePage from "@/app/components/table/TablePage";
 
 type PageProps = { 
   searchParams?: Promise<{ 
