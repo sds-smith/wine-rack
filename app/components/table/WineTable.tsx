@@ -16,7 +16,7 @@ import FooterRow from './FooterRow';
 import { 
   getWineData, 
   getCategories, 
-  columns as columnHeadings
+  columns
 } from '@/app/utils/data';
 import { Wine } from '../../types/wine';
 import { grey } from '@mui/material/colors';
@@ -46,6 +46,7 @@ export default async function WineTable({ page, searchParams={}} : WineTableProp
   const { filter_by_category, order, orderBy } = searchParams;
   const { wineList: wines, metaData : { totalBottles } } = await getWineData(page);
   const { categoriesByCode } = await getCategories();
+  const columnHeadings = columns.filter(h => !['Category'].includes(h))
   const filterByCategory = (arr: Wine[]) => filter_by_category ? arr.filter(w => w.Category === filter_by_category) : arr;
   const sort = (arr: Wine[]) => orderBy ? arr.sort((a, b) => order === 'desc' ? descendingComparator(a, b, orderBy) : descendingComparator(b, a, orderBy)) : arr;
   const wineList = sort(filterByCategory(wines));
