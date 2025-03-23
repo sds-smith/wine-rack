@@ -1,6 +1,6 @@
 
 // import { Fragment } from 'react';
-// import Table from '@mui/material/Table';
+import Table from '@mui/material/Table';
 // import TableBody from '@mui/material/TableBody';
 // import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
@@ -9,14 +9,13 @@ import TableContainer from '@mui/material/TableContainer';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import TableControlPanel from './TableControlPanel';
-// import SortableTableHead from './SortableTableHead';
+import SortableTableHead from './SortableTableHead';
 // import EditButton from '../buttons/EditButton';
 // import TableBodyCell from './TableBodyCell';
 // import FooterRow from './FooterRow';
 import { getWineData, 
   getCategories, 
-  // columns 
-  // 
+  columns as columnHeadings
 } from '@/app/utils/data';
 import { Wine } from '../../types/wine';
 // import { grey } from '@mui/material/colors';
@@ -49,7 +48,6 @@ export default async function WineTable({ page, searchParams={}} : WineTableProp
   const cats = [...new Set(wines.map(wine => wine.Category))]
   console.log({ filter_by_category, order, orderBy })
   const { categoriesByCode } = await getCategories();
-  // console.log({categoriesByCode})
   const filterByCategory = (arr: Wine[]) => filter_by_category ? arr.filter(w => w.Category === filter_by_category) : arr;
   const sort = (arr: Wine[]) => orderBy ? arr.sort((a, b) => order === 'desc' ? descendingComparator(a, b, orderBy) : descendingComparator(b, a, orderBy)) : arr;
   const wineList = sort(filterByCategory(wines));
@@ -65,9 +63,9 @@ export default async function WineTable({ page, searchParams={}} : WineTableProp
 
       <TableContainer component={Paper} sx={{ overflow: "auto", maxHeight: {xs: "70vh", lg:"85vh"} }}>
         <TableControlPanel categoriesByCode={categoriesByCode} page={page} />
-        {/* <Table size="small" aria-label="a dense table">
+        <Table size="small" aria-label="a dense table">
           <SortableTableHead columns={columnHeadings}/>
-          <TableBody>
+          {/* <TableBody>
             {wineList.map((row: Wine, idx: number) => {
               return (
                 <Fragment key={row.ID}>
@@ -98,8 +96,8 @@ export default async function WineTable({ page, searchParams={}} : WineTableProp
               columnHeadings={columnHeadings}
               totalBottles={totalBottles}
             />
-          </TableFooter>
-        </Table> */}
+          </TableFooter> */}
+        </Table>
       </TableContainer>
     </Box>
   );
