@@ -13,13 +13,13 @@ import SortableTableHead from './SortableTableHead';
 import EditButton from '../buttons/EditButton';
 import TableBodyCell from './TableBodyCell';
 import FooterRow from './FooterRow';
-import { getWineData, 
+import { 
+  getWineData, 
   getCategories, 
   columns as columnHeadings
 } from '@/app/utils/data';
 import { Wine } from '../../types/wine';
 import { grey } from '@mui/material/colors';
-
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -61,9 +61,7 @@ export default async function WineTable({ page, searchParams={}} : WineTableProp
               return (
                 <Fragment key={row.ID}>
                   { idx > 0 && row[orderBy || 'Category'] !== wineList[idx-1][orderBy || 'Category'] && <Spacer columns={columnHeadings} />}
-                  <TableRow
-                    // sx={{ '&:last-child td, &:last-child th': { border: 0 }, }}
-                  >
+                  <TableRow >
                     <TableCell align="center" size='small' >
                       <EditButton
                         id={row.ID!}

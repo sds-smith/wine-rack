@@ -30,9 +30,7 @@ export default async function TableBodyCell({columnId, wine, page, categoryColor
     <Suspense>
       { columnId === 'Quantity'
         ? <FormField columnId={columnId} wineID={ID!} value={cellContent} page={page}/>
-        // : <TableCell align="center" sx={ columnId === 'Varietal' ? { backgroundColor } : {}}>{cellContent}</TableCell>
-        : <TableCell align="center" >{columnId === 'Varietal' ? categoryColor : cellContent}</TableCell>
-        // : <TableCell align="center" >{cellContent}</TableCell>
+        : <TableCell align="center" sx={ columnId === 'Varietal' ? { backgroundColor: categoryColor } : {}}>{cellContent}</TableCell>
       }
     </Suspense>
   )
