@@ -45,7 +45,6 @@ type WineTableProps = {
 export default async function WineTable({ page, searchParams={}} : WineTableProps) {
   const { filter_by_category, order, orderBy } = searchParams;
   const { wineList: wines, metaData : { totalBottles } } = await getWineData(page);
-  const cats = [...new Set(wines.map(wine => wine.Category))]
   const { categoriesByCode } = await getCategories();
   const filterByCategory = (arr: Wine[]) => filter_by_category ? arr.filter(w => w.Category === filter_by_category) : arr;
   const sort = (arr: Wine[]) => orderBy ? arr.sort((a, b) => order === 'desc' ? descendingComparator(a, b, orderBy) : descendingComparator(b, a, orderBy)) : arr;
@@ -53,12 +52,6 @@ export default async function WineTable({ page, searchParams={}} : WineTableProp
 
   return (
     <Box >
-      <>
-        {cats.map(cat=><div key={cat}>{cat}</div>)}
-        <div>{`totalBottles: ${totalBottles}`}</div>
-        {wineList.map(w=><div key={w.ID}>{`${w.Category} ${w.Producer} ${w.Label} ${w.Varietal}`}</div>)}
-      </>
-
       <TableContainer component={Paper} sx={{ overflow: "auto", maxHeight: {xs: "70vh", lg:"85vh"} }}>
         <TableControlPanel categoriesByCode={categoriesByCode} page={page} />
         <Table size="small" aria-label="a dense table">
