@@ -76,6 +76,7 @@ export default async function WineTable({ page, searchParams={}} : WineTableProp
                           columnId={h}
                           wine={row}
                           page={page}
+                          categoryColor={categoriesByCode[row.Category].color || ''}
                         />
                       ))}
                   </TableRow>
