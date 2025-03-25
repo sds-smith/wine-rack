@@ -22,7 +22,7 @@ export async function getWineData(page: string) {
         }), initialMetaData
     );
 
-    const chunkedWineList = chunk(wineList, 34)
+    const chunkedWineList = chunk(wineList, 32)
 
     return { wineList, metaData, chunkedWineList }
 }
