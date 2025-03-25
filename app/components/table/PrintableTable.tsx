@@ -1,6 +1,6 @@
 'use client'
 
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, Fragment } from "react";
 import { useRouter } from "next/navigation";
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
@@ -11,13 +11,15 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableFooter from '@mui/material/TableFooter';
 import Paper from '@mui/material/Paper';
-import { Wine } from '../../types/wine';
+import { Wine, CategoriesByCode } from '../../types/wine';
+import { grey } from "@mui/material/colors";
 
 type PrintableTableProps = {
   columns: string[], 
   chunkedWineList: Wine[][], 
   totalBottles: number,
-  page: string
+  page: string,
+  categoriesByCode: CategoriesByCode
 }
 
 const boolToYesNo = {
@@ -37,7 +39,10 @@ const StyledTableCell = ({children, sx} : {children: ReactNode, sx?: {[key: stri
   return <TableCell align="center" sx={{...sx, fontSize: '18px'}}>{children}</TableCell>
 }
 
-export default function PrintableTable({ columns, chunkedWineList, totalBottles, page }: PrintableTableProps) {
+const Spacer = ({columns} : {columns: string[]}) => <TableRow sx={{height: '20px', borderBottom: '1px solid rgba(128, 128, 128, 0.2)'}}><>{columns.map(c => <TableCell key={c} sx={{ backgroundColor: grey[200], }}/>)}</></TableRow>
+
+
+export default function PrintableTable({ columns, chunkedWineList, totalBottles, page, categoriesByCode }: PrintableTableProps) {
   const router = useRouter();
 
   const columnHeadings = columns.filter(h => ![ 'Category' ].includes(h));
@@ -58,13 +63,16 @@ export default function PrintableTable({ columns, chunkedWineList, totalBottles,
               </TableRow>
             </TableHead>
             <TableBody>
-              {wineList.map((row: Wine) => (
-                <TableRow
-                  key={row.ID}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  { columnHeadings.map(h => <StyledTableCell key={h} >{getCellContent(h, row)}</StyledTableCell>)}
-                </TableRow>
+              {wineList.map((row: Wine, idx: number) => (
+                  <Fragment key={row.ID} >
+                    { idx > 0 && row['Category'] !== wineList[idx-1]['Category'] && <Spacer columns={columnHeadings} />}
+                    <TableRow >
+                      { columnHeadings.map(h => {
+                        const sx = h === 'Varietal' ? {backgroundColor: categoriesByCode[row.Category].color || ''} : undefined
+                        return <StyledTableCell key={h} sx={sx} >{getCellContent(h, row)}</StyledTableCell>
+                      })}
+                    </TableRow>
+                  </Fragment>
               ))}
             </TableBody>
             { key === chunkedWineList.length - 1 &&         

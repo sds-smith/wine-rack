@@ -31,7 +31,7 @@ function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   return 0;
 }
 
-const Spacer = ({columns} : {columns: string[]}) => <TableRow sx={{height: '20px', borderBottom: '1px solid rgba(128, 128, 128, 0.2)'}}><><TableCell sx={{ backgroundColor: grey[200], }}/>{columns.map(c => <TableCell key={c} sx={{ backgroundColor: grey[200], }}/>)}</></TableRow>
+export const Spacer = ({columns} : {columns: string[]}) => <TableRow sx={{height: '20px', borderBottom: '1px solid rgba(128, 128, 128, 0.2)'}}><><TableCell sx={{ backgroundColor: grey[200], }}/>{columns.map(c => <TableCell key={c} sx={{ backgroundColor: grey[200], }}/>)}</></TableRow>
 
 type WineTableProps = {
   page: string,
@@ -44,12 +44,15 @@ type WineTableProps = {
 
 export default async function WineTable({ page, searchParams={}} : WineTableProps) {
   const { filter_by_category, order, orderBy } = searchParams;
-  const { wineList: wines, metaData : { totalBottles } } = await getWineData(page);
+  const { wineList: wines, metaData : { totalBottles: ttl } } = await getWineData(page);
   const { categoriesByCode } = await getCategories();
   const columnHeadings = columns.filter(h => !['Category'].includes(h))
   const filterByCategory = (arr: Wine[]) => filter_by_category ? arr.filter(w => w.Category === filter_by_category) : arr;
   const sort = (arr: Wine[]) => orderBy ? arr.sort((a, b) => order === 'desc' ? descendingComparator(a, b, orderBy) : descendingComparator(b, a, orderBy)) : arr;
   const wineList = sort(filterByCategory(wines));
+  const totalBottles = filter_by_category 
+    ? wineList.reduce((acc: number, curr: Wine) => acc + Number(curr.Quantity || 0), 0) 
+    : ttl;
 
   return (
     <Box >
