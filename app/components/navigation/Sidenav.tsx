@@ -2,7 +2,6 @@
 
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { useMediaQuery } from '@mui/material';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -23,7 +22,7 @@ import IconButton from '@mui/material/IconButton';
 // import MobileFriendlyIcon from '@mui/icons-material/MobileFriendly';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import SearchIcon from '@mui/icons-material/Search';
-import theme from '@/app/theme';
+import { useResponsive } from '@/app/hooks/useResponsive';
 
 export default function Sidenav({ signOutUser } : { signOutUser: () => void }) {
   const searchParams = useSearchParams();
@@ -31,7 +30,7 @@ export default function Sidenav({ signOutUser } : { signOutUser: () => void }) {
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const isMobile = useMediaQuery(theme.breakpoints.down('lg'))
+  const { isMobile } = useResponsive();
 
   const toggleDrawer = (newOpen: boolean) => () => {
     const params = new URLSearchParams(searchParams);
