@@ -1,15 +1,13 @@
 'use client'
 
-import useMediaQuery from '@mui/material/useMediaQuery';
 import IconButton from '@mui/material/IconButton';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import Link from 'next/link';
-import theme from '@/app/theme';
+import { useResponsive } from '@/app/hooks/useResponsive';
 
 export default function AddButton() {
-
-  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
-
+  const { isDesktop } = useResponsive();
+  
   return (
     <>
       { isDesktop ?

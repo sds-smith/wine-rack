@@ -56,7 +56,7 @@ export default async function WineTable({ page, searchParams={}} : WineTableProp
 
   return (
     <Box >
-      <TableContainer component={Paper} sx={{ overflow: "auto", maxHeight: {xs: "70vh", lg:"85vh"} }}>
+      <TableContainer component={Paper} sx={{ overflow: "auto", maxHeight: {xs: "70vh", md:"85vh"} }}>
         <TableControlPanel categoriesByCode={categoriesByCode} page={page} />
         <Table size="small" aria-label="a dense table">
           <SortableTableHead columns={columnHeadings}/>

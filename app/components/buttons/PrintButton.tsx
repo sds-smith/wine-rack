@@ -1,18 +1,17 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import useMediaQuery from '@mui/material/useMediaQuery';
 import IconButton from '@mui/material/IconButton';
 import PrintIcon from '@mui/icons-material/Print';
 import Link from 'next/link';
-import theme from '@/app/theme';
+import { useResponsive } from '@/app/hooks/useResponsive';
 
 export default function PrintButton() {
   const pathname = usePathname();
   const path = pathname.split('/')
   const page = path[path.length - 1]
 
-  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
+  const { isDesktop } = useResponsive();
 
   return (
     <>
