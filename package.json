@@ -21,6 +21,7 @@
     "mongodb": "^6.13.0",
     "next": "15.1.6",
     "next-auth": "5.0.0-beta.25",
+    "pdfmake": "^0.2.20",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz",
