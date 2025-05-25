@@ -1,7 +1,7 @@
 
 import pdfMake from "pdfmake/build/pdfmake";
 import "pdfmake/build/vfs_fonts";
-import { PageOrientation } from "pdfmake/interfaces";
+import { Content, PageOrientation } from "pdfmake/interfaces";
 import { Wine, CategoriesByCode } from "../types/wine";
 
 type Cell = string | { text: string, style: {fillColor: string | undefined}}
@@ -25,8 +25,8 @@ function getDocDef(page: string, columnHeadings: string[], rows: Cell[][]) {
     defaultStyle: {
       fontSize: 10
     },
-    footer: ((currentPage: { toString: () => string; }, pageCount: string) =>  ({
-      text:`${page} ${currentPage.toString()} of ${pageCount}`,
+    footer: ((currentPage: number, pageCount: number): Content | undefined =>  ({
+      text:`${page} ${currentPage} of ${pageCount}`,
       alignment: 'right',
       marginRight: 30
     })),
