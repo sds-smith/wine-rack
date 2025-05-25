@@ -79,6 +79,7 @@ export const makePdf = async (page: string) => {
   const { wineList, columnHeadings, categoriesByCode } = await response.json()
 
   const rows = buildRows(wineList, categoriesByCode)
-  const docDefinition = getDocDef(page, columnHeadings, rows)
+  const Page = page === 'dashboard' ? 'current_inventory' : page
+  const docDefinition = getDocDef(Page, columnHeadings, rows)
   pdfMake.createPdf(docDefinition).print()
 };
