@@ -53,30 +53,30 @@ function buildRows(data: Wine[], categoriesByCode: CategoriesByCode): Cell[][] {
   const footerRow = ['','','','','','','','','','','Total:',`${data.reduce((a, c)=>a+c.Quantity, 0)}`, '']
   const getFillColor = (wine: Wine) => categoriesByCode[wine.Category].color;
   const rows = data.flatMap((wine: Wine, idx: number) => {
-    const row =  Object.values({
-      "Varietal": { text: `${wine.Varietal || ''}`, style: { fillColor: getFillColor(wine) }},
-      "Country": `${wine.Country || ''}`,
-      "Vintage": `${wine.Vintage || ''}`,
-      "Producer": `${wine.Producer || ''}`,
-      "Label": `${wine.Label || ''}`,
-      "Appellation": `${wine.Appellation || ''}`,
-      "Ready": `${!wine.Ready.close || wine.Ready.close === wine.Ready.open ? `${wine.Ready.open }` : `${wine.Ready.open} - ${wine.Ready.close}`}`,
-      "Source": `${wine.Source || ''}`,
-      "Price": `${wine.Price || ''}`,
-      "Acquired": `${wine.Acquired || ''}`,
-      "Notes": `${wine.Notes ? 'x' : ''}`,
-      "Quantity": `${wine.Quantity}`,
-      "Comments": `${wine.Comments || ''}`,
-    })
+    const row =  [
+      { text: `${wine.Varietal || ''}`, style: { fillColor: getFillColor(wine) }},
+      `${wine.Country || ''}`,
+      `${wine.Vintage || ''}`,
+      `${wine.Producer || ''}`,
+      `${wine.Label || ''}`,
+      `${wine.Appellation || ''}`,
+      `${!wine.Ready.close || wine.Ready.close === wine.Ready.open ? `${wine.Ready.open }` : `${wine.Ready.open} - ${wine.Ready.close}`}`,
+      `${wine.Source || ''}`,
+      `${wine.Price || ''}`,
+      `${wine.Acquired || ''}`,
+      `${wine.Notes ? 'x' : ''}`,
+      `${wine.Quantity}`,
+      `${wine.Comments || ''}`,
+    ]
     return (idx > 0 && wine.Category !== data[idx-1]?.Category) ? [spacerRow, row] :  [row]
   })
   rows.push(footerRow)
   return rows
 }
 
-export const makePdf = async (page: string) => {
-  const response= await fetch(`/api/pdf?page=${page}`)
-  const { wineList, columnHeadings, categoriesByCode } = await response.json()
+export const generatePdf = async (page: string) => {
+  const wineData = await fetch(`/api/wine_data?page=${page}`)
+  const { wineList, columnHeadings, categoriesByCode } = await wineData.json()
 
   const rows = buildRows(wineList, categoriesByCode)
   const Page = page === 'dashboard' ? 'current_inventory' : page

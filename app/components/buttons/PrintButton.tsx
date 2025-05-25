@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation'
 import IconButton from '@mui/material/IconButton';
 import PrintIcon from '@mui/icons-material/Print';
 import { useResponsive } from '@/app/hooks/useResponsive';
-import { makePdf } from '@/app/utils/pdf';
+import { generatePdf } from '@/app/utils/pdf';
 
 export default function PrintButton() {
   const pathname = usePathname();
@@ -13,10 +13,7 @@ export default function PrintButton() {
 
   const { isDesktop } = useResponsive();
 
-  const handleClick = () => {
-    console.log({pathname, path, page})
-    makePdf(page)
-  }
+  const handleClick = () => generatePdf(page);
 
   return (
     <>

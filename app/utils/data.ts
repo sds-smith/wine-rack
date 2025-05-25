@@ -5,13 +5,15 @@ import { Wine, Metadata, initialMetaData, Category, CategoriesByCode } from "../
 
 const db = client.db(process.env.MONGODB_DATABASE);
 
-export async function getWineData(page: string) {
+type Page = 'current_inventory' | 'archived' | 'get_more'
+
+export async function getWineData(page: Page) {
     const filter = {
         current_inventory: { Archived: { $ne: true } },
         archived: { Archived: true },
         get_more: { GetMore: true }
     }
-    const data = await db.collection("wines").find(filter[page as keyof typeof filter]).toArray();
+    const data = await db.collection("wines").find(filter[page]).toArray();
     const wineList: Wine[] = data
         .map((w) => ({ ...w, ID: w._id.toString(), _id: w._id.toString(), ...(w.Price && {Price: w.Price.toFixed(2)}) }))
         .sort((a, b) => parseInt(a.Category || '') - parseInt(b.Category || '') || parseInt(a.Vintage || '') - parseInt(b.Vintage || ''));
