@@ -1,7 +1,7 @@
 import { ObjectId } from "mongodb";
 import client from "../../services/mongodb";
 import chunk from "./chunkArray";
-import { Wine, Metadata, initialMetaData, Category, CategoriesByCode } from "../types/wine";
+import { Wine, Metadata, initialMetaData, Category, CategoriesByCode, Column } from "../types/wine";
 
 const db = client.db(process.env.MONGODB_DATABASE);
 
@@ -50,7 +50,7 @@ export async function getCategories() {
     return { categories, categoriesByCode }
 }
 
-export const columns = [
+export const columns: Column[] = [
     "Category",
     "Varietal",
     "Country",

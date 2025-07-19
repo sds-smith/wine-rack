@@ -16,7 +16,8 @@ import FooterRow from './FooterRow';
 import { 
   getWineData, 
   getCategories, 
-  columns
+  columns,
+  Page
 } from '@/app/utils/data';
 import { Wine, Ready } from '../../types/wine';
 import { grey } from '@mui/material/colors';
@@ -50,7 +51,7 @@ function descendingComparator(a: Wine, b: Wine, orderBy: string) {
 export const Spacer = ({columns} : {columns: string[]}) => <TableRow sx={{height: '20px', borderBottom: '1px solid rgba(128, 128, 128, 0.2)'}}><><TableCell sx={{ backgroundColor: grey[200], }}/>{columns.map(c => <TableCell key={c} sx={{ backgroundColor: grey[200], }}/>)}</></TableRow>
 
 type WineTableProps = {
-  page: string,
+  page: Page,
   searchParams?: { 
     filter_by_category?: string 
     order?: string 

@@ -48,4 +48,4 @@ export const initialMetaData = {
 }
 
 export type Column = "Category" | "Varietal" | "Country" | "Vintage" | "Producer" | "Label" 
-    | "Appellation" | "Ready" | "Source" | "Price" | "Acquired" | "Notes" | "Quantity" | "Comments" 
+    | "Appellation" | "Ready" | "Source" | "Price" | "Acquired" | "Notes" | "Quantity" | "Comments" | "Qty"
