@@ -18,14 +18,30 @@ import {
   getCategories, 
   columns
 } from '@/app/utils/data';
-import { Wine } from '../../types/wine';
+import { Wine, Ready } from '../../types/wine';
 import { grey } from '@mui/material/colors';
 
-function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
-  if (b[orderBy] < a[orderBy]) {
+function processComparator<T>(wine: Wine, orderBy: T) {
+  if (!['open','close'].includes(`${orderBy}`)) return wine[orderBy as keyof Wine];
+  let rawComparator = wine.Ready?.[orderBy as keyof Ready];
+  if (String(rawComparator).length === 2) rawComparator = `20${rawComparator}`;
+
+  return wine.Ready?.open === 'now'
+  ? orderBy === 'open' 
+    ? `${new Date().getFullYear()}`.slice(-2) : -2
+  : !wine.Ready?.open
+    ? orderBy === 'open' ? `${new Date().getFullYear()}`.slice(-2) : 100
+  : orderBy === 'close' && !wine.Ready?.close && !!wine.Ready?.open ? 100
+  : rawComparator ? `${new Date(rawComparator).getFullYear()}`.slice(-2) : `${new Date().getFullYear()}`.slice(-2)
+}
+
+function descendingComparator(a: Wine, b: Wine, orderBy: string) {
+  const B = processComparator(b, orderBy);
+  const A = processComparator(a, orderBy);
+  if (B < A) {
     return -1;
   }
-  if (b[orderBy] > a[orderBy]) {
+  if (B > A) {
     return 1;
   }
   return 0;
@@ -48,7 +64,14 @@ export default async function WineTable({ page, searchParams={}} : WineTableProp
   const { categoriesByCode } = await getCategories();
   const columnHeadings = columns.filter(h => !['Category'].includes(h))
   const filterByCategory = (arr: Wine[]) => filter_by_category ? arr.filter(w => w.Category === filter_by_category) : arr;
-  const sort = (arr: Wine[]) => orderBy ? arr.sort((a, b) => order === 'desc' ? descendingComparator(a, b, orderBy) : descendingComparator(b, a, orderBy)) : arr;
+  const sort = (arr: Wine[]) => orderBy 
+    ? arr.sort((a, b) => {
+      // const A = ['open','close'].includes(orderBy) ? a.Ready : a;
+      // const B = ['open','close'].includes(orderBy) ? b.Ready : b;
+      return order === 'desc' 
+        ? descendingComparator(a, b, orderBy) 
+        : descendingComparator(b, a, orderBy) })
+    : arr;
   const wineList = sort(filterByCategory(wines));
   const totalBottles = filter_by_category 
     ? wineList.reduce((acc: number, curr: Wine) => acc + Number(curr.Quantity || 0), 0) 
