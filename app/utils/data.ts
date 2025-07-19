@@ -5,7 +5,7 @@ import { Wine, Metadata, initialMetaData, Category, CategoriesByCode } from "../
 
 const db = client.db(process.env.MONGODB_DATABASE);
 
-type Page = 'current_inventory' | 'archived' | 'get_more'
+export type Page = 'current_inventory' | 'archived' | 'get_more'
 
 export async function getWineData(page: Page) {
     const filter = {
