@@ -1,9 +1,10 @@
 
 import WineTable from "./WineTable";
 import styles from "../../page.module.css";
+import { Page } from "@/app/utils/data";
 
 type TablePageProps = {
-  page: string,
+  page: Page,
   searchParams?: { 
     filter_by_category?: string 
     order?: string 

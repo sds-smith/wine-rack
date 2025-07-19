@@ -3,12 +3,13 @@ import TableCell from '@mui/material/TableCell';
 import TextField from '@mui/material/TextField';
 import Input from '@mui/material/Input';
 import { updateQuantity } from '../../utils/actions.wine';
+import { Page } from '@/app/utils/data';
 
 type FormFieldProps = {
     columnId: string,
     wineID: string,
     value: string,
-    page: string
+    page: Page
 }
 
 export default function FormField({columnId, wineID, value, page}: FormFieldProps) {

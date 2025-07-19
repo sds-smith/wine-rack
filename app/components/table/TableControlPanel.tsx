@@ -9,6 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
 import MenuItem from '@mui/material/MenuItem';
 import { CategoriesByCode } from '@/app/types/wine';
+import { Page } from '@/app/utils/data';
 
 const pages = {
   'current_inventory' : 'Current Inventory',
@@ -18,7 +19,7 @@ const pages = {
 
 type TableControlPanelProps = {
     categoriesByCode: CategoriesByCode,
-    page: string
+    page: Page
 }
 
 export default function TableControlPanel({categoriesByCode, page} : TableControlPanelProps) {

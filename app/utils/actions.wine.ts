@@ -9,6 +9,7 @@ import {
   UpdateWineSchema, 
   UpdateQuantitySchema 
 } from './schema';
+import { Page } from './data';
 
 const db = client.db(process.env.MONGODB_DATABASE);
 
@@ -71,7 +72,7 @@ export async function updateQuantity(formData: FormData) {
     redirect(`/dashboard/${page}`);
 }
 
-export async function deleteWine(ID: string, page: string) {
+export async function deleteWine(ID: string, page: Page) {
     const _id = new ObjectId(ID)
     await db.collection("wines").deleteOne({_id})
 

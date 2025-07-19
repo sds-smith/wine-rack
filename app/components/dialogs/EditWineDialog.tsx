@@ -15,12 +15,13 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import ConfirmationDialog from './ConfirmationDialog';
 import { Wine, Category } from '../../types/wine';
+import { Page } from '@/app/utils/data';
 import { updateWine, deleteWine } from '../../utils/actions.wine';
 
 type EditWineDialogProps = {
   categories: Category[],
   wine: Wine,
-  page: string
+  page: Page
 } 
 
 export default function EditWineDialog({categories, wine, page}: EditWineDialogProps) {  

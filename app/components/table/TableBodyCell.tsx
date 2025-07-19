@@ -2,11 +2,12 @@ import { Suspense } from 'react';
 import TableCell from '@mui/material/TableCell';
 import FormField from './FormField';
 import { Wine } from '../../types/wine';
+import { Page } from '@/app/utils/data';
 
 type TableBodyCellProps = {
   wine: Wine,
   columnId: string,
-  page: string,
+  page: Page,
   categoryColor: string,
 }
 

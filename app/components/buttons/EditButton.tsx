@@ -2,10 +2,11 @@
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import Link from 'next/link';
+import { Page } from '@/app/utils/data';
 
 type EditButtonProps = {
   id: string,
-  page: string
+  page: Page
 }
 
 export default function EditButton({id, page}: EditButtonProps) {
