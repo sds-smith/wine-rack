@@ -2,12 +2,12 @@
 import EditWineDialog from "@/app/components/dialogs/EditWineDialog";
 import WineTable from "../../../components/table/WineTable";
 import styles from "../../../page.module.css";
-import { getWineByID, getCategories } from "@/app/utils/data";
+import { getWineByID, getCategories, Page } from "@/app/utils/data";
 import { Wine } from "@/app/types/wine";
 
 type EditPageProps = { 
   params: Promise<{ id: string }>, 
-  searchParams?: Promise<{ page?: string }>, 
+  searchParams?: Promise<{ page?: Page }>, 
 }
 
 export default async function EditPage(props: EditPageProps) {
